@@ -1,19 +1,19 @@
 import Head from "next/head";
 
-export default function Login() {
+export default function Register() {
   return (
     <>
       <Head>
-        <title>Login | COT - Advanced COT Report Expert Advisor</title>
+        <title>Register | COT - Advanced COT Report Expert Advisor</title>
         <meta
           name="description"
           content="COT - Advanced COT Report Expert Advisor"
         />
       </Head>
 
-      <div className="login-page">
-        <div className="login-box">
-          <div className="login-logo">
+      <div className="register-page">
+        <div className="register-box">
+          <div className="register-logo">
             <a href="/">
               <img
                 src="/logo.png"
@@ -26,10 +26,22 @@ export default function Login() {
           </div>
 
           <div className="card">
-            <div className="card-body login-card-body">
-              <p className="login-box-msg">Login</p>
+            <div className="card-body register-card-body">
+              <p className="register-box-msg">Register</p>
 
               <form action="/dashboard" method="post">
+                <div className="input-group mb-3">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Full name"
+                  />
+                  <div className="input-group-append">
+                    <div className="input-group-text">
+                      <span className="fas fa-user"></span>
+                    </div>
+                  </div>
+                </div>
                 <div className="input-group mb-3">
                   <input
                     type="email"
@@ -54,23 +66,44 @@ export default function Login() {
                     </div>
                   </div>
                 </div>
+                <div className="input-group mb-3">
+                  <input
+                    type="password"
+                    className="form-control"
+                    placeholder="Retype password"
+                  />
+                  <div className="input-group-append">
+                    <div className="input-group-text">
+                      <span className="fas fa-lock"></span>
+                    </div>
+                  </div>
+                </div>
                 <div className="row">
                   <div className="col-8">
-                    <a href="/forgot-password" className="small">
-                      I forgot my password
-                    </a>
+                    <div className="icheck-primary">
+                      <input
+                        type="checkbox"
+                        id="agreeTerms"
+                        name="terms"
+                        value="agree"
+                      />{" "}
+                      <label>
+                        I agree to the <a href="#">terms</a>
+                      </label>
+                    </div>
                   </div>
                   <div className="col-4">
                     <button type="submit" className="btn btn-primary btn-block">
-                      Login
+                      Register
                     </button>
                   </div>
                 </div>
               </form>
+
               <p className="mb-0 mt-2">
-                Need an Account?{" "}
-                <a href="/register" className="text-center">
-                  Register yourself
+                Already have an account?{" "}
+                <a href="/login" className="text-center">
+                  Login here
                 </a>
               </p>
             </div>
