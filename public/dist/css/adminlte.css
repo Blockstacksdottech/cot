@@ -377,9 +377,9 @@ h6,
 .h4,
 .h5,
 .h6 {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0rem;
   font-family: inherit;
-  font-weight: 500;
+  font-weight: 300;
   line-height: 1.2;
   color: inherit;
 }
@@ -3899,6 +3899,11 @@ input[type="button"].btn-block {
   display: flex;
   -ms-flex-align: center;
   align-items: center;
+}
+
+.custom-file-label::after {
+    display: none !important;
+    border-radius: 0 !important;
 }
 
 .input-group > .custom-file:not(:last-child) .custom-file-label,
@@ -12470,7 +12475,7 @@ body.sidebar-collapse:not(.sidebar-mini-xs):not(.sidebar-mini-md):not(
 }
 
 .content-wrapper {
-  background-color: #f4f6f9;
+  background-color: #f1e2ea;
 }
 
 .content-wrapper > .content {
@@ -12605,7 +12610,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 }
 
 .content-header h1 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin: 0;
 }
 
