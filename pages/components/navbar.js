@@ -1,3 +1,4 @@
+"use client";
 import { useRouter } from "next/router";
 import { logout } from "@/helpers";
 
@@ -36,7 +37,7 @@ export default function Navbar({ user }) {
               className="user-image img-circle elevation-2"
               alt="User Image"
             />
-            <span className="d-none d-md-inline">{user.username}</span>
+            <span className="d-none d-md-inline">{user && user.username}</span>
           </a>
           <ul className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <li className="user-header bg-primary">
@@ -47,7 +48,7 @@ export default function Navbar({ user }) {
               />
 
               <p className="mb-2">
-                {user.username}
+                {user && user.username}
                 {/* <small>Member since Nov. 2012</small> */}
               </p>
             </li>

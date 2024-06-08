@@ -1,7 +1,7 @@
 import axios from "axios";
 
-export const base = "http://127.0.0.1:8000";
-//export const base = "http://194.164.72.71";
+//export const base = "http://127.0.0.1:8000";
+export const base = "http://194.164.72.71";
 export const api = base + "/api/";
 //var fileDownload = require('js-file-download');
 function set_header(token = null) {
