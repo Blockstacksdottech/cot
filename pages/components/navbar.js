@@ -1,4 +1,9 @@
-export default function Navbar() {
+import { useRouter } from "next/router";
+import { logout } from "@/helpers";
+
+export default function Navbar({ user }) {
+  const nav = useRouter();
+
   return (
     <nav className="main-header navbar navbar-expand navbar-white navbar-light">
       <div className="container">
@@ -31,7 +36,7 @@ export default function Navbar() {
               className="user-image img-circle elevation-2"
               alt="User Image"
             />
-            <span className="d-none d-md-inline">Alexander Pierce</span>
+            <span className="d-none d-md-inline">{user.username}</span>
           </a>
           <ul className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <li className="user-header bg-primary">
@@ -42,15 +47,18 @@ export default function Navbar() {
               />
 
               <p className="mb-2">
-                Alexander Pierce
-                <small>Member since Nov. 2012</small>
+                {user.username}
+                {/* <small>Member since Nov. 2012</small> */}
               </p>
             </li>
             <li className="user-footer">
-              <a href="#" className="btn btn-default btn-flat">
+              {/* <a href="#" className="btn btn-default btn-flat">
                 Profile
-              </a>
-              <a href="#" className="btn btn-default btn-flat float-right">
+              </a> */}
+              <a
+                onClick={() => logout(nav)}
+                className="btn btn-default btn-flat float-right"
+              >
                 Sign out
               </a>
             </li>
