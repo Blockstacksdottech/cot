@@ -5,6 +5,14 @@ import React, { Component, useEffect, useState } from "react";
 import axios from "axios";
 import { isLogged, req } from "@/helpers";
 import { useRouter } from "next/router";
+import {
+  LineChart,
+  Line,
+  CartesianGrid,
+  XAxis,
+  YAxis,
+  Tooltip,
+} from "recharts";
 
 const Cotdata = () => {
   const [data, setData] = useState(null);
@@ -89,6 +97,36 @@ const Cotdata = () => {
 
   useEffect(() => {}, [data]);
 
+  const sentimentdata = [
+    { name: "Jan", uv: 400 },
+    { name: "Feb", uv: 300 },
+    { name: "Mar", uv: 200 },
+    { name: "Apr", uv: 100 },
+    { name: "May", uv: 50 },
+    { name: "Jun", uv: 250 },
+    { name: "Jul", uv: 130 },
+    { name: "Aug", uv: 500 },
+    { name: "Sep", uv: 350 },
+    { name: "Oct", uv: 430 },
+    { name: "Nov", uv: 290 },
+    { name: "Dec", uv: 20 },
+  ];
+
+  const crowdingdata = [
+    { name: "Jan", uv: 100 },
+    { name: "Feb", uv: 200 },
+    { name: "Mar", uv: 300 },
+    { name: "Apr", uv: 400 },
+    { name: "May", uv: 500 },
+    { name: "Jun", uv: 600 },
+    { name: "Jul", uv: 700 },
+    { name: "Aug", uv: 800 },
+    { name: "Sep", uv: 900 },
+    { name: "Oct", uv: 1000 },
+    { name: "Nov", uv: 1100 },
+    { name: "Dec", uv: 1200 },
+  ];
+
   return (
     <>
       <Head>
@@ -100,21 +138,19 @@ const Cotdata = () => {
       </Head>
 
       <Navbar user={user} />
-      {!loading && (
-        <>
-          <div className="content-wrapper">
-            <div className="content-header">
-              <div className="container-fluid">
-                <div className="row mb-2">
-                  <div className="col-sm-12">
-                    <h1 className="m-0">
-                      Commitments of Traders (COT) Reports
-                    </h1>
-                  </div>
-                </div>
+
+      <div className="content-wrapper">
+        <div className="content-header">
+          <div className="container-fluid">
+            <div className="row mb-2">
+              <div className="col-sm-12">
+                <h1 className="m-0">Commitments of Traders (COT) Reports</h1>
               </div>
             </div>
-
+          </div>
+        </div>
+        {!loading && (
+          <>
             <div className="content">
               <div className="container-fluid">
                 <div className="row mb-2">
@@ -161,7 +197,7 @@ const Cotdata = () => {
                                 <th>Crowded Short</th>
                                 {/* <th>SPI</th> */}
                                 <th>Net Speculative Position</th>
-                                <th>% spec positions</th>
+                                <th>% Spec positions</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -241,11 +277,76 @@ const Cotdata = () => {
                     </div>
                   </div>
                 </div>
+
+                <div className="row">
+                  <div className="col-lg-6">
+                    <div className="card card-primary card-outline">
+                      <div className="card-header">
+                        <h5 className="card-title">Sentiment Data</h5>
+                        <div className="card-tools">
+                          <select className="form-control form-control-sm">
+                            <option selected="selected">
+                              Select Symbol Name
+                            </option>
+                            <option>10 YEAR ERIS SOFR SWAP</option>
+                            <option>5 YEAR ERIS SOFR SWAP </option>
+                            <option>ADJUSTED INT RATE S&P 500 TOTL </option>
+                            <option>AUSTRALIAN DOLLAR </option>
+                            <option>BBG COMMODITY </option>
+                            <option>BITCOIN</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="card-body">
+                        <LineChart
+                          width={600}
+                          height={300}
+                          data={sentimentdata}
+                        >
+                          <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+                          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                          <XAxis dataKey="name" />
+                          <YAxis />
+                          <Tooltip />
+                        </LineChart>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="card card-primary card-outline">
+                      <div className="card-header">
+                        <h5 className="card-title">Crowding Data</h5>
+                        <div className="card-tools">
+                          <select className="form-control form-control-sm">
+                            <option selected="selected">
+                              Select Symbol Name
+                            </option>
+                            <option>10 YEAR ERIS SOFR SWAP</option>
+                            <option>5 YEAR ERIS SOFR SWAP </option>
+                            <option>ADJUSTED INT RATE S&P 500 TOTL </option>
+                            <option>AUSTRALIAN DOLLAR </option>
+                            <option>BBG COMMODITY </option>
+                            <option>BITCOIN</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div className="card-body">
+                        <LineChart width={600} height={300} data={crowdingdata}>
+                          <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+                          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+                          <XAxis dataKey="name" />
+                          <YAxis />
+                          <Tooltip />
+                        </LineChart>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </>
-      )}
+          </>
+        )}
+      </div>
 
       <Footer />
     </>
