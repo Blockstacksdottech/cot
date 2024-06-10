@@ -12,6 +12,9 @@ import {
   XAxis,
   YAxis,
   Tooltip,
+  BarChart,
+  Legend,
+  Bar,
 } from "recharts";
 
 const Cotdata = () => {
@@ -23,6 +26,11 @@ const Cotdata = () => {
     username: "",
     email: "",
   });
+  const [crowdingData, setCrowdingData] = useState([]);
+  const [sentimentData, setSentimentData] = useState([]);
+  const [selectedCrowded, setSelectedCrowded] = useState(null);
+  const [selectedSentiment, setSelectedSentiment] = useState(null);
+  const [keys, setKeys] = useState([]);
   const nav = useRouter();
 
   const initDataTable = () => {
@@ -82,10 +90,28 @@ const Cotdata = () => {
     try {
       const response = await req("data");
       setData(response[0].data);
+      const response1 = await req("crowding_positions");
+      setCrowdingData(response1);
+      const response2 = await req("sentiment_scores");
+      setSentimentData(response2);
+      const keys = Object.keys(response1);
+      console.log(keys);
+      setKeys(keys);
+      setSelectedCrowded(keys[0]);
+      setSelectedSentiment(keys[0]);
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleSelectChange = (e, target) => {
+    const o = e.target;
+    if (target === "crowded") {
+      setSelectedCrowded(o.value);
+    } else {
+      setSelectedSentiment(o.value);
     }
   };
 
@@ -113,18 +139,41 @@ const Cotdata = () => {
   ];
 
   const crowdingdata = [
-    { name: "Jan", uv: 100 },
-    { name: "Feb", uv: 200 },
-    { name: "Mar", uv: 300 },
-    { name: "Apr", uv: 400 },
-    { name: "May", uv: 500 },
-    { name: "Jun", uv: 600 },
-    { name: "Jul", uv: 700 },
-    { name: "Aug", uv: 800 },
-    { name: "Sep", uv: 900 },
-    { name: "Oct", uv: 1000 },
-    { name: "Nov", uv: 1100 },
-    { name: "Dec", uv: 1200 },
+    {
+      name: "Page A",
+      uv: 4000,
+      pv: 2400,
+    },
+    {
+      name: "Page B",
+      uv: 3000,
+      pv: 1398,
+    },
+    {
+      name: "Page C",
+      uv: 2000,
+      pv: 9800,
+    },
+    {
+      name: "Page D",
+      uv: 2780,
+      pv: 3908,
+    },
+    {
+      name: "Page E",
+      uv: 1890,
+      pv: 4800,
+    },
+    {
+      name: "Page F",
+      uv: 2390,
+      pv: 3800,
+    },
+    {
+      name: "Page G",
+      uv: 3490,
+      pv: 4300,
+    },
   ];
 
   return (
@@ -284,16 +333,21 @@ const Cotdata = () => {
                       <div className="card-header">
                         <h5 className="card-title">Sentiment Data</h5>
                         <div className="card-tools">
-                          <select className="form-control form-control-sm">
+                          <select
+                            className="form-control form-control-sm"
+                            onChange={(e) => handleSelectChange(e, "sentiment")}
+                            value={selectedSentiment}
+                          >
                             <option selected="selected">
                               Select Symbol Name
                             </option>
-                            <option>10 YEAR ERIS SOFR SWAP</option>
-                            <option>5 YEAR ERIS SOFR SWAP </option>
-                            <option>ADJUSTED INT RATE S&P 500 TOTL </option>
-                            <option>AUSTRALIAN DOLLAR </option>
-                            <option>BBG COMMODITY </option>
-                            <option>BITCOIN</option>
+                            {keys.map((e, i) => {
+                              return (
+                                <option key={e} value={e}>
+                                  {e}
+                                </option>
+                              );
+                            })}
                           </select>
                         </div>
                       </div>
@@ -301,11 +355,17 @@ const Cotdata = () => {
                         <LineChart
                           width={600}
                           height={300}
-                          data={sentimentdata}
+                          data={
+                            sentimentData && sentimentData[selectedSentiment]
+                          }
                         >
-                          <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+                          <Line
+                            type="monotone"
+                            dataKey="score"
+                            stroke="#8884d8"
+                          />
                           <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                          <XAxis dataKey="name" />
+                          <XAxis dataKey="date" />
                           <YAxis />
                           <Tooltip />
                         </LineChart>
@@ -317,27 +377,38 @@ const Cotdata = () => {
                       <div className="card-header">
                         <h5 className="card-title">Crowding Data</h5>
                         <div className="card-tools">
-                          <select className="form-control form-control-sm">
+                          <select
+                            className="form-control form-control-sm"
+                            onChange={(e) => handleSelectChange(e, "crowded")}
+                            value={selectedCrowded}
+                          >
                             <option selected="selected">
                               Select Symbol Name
                             </option>
-                            <option>10 YEAR ERIS SOFR SWAP</option>
-                            <option>5 YEAR ERIS SOFR SWAP </option>
-                            <option>ADJUSTED INT RATE S&P 500 TOTL </option>
-                            <option>AUSTRALIAN DOLLAR </option>
-                            <option>BBG COMMODITY </option>
-                            <option>BITCOIN</option>
+                            {keys.map((e, i) => {
+                              return (
+                                <option key={e} value={e}>
+                                  {e}
+                                </option>
+                              );
+                            })}
                           </select>
                         </div>
                       </div>
                       <div className="card-body">
-                        <LineChart width={600} height={300} data={crowdingdata}>
-                          <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-                          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                          <XAxis dataKey="name" />
+                        <BarChart
+                          width={600}
+                          height={300}
+                          data={crowdingData && crowdingData[selectedCrowded]}
+                        >
+                          <CartesianGrid strokeDasharray="3 3" />
+                          <XAxis dataKey="date" />
                           <YAxis />
                           <Tooltip />
-                        </LineChart>
+                          <Legend />
+                          <Bar dataKey="long" fill="#8884d8" />
+                          <Bar dataKey="short" fill="#82ca9d" />
+                        </BarChart>
                       </div>
                     </div>
                   </div>
