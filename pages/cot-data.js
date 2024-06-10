@@ -16,6 +16,7 @@ import {
   Legend,
   Bar,
 } from "recharts";
+import Downloader from "react-csv-downloader";
 
 const Cotdata = () => {
   const [data, setData] = useState(null);
@@ -32,6 +33,7 @@ const Cotdata = () => {
   const [selectedSentiment, setSelectedSentiment] = useState(null);
   const [keys, setKeys] = useState([]);
   const nav = useRouter();
+  const [exportableData, setExportableData] = useState([]);
 
   const initDataTable = () => {
     const script = document.createElement("script");
@@ -86,13 +88,45 @@ const Cotdata = () => {
     return `${percentage.toFixed(2)}%`;
   };
 
+  const handleExport = (dt) => {
+    const temp = [
+      // Add headers for your CSV data
+      [
+        "Symbol Name",
+        "Overall Sentiment Score",
+        "Overall Decision",
+        "Sentiment Score",
+        "Decision",
+        "Crowded Long",
+        "Crowded Short",
+        "Net Speculative Position",
+        "% Spec positions",
+      ],
+      ...dt.map((e) => [
+        e.symbol,
+        e.overall_sentiment,
+        e.overall_decision,
+        e.sentiment_score,
+        e.decision,
+        e.crowded_long_positions,
+        e.crowded_short_positions,
+        e.net_speculative_position,
+        e.pct_oi_spec_positions.toFixed(2),
+      ]),
+    ];
+    console.log(temp);
+    setExportableData(temp);
+  };
+
   const fetchData = async () => {
     try {
       const response = await req("data");
+      console.log("formating export");
+      handleExport(response[0].data);
       setData(response[0].data);
       const response1 = await req("crowding_positions");
       setCrowdingData(response1);
-      const response2 = await req("sentiment_scores");
+      const response2 = await req("net_speculative");
       setSentimentData(response2);
       const keys = Object.keys(response1);
       console.log(keys);
@@ -100,7 +134,7 @@ const Cotdata = () => {
       setSelectedCrowded(keys[0]);
       setSelectedSentiment(keys[0]);
     } catch (error) {
-      setError(error.message);
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -122,59 +156,6 @@ const Cotdata = () => {
   }, [user]);
 
   useEffect(() => {}, [data]);
-
-  const sentimentdata = [
-    { name: "Jan", uv: 400 },
-    { name: "Feb", uv: 300 },
-    { name: "Mar", uv: 200 },
-    { name: "Apr", uv: 100 },
-    { name: "May", uv: 50 },
-    { name: "Jun", uv: 250 },
-    { name: "Jul", uv: 130 },
-    { name: "Aug", uv: 500 },
-    { name: "Sep", uv: 350 },
-    { name: "Oct", uv: 430 },
-    { name: "Nov", uv: 290 },
-    { name: "Dec", uv: 20 },
-  ];
-
-  const crowdingdata = [
-    {
-      name: "Page A",
-      uv: 4000,
-      pv: 2400,
-    },
-    {
-      name: "Page B",
-      uv: 3000,
-      pv: 1398,
-    },
-    {
-      name: "Page C",
-      uv: 2000,
-      pv: 9800,
-    },
-    {
-      name: "Page D",
-      uv: 2780,
-      pv: 3908,
-    },
-    {
-      name: "Page E",
-      uv: 1890,
-      pv: 4800,
-    },
-    {
-      name: "Page F",
-      uv: 2390,
-      pv: 3800,
-    },
-    {
-      name: "Page G",
-      uv: 3490,
-      pv: 4300,
-    },
-  ];
 
   return (
     <>
@@ -230,6 +211,21 @@ const Cotdata = () => {
                   <div className="col-lg-12">
                     <div className="card card-primary card-outline">
                       <div className="card-body">
+                        {exportableData.length > 0 && (
+                          <>
+                            <Downloader
+                              filename="my_data.csv"
+                              elementType="button"
+                              disabled={false} // Set to true to disable download
+                              datas={exportableData}
+                            >
+                              <a className="btn btn-sm btn-primary my-2">
+                                Export COT Data
+                              </a>
+                            </Downloader>
+                          </>
+                        )}
+
                         <div className="table-responsive p-0">
                           <table
                             id="datatable-Cotdata"
@@ -331,7 +327,7 @@ const Cotdata = () => {
                   <div className="col-lg-6">
                     <div className="card card-primary card-outline">
                       <div className="card-header">
-                        <h5 className="card-title">Sentiment Data</h5>
+                        <h5 className="card-title">Net Speculative Data</h5>
                         <div className="card-tools">
                           <select
                             className="form-control form-control-sm"
