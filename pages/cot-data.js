@@ -15,6 +15,7 @@ import {
   BarChart,
   Legend,
   Bar,
+  ResponsiveContainer,
 } from "recharts";
 import Downloader from "react-csv-downloader";
 
@@ -348,23 +349,26 @@ const Cotdata = () => {
                         </div>
                       </div>
                       <div className="card-body">
-                        <LineChart
-                          width={600}
-                          height={300}
-                          data={
-                            sentimentData && sentimentData[selectedSentiment]
-                          }
-                        >
-                          <Line
-                            type="monotone"
-                            dataKey="score"
-                            stroke="#8884d8"
-                          />
-                          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                          <XAxis dataKey="date" />
-                          <YAxis />
-                          <Tooltip />
-                        </LineChart>
+                        <ResponsiveContainer width="100%" height={300}>
+                          <LineChart
+                            data={
+                              sentimentData && sentimentData[selectedSentiment]
+                            }
+                          >
+                            <Line
+                              type="monotone"
+                              dataKey="score"
+                              stroke="#8884d8"
+                            />
+                            <CartesianGrid
+                              stroke="#ccc"
+                              strokeDasharray="5 5"
+                            />
+                            <XAxis dataKey="date" />
+                            <YAxis />
+                            <Tooltip />
+                          </LineChart>
+                        </ResponsiveContainer>
                       </div>
                     </div>
                   </div>
@@ -392,19 +396,19 @@ const Cotdata = () => {
                         </div>
                       </div>
                       <div className="card-body">
-                        <BarChart
-                          width={600}
-                          height={300}
-                          data={crowdingData && crowdingData[selectedCrowded]}
-                        >
-                          <CartesianGrid strokeDasharray="3 3" />
-                          <XAxis dataKey="date" />
-                          <YAxis />
-                          <Tooltip />
-                          <Legend />
-                          <Bar dataKey="long" fill="#8884d8" />
-                          <Bar dataKey="short" fill="#82ca9d" />
-                        </BarChart>
+                        <ResponsiveContainer width="100%" height={300}>
+                          <BarChart
+                            data={crowdingData && crowdingData[selectedCrowded]}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="date" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="long" fill="#9932cc" />
+                            <Bar dataKey="short" fill="#d08ef1" />
+                          </BarChart>
+                        </ResponsiveContainer>
                       </div>
                     </div>
                   </div>
