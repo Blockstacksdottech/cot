@@ -358,7 +358,7 @@ const Cotdata = () => {
                             <Line
                               type="monotone"
                               dataKey="score"
-                              stroke="#8884d8"
+                              stroke="#9932cc"
                             />
                             <CartesianGrid
                               stroke="#ccc"
