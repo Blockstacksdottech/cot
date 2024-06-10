@@ -26,7 +26,7 @@ export default function Login() {
         obj.username = resp.username;
         obj.email = resp.email;
         setUser(obj);
-        await updateSuppliers();
+        //await updateSuppliers();
         return obj;
       } else {
         return obj;
