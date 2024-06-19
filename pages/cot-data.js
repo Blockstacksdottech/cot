@@ -90,29 +90,62 @@ const Cotdata = () => {
   };
 
   const handleExport = (dt) => {
+    console.log(dt);
     const temp = [
       // Add headers for your CSV data
       [
-        "Symbol Name",
-        "Overall Sentiment Score",
-        "Overall Decision",
-        "Sentiment Score",
-        "Decision",
-        "Crowded Long",
-        "Crowded Short",
-        "Net Speculative Position",
-        "% Spec positions",
+        "Symbol",
+        "Comm Long",
+        "Comm Short",
+        "Comm Total",
+        "Comm Long %",
+        "Comm Short %",
+        "Comm Net Position",
+        "Comm Long Change",
+        "Comm Short Change",
+        "Comm Net Position Change",
+        "Comm Long Change %",
+        "Comm Short Change %",
+        "Comm Sentiment",
+        "Noncomm Long",
+        "Noncomm Short",
+        "Noncomm Total",
+        "Noncomm Long %",
+        "Noncomm Short %",
+        "Noncomm Net Position",
+        "Noncomm Long Change",
+        "Noncomm Short Change",
+        "Noncomm Net Position Change",
+        "Noncomm Long Change %",
+        "Noncomm Short Change %",
+        "Noncomm Sentiment",
       ],
       ...dt.map((e) => [
         e.symbol,
-        e.overall_sentiment,
-        e.overall_decision,
-        e.sentiment_score,
-        e.decision,
-        e.crowded_long_positions,
-        e.crowded_short_positions,
-        e.net_speculative_position,
-        e.pct_oi_spec_positions.toFixed(2),
+        e.comm_long,
+        e.comm_short,
+        e.comm_total,
+        e.comm_long_pct.toFixed(2),
+        e.comm_short_pct.toFixed(2),
+        e.comm_net_position,
+        e.comm_long_change,
+        e.comm_short_change,
+        e.comm_net_position_change,
+        e.comm_long_change_pct.toFixed(2),
+        e.comm_short_change_pct.toFixed(2),
+        e.comm_sentiment,
+        e.noncomm_long,
+        e.noncomm_short,
+        e.noncomm_total,
+        e.noncomm_long_pct.toFixed(2),
+        e.noncomm_short_pct.toFixed(2),
+        e.noncomm_net_position,
+        e.noncomm_long_change,
+        e.noncomm_short_change,
+        e.noncomm_net_position_change,
+        e.noncomm_long_change_pct.toFixed(2),
+        e.noncomm_short_change_pct.toFixed(2),
+        e.noncomm_sentiment,
       ]),
     ];
     console.log(temp);
@@ -234,58 +267,44 @@ const Cotdata = () => {
                           >
                             <thead>
                               <tr className="bg-light">
-                                <th>Symbol Name</th>
-                                <th>Overall Sentiment Score</th>
-                                <th>Overall Decision</th>
-                                <th>Sentiment Score</th>
-                                <th>Decision</th>
-                                <th>Crowded Long</th>
-                                <th>Crowded Short</th>
-                                {/* <th>SPI</th> */}
-                                <th>Net Speculative Position</th>
-                                <th>% Spec positions</th>
+                                <th>Symbol</th>
+                                <th>Comm Long</th>
+                                <th>Comm Short</th>
+                                <th>Comm Total</th>
+                                <th>Comm Long %</th>
+                                <th>Comm Short %</th>
+                                <th>Comm Net Position</th>
+                                <th>Comm Long Change</th>
+                                <th>Comm Short Change</th>
+                                <th>Comm Net Position Change</th>
+                                <th>Comm Long Change %</th>
+                                <th>Comm Short Change %</th>
+                                <th>Comm Sentiment</th>
+                                <th>Noncomm Long</th>
+                                <th>Noncomm Short</th>
+                                <th>Noncomm Total</th>
+                                <th>Noncomm Long %</th>
+                                <th>Noncomm Short %</th>
+                                <th>Noncomm Net Position</th>
+                                <th>Noncomm Long Change</th>
+                                <th>Noncomm Short Change</th>
+                                <th>Noncomm Net Position Change</th>
+                                <th>Noncomm Long Change %</th>
+                                <th>Noncomm Short Change %</th>
+                                <th>Noncomm Sentiment</th>
                               </tr>
                             </thead>
                             <tbody>
                               {data && (
                                 <>
-                                  {data.map((e, i) => {
+                                  {data.map((entry, index) => {
                                     return (
-                                      <tr>
-                                        <td>{e.symbol}</td>
-                                        <td>{e.overall_sentiment}</td>
-                                        <td>{e.overall_decision}</td>
-                                        <td>{e.sentiment_score}</td>
-                                        <td>{e.decision}</td>
-                                        <td>{e.crowded_long_positions}</td>
-                                        <td>{e.crowded_short_positions}</td>
-                                        {/* <td>
-                                          <div
-                                            className="progress"
-                                            style={{ height: "25px" }}
-                                          >
-                                            <div
-                                              className="progress-bar progress-bar-striped progress-bar-animated"
-                                              style={{
-                                                width: `${toPercentage(
-                                                  e.speculative_positioning_index
-                                                )}%`,
-                                              }}
-                                              aria-valuenow={toPercentage(
-                                                e.speculative_positioning_index
-                                              )}
-                                              aria-valuemin="0"
-                                              aria-valuemax="100"
-                                            >
-                                              {toPercentage(
-                                                e.speculative_positioning_index
-                                              )}
-                                              %
-                                            </div>
-                                          </div>
-                                        </td> */}
+                                      <tr key={index}>
+                                        <td>{entry.symbol}</td>
+                                        <td>{entry.comm_long}</td>
+                                        <td>{entry.comm_short}</td>
+                                        <td>{entry.comm_total}</td>
 
-                                        <td>{e.net_speculative_position}</td>
                                         <td>
                                           <div
                                             className="progress"
@@ -294,23 +313,216 @@ const Cotdata = () => {
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
                                               style={{
-                                                width: `${e.pct_oi_spec_positions.toFixed(
+                                                width: `${entry.comm_long_pct.toFixed(
                                                   2
                                                 )}%`,
                                               }}
-                                              aria-valuenow={e.pct_oi_spec_positions.toFixed(
+                                              aria-valuenow={entry.comm_long_pct.toFixed(
                                                 2
                                               )}
                                               aria-valuemin="0"
                                               aria-valuemax="100"
                                             >
-                                              {e.pct_oi_spec_positions.toFixed(
+                                              {entry.comm_long_pct.toFixed(2)}%
+                                            </div>
+                                          </div>
+                                        </td>
+
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.comm_short_pct.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.comm_short_pct.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.comm_short_pct.toFixed(2)}%
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>{entry.comm_net_position}</td>
+                                        <td>{entry.comm_long_change}</td>
+                                        <td>{entry.comm_short_change}</td>
+                                        <td>
+                                          {entry.comm_net_position_change}
+                                        </td>
+
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.comm_long_change_pct.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.comm_long_change_pct.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.comm_long_change_pct.toFixed(
                                                 2
                                               )}
                                               %
                                             </div>
                                           </div>
                                         </td>
+
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.comm_short_change_pct.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.comm_short_change_pct.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.comm_short_change_pct.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>{entry.comm_sentiment}</td>
+                                        <td>{entry.noncomm_long}</td>
+                                        <td>{entry.noncomm_short}</td>
+                                        <td>{entry.noncomm_total}</td>
+
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.noncomm_long_pct.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.noncomm_long_pct.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.noncomm_long_pct.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.noncomm_short_pct.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.noncomm_short_pct.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.noncomm_short_pct.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>{entry.noncomm_net_position}</td>
+                                        <td>{entry.noncomm_long_change}</td>
+                                        <td>{entry.noncomm_short_change}</td>
+                                        <td>
+                                          {entry.noncomm_net_position_change}
+                                        </td>
+
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.noncomm_long_change_pct.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.noncomm_long_change_pct.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.noncomm_long_change_pct.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.noncomm_short_change_pct.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.noncomm_short_change_pct.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.noncomm_short_change_pct.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>{entry.noncomm_sentiment}</td>
                                       </tr>
                                     );
                                   })}
@@ -425,3 +637,98 @@ const Cotdata = () => {
 };
 
 export default Cotdata;
+
+/* 
+
+<table
+                            id="datatable-Cotdata"
+                            className="table table-bordered table-hover table-sm"
+                          >
+                            <thead>
+                              <tr className="bg-light">
+                                <th>Symbol Name</th>
+                                <th>Overall Sentiment Score</th>
+                                <th>Overall Decision</th>
+                                <th>Sentiment Score</th>
+                                <th>Decision</th>
+                                <th>Crowded Long</th>
+                                <th>Crowded Short</th>
+                                {/* <th>SPI</th> 
+                                <th>Net Speculative Position</th>
+                                <th>% Spec positions</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {data && (
+                                <>
+                                  {data.map((e, i) => {
+                                    return (
+                                      <tr>
+                                        <td>{e.symbol}</td>
+                                        <td>{e.overall_sentiment}</td>
+                                        <td>{e.overall_decision}</td>
+                                        <td>{e.sentiment_score}</td>
+                                        <td>{e.decision}</td>
+                                        <td>{e.crowded_long_positions}</td>
+                                        <td>{e.crowded_short_positions}</td>
+                                        {/* <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${toPercentage(
+                                                  e.speculative_positioning_index
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={toPercentage(
+                                                e.speculative_positioning_index
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {toPercentage(
+                                                e.speculative_positioning_index
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td> 
+
+                                        <td>{e.net_speculative_position}</td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${e.pct_oi_spec_positions.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={e.pct_oi_spec_positions.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {e.pct_oi_spec_positions.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
+                                </>
+                              )}
+                            </tbody>
+                          </table>
+
+*/
