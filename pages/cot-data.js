@@ -35,6 +35,7 @@ const Cotdata = () => {
   const [keys, setKeys] = useState([]);
   const nav = useRouter();
   const [exportableData, setExportableData] = useState([]);
+  const [date, setDate] = useState(null);
 
   const initDataTable = () => {
     const script = document.createElement("script");
@@ -89,63 +90,50 @@ const Cotdata = () => {
     return `${percentage.toFixed(2)}%`;
   };
 
+  function formatDate(dateString) {
+    // Create a new Date object from the input string
+    const date = new Date(dateString);
+
+    // Format the date using toLocaleDateString
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return date.toLocaleDateString(undefined, options);
+  }
+
   const handleExport = (dt) => {
     console.log(dt);
     const temp = [
       // Add headers for your CSV data
       [
-        "Symbol",
-        "Comm Long",
-        "Comm Short",
-        "Comm Total",
-        "Comm Long %",
-        "Comm Short %",
-        "Comm Net Position",
-        "Comm Long Change",
-        "Comm Short Change",
-        "Comm Net Position Change",
-        "Comm Long Change %",
-        "Comm Short Change %",
-        "Comm Sentiment",
-        "Noncomm Long",
-        "Noncomm Short",
-        "Noncomm Total",
-        "Noncomm Long %",
-        "Noncomm Short %",
-        "Noncomm Net Position",
-        "Noncomm Long Change",
-        "Noncomm Short Change",
-        "Noncomm Net Position Change",
-        "Noncomm Long Change %",
-        "Noncomm Short Change %",
-        "Noncomm Sentiment",
+        "Date",
+        "Pair",
+        "Base Long",
+        "Base Short",
+        "Base Net Position",
+        "Quote Long",
+        "Quote Short",
+        "Quote Net Position",
+        "Pair Long",
+        "Pair Short",
+        "Pair Net Position",
+        "Percentage Change",
+        "5 Week Change",
+        "Sentiment",
       ],
       ...dt.map((e) => [
-        e.symbol,
-        e.comm_long,
-        e.comm_short,
-        e.comm_total,
-        e.comm_long_pct.toFixed(2),
-        e.comm_short_pct.toFixed(2),
-        e.comm_net_position,
-        e.comm_long_change,
-        e.comm_short_change,
-        e.comm_net_position_change,
-        e.comm_long_change_pct.toFixed(2),
-        e.comm_short_change_pct.toFixed(2),
-        e.comm_sentiment,
-        e.noncomm_long,
-        e.noncomm_short,
-        e.noncomm_total,
-        e.noncomm_long_pct.toFixed(2),
-        e.noncomm_short_pct.toFixed(2),
-        e.noncomm_net_position,
-        e.noncomm_long_change,
-        e.noncomm_short_change,
-        e.noncomm_net_position_change,
-        e.noncomm_long_change_pct.toFixed(2),
-        e.noncomm_short_change_pct.toFixed(2),
-        e.noncomm_sentiment,
+        e.date,
+        e.pair,
+        e.base_long,
+        e.base_short,
+        e.base_net_position,
+        e.quote_long,
+        e.quote_short,
+        e.quote_net_position,
+        e.pair_long,
+        e.pair_short,
+        e.pair_net_position,
+        e.pct_change.toFixed(2),
+        e.five_week_change.toFixed(2),
+        e.sentiment,
       ]),
     ];
     console.log(temp);
@@ -158,6 +146,7 @@ const Cotdata = () => {
       console.log("formating export");
       handleExport(response[0].data);
       setData(response[0].data);
+      setDate(response[0].date);
       const response1 = await req("crowding_positions");
       setCrowdingData(response1);
       const response2 = await req("net_speculative");
@@ -267,31 +256,20 @@ const Cotdata = () => {
                           >
                             <thead>
                               <tr className="bg-light">
-                                <th>Symbol</th>
-                                <th>Comm Long</th>
-                                <th>Comm Short</th>
-                                <th>Comm Total</th>
-                                <th>Comm Long %</th>
-                                <th>Comm Short %</th>
-                                <th>Comm Net Position</th>
-                                <th>Comm Long Change</th>
-                                <th>Comm Short Change</th>
-                                <th>Comm Net Position Change</th>
-                                <th>Comm Long Change %</th>
-                                <th>Comm Short Change %</th>
-                                <th>Comm Sentiment</th>
-                                <th>Noncomm Long</th>
-                                <th>Noncomm Short</th>
-                                <th>Noncomm Total</th>
-                                <th>Noncomm Long %</th>
-                                <th>Noncomm Short %</th>
-                                <th>Noncomm Net Position</th>
-                                <th>Noncomm Long Change</th>
-                                <th>Noncomm Short Change</th>
-                                <th>Noncomm Net Position Change</th>
-                                <th>Noncomm Long Change %</th>
-                                <th>Noncomm Short Change %</th>
-                                <th>Noncomm Sentiment</th>
+                                <th>Date</th>
+                                <th>Pair</th>
+                                <th>Base Long</th>
+                                <th>Base Short</th>
+                                <th>Base Net Position</th>
+                                <th>Quote Long</th>
+                                <th>Quote Short</th>
+                                <th>Quote Net Position</th>
+                                <th>Pair Long</th>
+                                <th>Pair Short</th>
+                                <th>Pair Net Position</th>
+                                <th>Percentage Change</th>
+                                <th>5 Week Change</th>
+                                <th>Sentiment</th>
                               </tr>
                             </thead>
                             <tbody>
@@ -300,11 +278,17 @@ const Cotdata = () => {
                                   {data.map((entry, index) => {
                                     return (
                                       <tr key={index}>
-                                        <td>{entry.symbol}</td>
-                                        <td>{entry.comm_long}</td>
-                                        <td>{entry.comm_short}</td>
-                                        <td>{entry.comm_total}</td>
-
+                                        <td>{date && formatDate(date)}</td>
+                                        <td>{entry.pair}</td>
+                                        <td>{entry.base_long}</td>
+                                        <td>{entry.base_short}</td>
+                                        <td>{entry.base_net_position}</td>
+                                        <td>{entry.quote_long}</td>
+                                        <td>{entry.quote_short}</td>
+                                        <td>{entry.quote_net_position}</td>
+                                        <td>{entry.pair_long}</td>
+                                        <td>{entry.pair_short}</td>
+                                        <td>{entry.pair_net_position}</td>
                                         <td>
                                           <div
                                             className="progress"
@@ -313,21 +297,20 @@ const Cotdata = () => {
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
                                               style={{
-                                                width: `${entry.comm_long_pct.toFixed(
+                                                width: `${entry.pct_change.toFixed(
                                                   2
                                                 )}%`,
                                               }}
-                                              aria-valuenow={entry.comm_long_pct.toFixed(
+                                              aria-valuenow={entry.pct_change.toFixed(
                                                 2
                                               )}
                                               aria-valuemin="0"
                                               aria-valuemax="100"
                                             >
-                                              {entry.comm_long_pct.toFixed(2)}%
+                                              {entry.pct_change.toFixed(2)}%
                                             </div>
                                           </div>
                                         </td>
-
                                         <td>
                                           <div
                                             className="progress"
@@ -336,193 +319,24 @@ const Cotdata = () => {
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
                                               style={{
-                                                width: `${entry.comm_short_pct.toFixed(
+                                                width: `${entry.five_week_change.toFixed(
                                                   2
                                                 )}%`,
                                               }}
-                                              aria-valuenow={entry.comm_short_pct.toFixed(
+                                              aria-valuenow={entry.five_week_change.toFixed(
                                                 2
                                               )}
                                               aria-valuemin="0"
                                               aria-valuemax="100"
                                             >
-                                              {entry.comm_short_pct.toFixed(2)}%
-                                            </div>
-                                          </div>
-                                        </td>
-                                        <td>{entry.comm_net_position}</td>
-                                        <td>{entry.comm_long_change}</td>
-                                        <td>{entry.comm_short_change}</td>
-                                        <td>
-                                          {entry.comm_net_position_change}
-                                        </td>
-
-                                        <td>
-                                          <div
-                                            className="progress"
-                                            style={{ height: "25px" }}
-                                          >
-                                            <div
-                                              className="progress-bar progress-bar-striped progress-bar-animated"
-                                              style={{
-                                                width: `${entry.comm_long_change_pct.toFixed(
-                                                  2
-                                                )}%`,
-                                              }}
-                                              aria-valuenow={entry.comm_long_change_pct.toFixed(
-                                                2
-                                              )}
-                                              aria-valuemin="0"
-                                              aria-valuemax="100"
-                                            >
-                                              {entry.comm_long_change_pct.toFixed(
+                                              {entry.five_week_change.toFixed(
                                                 2
                                               )}
                                               %
                                             </div>
                                           </div>
                                         </td>
-
-                                        <td>
-                                          <div
-                                            className="progress"
-                                            style={{ height: "25px" }}
-                                          >
-                                            <div
-                                              className="progress-bar progress-bar-striped progress-bar-animated"
-                                              style={{
-                                                width: `${entry.comm_short_change_pct.toFixed(
-                                                  2
-                                                )}%`,
-                                              }}
-                                              aria-valuenow={entry.comm_short_change_pct.toFixed(
-                                                2
-                                              )}
-                                              aria-valuemin="0"
-                                              aria-valuemax="100"
-                                            >
-                                              {entry.comm_short_change_pct.toFixed(
-                                                2
-                                              )}
-                                              %
-                                            </div>
-                                          </div>
-                                        </td>
-                                        <td>{entry.comm_sentiment}</td>
-                                        <td>{entry.noncomm_long}</td>
-                                        <td>{entry.noncomm_short}</td>
-                                        <td>{entry.noncomm_total}</td>
-
-                                        <td>
-                                          <div
-                                            className="progress"
-                                            style={{ height: "25px" }}
-                                          >
-                                            <div
-                                              className="progress-bar progress-bar-striped progress-bar-animated"
-                                              style={{
-                                                width: `${entry.noncomm_long_pct.toFixed(
-                                                  2
-                                                )}%`,
-                                              }}
-                                              aria-valuenow={entry.noncomm_long_pct.toFixed(
-                                                2
-                                              )}
-                                              aria-valuemin="0"
-                                              aria-valuemax="100"
-                                            >
-                                              {entry.noncomm_long_pct.toFixed(
-                                                2
-                                              )}
-                                              %
-                                            </div>
-                                          </div>
-                                        </td>
-
-                                        <td>
-                                          <div
-                                            className="progress"
-                                            style={{ height: "25px" }}
-                                          >
-                                            <div
-                                              className="progress-bar progress-bar-striped progress-bar-animated"
-                                              style={{
-                                                width: `${entry.noncomm_short_pct.toFixed(
-                                                  2
-                                                )}%`,
-                                              }}
-                                              aria-valuenow={entry.noncomm_short_pct.toFixed(
-                                                2
-                                              )}
-                                              aria-valuemin="0"
-                                              aria-valuemax="100"
-                                            >
-                                              {entry.noncomm_short_pct.toFixed(
-                                                2
-                                              )}
-                                              %
-                                            </div>
-                                          </div>
-                                        </td>
-                                        <td>{entry.noncomm_net_position}</td>
-                                        <td>{entry.noncomm_long_change}</td>
-                                        <td>{entry.noncomm_short_change}</td>
-                                        <td>
-                                          {entry.noncomm_net_position_change}
-                                        </td>
-
-                                        <td>
-                                          <div
-                                            className="progress"
-                                            style={{ height: "25px" }}
-                                          >
-                                            <div
-                                              className="progress-bar progress-bar-striped progress-bar-animated"
-                                              style={{
-                                                width: `${entry.noncomm_long_change_pct.toFixed(
-                                                  2
-                                                )}%`,
-                                              }}
-                                              aria-valuenow={entry.noncomm_long_change_pct.toFixed(
-                                                2
-                                              )}
-                                              aria-valuemin="0"
-                                              aria-valuemax="100"
-                                            >
-                                              {entry.noncomm_long_change_pct.toFixed(
-                                                2
-                                              )}
-                                              %
-                                            </div>
-                                          </div>
-                                        </td>
-
-                                        <td>
-                                          <div
-                                            className="progress"
-                                            style={{ height: "25px" }}
-                                          >
-                                            <div
-                                              className="progress-bar progress-bar-striped progress-bar-animated"
-                                              style={{
-                                                width: `${entry.noncomm_short_change_pct.toFixed(
-                                                  2
-                                                )}%`,
-                                              }}
-                                              aria-valuenow={entry.noncomm_short_change_pct.toFixed(
-                                                2
-                                              )}
-                                              aria-valuemin="0"
-                                              aria-valuemax="100"
-                                            >
-                                              {entry.noncomm_short_change_pct.toFixed(
-                                                2
-                                              )}
-                                              %
-                                            </div>
-                                          </div>
-                                        </td>
-                                        <td>{entry.noncomm_sentiment}</td>
+                                        <td>{entry.sentiment}</td>
                                       </tr>
                                     );
                                   })}
