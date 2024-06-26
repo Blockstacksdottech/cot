@@ -57,7 +57,7 @@ export default function Navbar({ user }) {
                 onClick={() => logout(nav)}
                 className="btn btn-default btn-flat float-right"
               >
-                Sign out
+                Logout
               </a>
             </li>
           </ul>
