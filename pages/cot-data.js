@@ -624,7 +624,9 @@ const Cotdata = () => {
                   <div className="col-lg-6">
                     <div className="card card-primary card-outline">
                       <div className="card-header">
-                        <h5 className="card-title">Net Speculative Data</h5>
+                        <h5 className="card-title">
+                          Net Speculative Data (Commercial)
+                        </h5>
                         <div className="card-tools">
                           <select
                             className="form-control form-control-sm"
@@ -671,7 +673,103 @@ const Cotdata = () => {
                   <div className="col-lg-6">
                     <div className="card card-primary card-outline">
                       <div className="card-header">
-                        <h5 className="card-title">Crowding Data</h5>
+                        <h5 className="card-title">
+                          Crowding Data (Commercial)
+                        </h5>
+                        <div className="card-tools">
+                          <select
+                            className="form-control form-control-sm"
+                            onChange={(e) => handleSelectChange(e, "crowded")}
+                            value={selectedCrowded}
+                          >
+                            <option selected="selected">
+                              Select Symbol Name
+                            </option>
+                            {keys.map((e, i) => {
+                              return (
+                                <option key={e} value={e}>
+                                  {e}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                      </div>
+                      <div className="card-body">
+                        <ResponsiveContainer width="100%" height={300}>
+                          <BarChart
+                            data={crowdingData && crowdingData[selectedCrowded]}
+                          >
+                            <CartesianGrid strokeDasharray="3 3" />
+                            <XAxis dataKey="date" />
+                            <YAxis />
+                            <Tooltip />
+                            <Legend />
+                            <Bar dataKey="long" fill="#9932cc" />
+                            <Bar dataKey="short" fill="#d08ef1" />
+                          </BarChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="row">
+                  <div className="col-lg-6">
+                    <div className="card card-primary card-outline">
+                      <div className="card-header">
+                        <h5 className="card-title">
+                          Net Speculative Data (Non-Commercial)
+                        </h5>
+                        <div className="card-tools">
+                          <select
+                            className="form-control form-control-sm"
+                            onChange={(e) => handleSelectChange(e, "sentiment")}
+                            value={selectedSentiment}
+                          >
+                            <option selected="selected">
+                              Select Symbol Name
+                            </option>
+                            {keys.map((e, i) => {
+                              return (
+                                <option key={e} value={e}>
+                                  {e}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                      </div>
+                      <div className="card-body">
+                        <ResponsiveContainer width="100%" height={300}>
+                          <LineChart
+                            data={
+                              sentimentData && sentimentData[selectedSentiment]
+                            }
+                          >
+                            <Line
+                              type="monotone"
+                              dataKey="score"
+                              stroke="#9932cc"
+                            />
+                            <CartesianGrid
+                              stroke="#ccc"
+                              strokeDasharray="5 5"
+                            />
+                            <XAxis dataKey="date" />
+                            <YAxis />
+                            <Tooltip />
+                          </LineChart>
+                        </ResponsiveContainer>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-6">
+                    <div className="card card-primary card-outline">
+                      <div className="card-header">
+                        <h5 className="card-title">
+                          Crowding Data (Non-Commercial)
+                        </h5>
                         <div className="card-tools">
                           <select
                             className="form-control form-control-sm"
