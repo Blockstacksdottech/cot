@@ -12,7 +12,7 @@ export default function Navbar({ user }) {
           <img
             src="/logo.png"
             alt="cot"
-            className="brand-image img-circle elevation-3"
+            className="brand-image img-circle elevation-1"
           />
           <span className="brand-text font-weight-light">COT</span>
         </a>
@@ -20,7 +20,7 @@ export default function Navbar({ user }) {
       <ul className="navbar-nav mr-auto">
         <li className="nav-item d-none d-sm-inline-block">
           <a href="#" className="nav-link active">
-            COT Report
+            COT Reports
           </a>
         </li>
       </ul>
@@ -33,7 +33,7 @@ export default function Navbar({ user }) {
             data-toggle="dropdown"
           >
             <img
-              src="/dist/img/user2-160x160.jpg"
+              src="/dist/img/avatar5.png"
               className="user-image img-circle elevation-2"
               alt="User Image"
             />
@@ -42,15 +42,12 @@ export default function Navbar({ user }) {
           <ul className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
             <li className="user-header bg-primary">
               <img
-                src="/dist/img/user2-160x160.jpg"
+                src="/dist/img/avatar5.png"
                 className="img-circle elevation-2"
                 alt="User Image"
               />
 
-              <p className="mb-2">
-                {user && user.username}
-                {/* <small>Member since Nov. 2012</small> */}
-              </p>
+              <p className="mb-2">{user && user.username}</p>
             </li>
             <li className="user-footer">
               {/* <a href="#" className="btn btn-default btn-flat">
