@@ -112,11 +112,31 @@ const Cotdata = () => {
         "Quote Long",
         "Quote Short",
         "Quote Net Position",
+        "Base Comm Long",
+        "Base Comm Short",
+        "Base Comm Net Position",
+        "Quote Comm Long",
+        "Quote Comm Short",
+        "Quote Comm Net Position",
+        "Base Nonrep Long",
+        "Base Nonrep Short",
+        "Base Nonrep Net Position",
+        "Quote Nonrep Long",
+        "Quote Nonrep Short",
+        "Quote Nonrep Net Position",
         "Pair Long",
         "Pair Short",
         "Pair Net Position",
         "Percentage Change",
+        "2 Week Change",
+        "3 Week Change",
+        "4 Week Change",
         "5 Week Change",
+        "6 Week Change",
+        "7 Week Change",
+        "8 Week Change",
+        "9 Week Change",
+        "10 Week Change",
         "Sentiment",
       ],
       ...dt.map((e) => [
@@ -128,11 +148,31 @@ const Cotdata = () => {
         e.quote_long,
         e.quote_short,
         e.quote_net_position,
+        e.base_comm_long,
+        e.base_comm_short,
+        e.base_comm_net_position,
+        e.quote_comm_long,
+        e.quote_comm_short,
+        e.quote_comm_net_position,
+        e.base_nonrep_long,
+        e.base_nonrep_short,
+        e.base_nonrep_net_position,
+        e.quote_nonrep_long,
+        e.quote_nonrep_short,
+        e.quote_nonrep_net_position,
         e.pair_long,
         e.pair_short,
         e.pair_net_position,
         e.pct_change.toFixed(2),
+        e.two_week_change.toFixed(2),
+        e.three_week_change.toFixed(2),
+        e.four_week_change.toFixed(2),
         e.five_week_change.toFixed(2),
+        e.six_week_change.toFixed(2),
+        e.seven_week_change.toFixed(2),
+        e.eight_week_change.toFixed(2),
+        e.nine_week_change.toFixed(2),
+        e.ten_week_change.toFixed(2),
         e.sentiment,
       ]),
     ];
@@ -264,11 +304,31 @@ const Cotdata = () => {
                                 <th>Quote Long</th>
                                 <th>Quote Short</th>
                                 <th>Quote Net Position</th>
+                                <th>Base Comm Long</th>
+                                <th>Base Comm Short</th>
+                                <th>Base Comm Net Position</th>
+                                <th>Quote Comm Long</th>
+                                <th>Quote Comm Short</th>
+                                <th>Quote Comm Net Position</th>
+                                <th>Base Nonrep Long</th>
+                                <th>Base Nonrep Short</th>
+                                <th>Base Nonrep Net Position</th>
+                                <th>Quote Nonrep Long</th>
+                                <th>Quote Nonrep Short</th>
+                                <th>Quote Nonrep Net Position</th>
                                 <th>Pair Long</th>
                                 <th>Pair Short</th>
                                 <th>Pair Net Position</th>
                                 <th>Percentage Change</th>
+                                <th>2 Week Change</th>
+                                <th>3 Week Change</th>
+                                <th>4 Week Change</th>
                                 <th>5 Week Change</th>
+                                <th>6 Week Change</th>
+                                <th>7 Week Change</th>
+                                <th>8 Week Change</th>
+                                <th>9 Week Change</th>
+                                <th>10 Week Change</th>
                                 <th>Sentiment</th>
                               </tr>
                             </thead>
@@ -286,6 +346,22 @@ const Cotdata = () => {
                                         <td>{entry.quote_long}</td>
                                         <td>{entry.quote_short}</td>
                                         <td>{entry.quote_net_position}</td>
+                                        <td>{entry.base_comm_long}</td>
+                                        <td>{entry.base_comm_short}</td>
+                                        <td>{entry.base_comm_net_position}</td>
+                                        <td>{entry.quote_comm_long}</td>
+                                        <td>{entry.quote_comm_short}</td>
+                                        <td>{entry.quote_comm_net_position}</td>
+                                        <td>{entry.base_nonrep_long}</td>
+                                        <td>{entry.base_nonrep_short}</td>
+                                        <td>
+                                          {entry.base_nonrep_net_position}
+                                        </td>
+                                        <td>{entry.quote_nonrep_long}</td>
+                                        <td>{entry.quote_nonrep_short}</td>
+                                        <td>
+                                          {entry.quote_nonrep_net_position}
+                                        </td>
                                         <td>{entry.pair_long}</td>
                                         <td>{entry.pair_short}</td>
                                         <td>{entry.pair_net_position}</td>
@@ -319,6 +395,79 @@ const Cotdata = () => {
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
                                               style={{
+                                                width: `${entry.two_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.two_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.two_week_change.toFixed(2)}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.three_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.three_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.three_week_change.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.four_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.four_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.four_week_change.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
                                                 width: `${entry.five_week_change.toFixed(
                                                   2
                                                 )}%`,
@@ -332,6 +481,127 @@ const Cotdata = () => {
                                               {entry.five_week_change.toFixed(
                                                 2
                                               )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.six_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.six_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.six_week_change.toFixed(2)}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.seven_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.seven_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.seven_week_change.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.eight_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.eight_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.eight_week_change.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.nine_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.nine_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.nine_week_change.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.ten_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.ten_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.ten_week_change.toFixed(2)}
                                               %
                                             </div>
                                           </div>
