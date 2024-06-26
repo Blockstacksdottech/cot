@@ -32,6 +32,10 @@ const Cotdata = () => {
   const [sentimentData, setSentimentData] = useState([]);
   const [selectedCrowded, setSelectedCrowded] = useState(null);
   const [selectedSentiment, setSelectedSentiment] = useState(null);
+  const [CommcrowdingData, setCommCrowdingData] = useState([]);
+  const [CommsentimentData, setCommSentimentData] = useState([]);
+  const [selectedCommCrowded, setSelectedCommCrowded] = useState(null);
+  const [selectedCommSentiment, setSelectedCommSentiment] = useState(null);
   const [keys, setKeys] = useState([]);
   const nav = useRouter();
   const [exportableData, setExportableData] = useState([]);
@@ -191,11 +195,17 @@ const Cotdata = () => {
       setCrowdingData(response1);
       const response2 = await req("net_speculative");
       setSentimentData(response2);
+      const response3 = await req("crowding_comm_positions");
+      setCommCrowdingData(response3);
+      const response4 = await req("net_comm_speculative");
+      setCommSentimentData(response4);
       const keys = Object.keys(response1);
       console.log(keys);
       setKeys(keys);
       setSelectedCrowded(keys[0]);
       setSelectedSentiment(keys[0]);
+      setSelectedCommCrowded(keys[0]);
+      setSelectedCommSentiment(keys[0]);
     } catch (error) {
       console.log(error);
     } finally {
@@ -209,6 +219,15 @@ const Cotdata = () => {
       setSelectedCrowded(o.value);
     } else {
       setSelectedSentiment(o.value);
+    }
+  };
+
+  const handleSelectCommChange = (e, target) => {
+    const o = e.target;
+    if (target === "crowded") {
+      setSelectedCommCrowded(o.value);
+    } else {
+      setSelectedCommSentiment(o.value);
     }
   };
 
@@ -630,8 +649,10 @@ const Cotdata = () => {
                         <div className="card-tools">
                           <select
                             className="form-control form-control-sm"
-                            onChange={(e) => handleSelectChange(e, "sentiment")}
-                            value={selectedSentiment}
+                            onChange={(e) =>
+                              handleSelectCommChange(e, "sentiment")
+                            }
+                            value={selectedCommSentiment}
                           >
                             <option selected="selected">
                               Select Symbol Name
@@ -650,7 +671,8 @@ const Cotdata = () => {
                         <ResponsiveContainer width="100%" height={300}>
                           <LineChart
                             data={
-                              sentimentData && sentimentData[selectedSentiment]
+                              CommsentimentData &&
+                              CommsentimentData[selectedCommSentiment]
                             }
                           >
                             <Line
@@ -679,8 +701,10 @@ const Cotdata = () => {
                         <div className="card-tools">
                           <select
                             className="form-control form-control-sm"
-                            onChange={(e) => handleSelectChange(e, "crowded")}
-                            value={selectedCrowded}
+                            onChange={(e) =>
+                              handleSelectCommChange(e, "comm_crowded")
+                            }
+                            value={selectedCommCrowded}
                           >
                             <option selected="selected">
                               Select Symbol Name
@@ -698,7 +722,10 @@ const Cotdata = () => {
                       <div className="card-body">
                         <ResponsiveContainer width="100%" height={300}>
                           <BarChart
-                            data={crowdingData && crowdingData[selectedCrowded]}
+                            data={
+                              CommcrowdingData &&
+                              CommcrowdingData[selectedCommCrowded]
+                            }
                           >
                             <CartesianGrid strokeDasharray="3 3" />
                             <XAxis dataKey="date" />
