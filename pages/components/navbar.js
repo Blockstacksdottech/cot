@@ -8,7 +8,7 @@ export default function Navbar({ user }) {
   return (
     <nav className="main-header navbar navbar-expand-lg navbar-dark">
       <a className="navbar-brand" href="#">
-        Navbar
+        <img src="/logo-admin.png" className="img-fluid w-25" />
       </a>
       <button
         className="navbar-toggler"
@@ -23,62 +23,61 @@ export default function Navbar({ user }) {
       </button>
 
       <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul className="navbar-nav mx-auto mt-2 mt-lg-0">
+        <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
           <li className="nav-item active">
             <a className="nav-link" href="#">
               COT DATA
             </a>
           </li>
-        </ul>
-      </div>
-      <ul className="navbar-nav ml-auto">
-        <li className="nav-item">
-          <a
-            className="nav-link"
-            data-widget="fullscreen"
-            href="#"
-            role="button"
-          >
-            <i className="fas fa-expand-arrows-alt"></i>
-          </a>
-        </li>
-        <li className="nav-item dropdown user-menu">
-          <a
-            href="#"
-            className="nav-link dropdown-toggle"
-            data-toggle="dropdown"
-          >
-            <img
-              src="/dist/img/avatar5.png"
-              className="user-image img-circle elevation-2"
-              alt="User Image"
-            />
-            <span className="d-none d-md-inline">{user && user.username}</span>
-          </a>
-          <ul className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <li className="user-header bg-primary">
+          <li className="nav-item">
+            <a
+              className="nav-link"
+              data-widget="fullscreen"
+              href="#"
+              role="button"
+            >
+              <i className="fas fa-expand-arrows-alt"></i>
+            </a>
+          </li>
+          <li className="nav-item dropdown user-menu">
+            <a
+              href="#"
+              className="nav-link dropdown-toggle"
+              data-toggle="dropdown"
+            >
               <img
                 src="/dist/img/avatar5.png"
-                className="img-circle elevation-2"
+                className="user-image img-circle elevation-2"
                 alt="User Image"
               />
-
-              <p className="mb-2">{user && user.username}</p>
-            </li>
-            <li className="user-footer">
-              <a href="/account" className="btn btn-default btn-flat">
-                Account
-              </a>
-              <a
-                onClick={() => logout(nav)}
-                className="btn btn-default btn-flat float-right"
-              >
-                Logout
-              </a>
-            </li>
-          </ul>
-        </li>
-      </ul>
+              <span className="d-none d-md-inline">
+                {user && user.username}
+              </span>
+            </a>
+            <ul className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <li className="user-header bg-primary">
+                <img
+                  src="/dist/img/avatar5.png"
+                  className="img-circle elevation-2"
+                  alt="User Image"
+                />
+                <p className="mb-2">{user && user.username}</p>
+              </li>
+              <li className="user-footer">
+                <a href="/account" className="btn btn-default btn-flat">
+                  Account
+                </a>
+                <a
+                  onClick={() => logout(nav)}
+                  className="btn btn-default btn-flat float-right"
+                >
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </nav>
   );
 }
