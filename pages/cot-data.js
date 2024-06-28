@@ -252,69 +252,44 @@ const Cotdata = () => {
       <Navbar user={user} />
 
       <div className="content-wrapper">
-        <div className="content-header">
-          <div className="container-fluid">
-            <div className="row mb-2">
-              <div className="col-sm-12">
-                <h1 className="m-0">Commitments of Traders (COT) Reports</h1>
-              </div>
-            </div>
-          </div>
-        </div>
         {!loading && (
           <>
             <div className="content">
               <div className="container-fluid">
-                <div className="row mb-2">
-                  {/* <div className="col-lg-12">
-                    <form>
-                      <label>Import Data Source</label>
-                      <div className="input-group">
-                        <div className="custom-file">
-                          <input
-                            type="file"
-                            className="custom-file-input"
-                            id="exampleInputFile"
-                          />
-                          <label className="custom-file-label">
-                            Choose file
-                          </label>
-                        </div>
-                        <div className="input-group-append">
-                          <button className="btn btn-primary">
-                            Fetch data
-                          </button>
-                        </div>
-                      </div>
-                    </form>
-                  </div> */}
-                </div>
-                <div className="row">
+                <div className="row pt-5">
                   <div className="col-lg-12">
                     <div className="card card-primary card-outline">
-                      <div className="card-body">
-                        {exportableData.length > 0 && (
-                          <>
-                            <Downloader
-                              filename="my_data.csv"
-                              elementType="button"
-                              disabled={false} // Set to true to disable download
-                              datas={exportableData}
-                            >
-                              <a className="btn btn-sm btn-primary my-2">
-                                Export COT Data
-                              </a>
-                            </Downloader>
-                          </>
-                        )}
+                      <div className="card-header">
+                        <h3 className="card-title mb-0">
+                          Commitments of Traders (COT) Reports
+                        </h3>
 
+                        <div className="card-tools">
+                          {exportableData.length > 0 && (
+                            <>
+                              <Downloader
+                                filename="my_data.csv"
+                                elementType="button"
+                                disabled={false} // Set to true to disable download
+                                datas={exportableData}
+                              >
+                                <a className="btn btn-sm btn-primary">
+                                  Export COT Data
+                                </a>
+                              </Downloader>
+                            </>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="card-body">
                         <div className="table-responsive p-0">
                           <table
                             id="datatable-Cotdata"
                             className="table table-bordered table-hover table-sm"
                           >
                             <thead>
-                              <tr className="bg-light">
+                              <tr>
                                 <th>Date</th>
                                 <th>Pair</th>
                                 <th>Base Long</th>
@@ -639,8 +614,316 @@ const Cotdata = () => {
                   </div>
                 </div>
 
+                <div className="row mt-4">
+                  <div className="col-lg-12">
+                    <div className="card card-primary card-outline">
+                      <div className="card-header">
+                        <h3 className="card-title mb-0">% Change (10 Weeks)</h3>
+
+                        <div className="card-tools">
+                          {exportableData.length > 0 && (
+                            <>
+                              <Downloader
+                                filename="my_data.csv"
+                                elementType="button"
+                                disabled={false} // Set to true to disable download
+                                datas={exportableData}
+                              >
+                                <a className="btn btn-sm btn-primary">
+                                  Export Data
+                                </a>
+                              </Downloader>
+                            </>
+                          )}
+                        </div>
+                      </div>
+
+                      <div className="card-body">
+                        <div className="table-responsive p-0">
+                          <table
+                            id="datatable-change"
+                            className="table table-bordered table-hover table-sm"
+                          >
+                            <thead>
+                              <tr>
+                                <th>Date</th>
+                                <th>Pair</th>
+                                <th>Percentage Change</th>
+                                <th>2 Week Change</th>
+                                <th>3 Week Change</th>
+                                <th>4 Week Change</th>
+                                <th>5 Week Change</th>
+                                <th>6 Week Change</th>
+                                <th>7 Week Change</th>
+                                <th>8 Week Change</th>
+                                <th>9 Week Change</th>
+                                <th>10 Week Change</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {data && (
+                                <>
+                                  {data.map((entry, index) => {
+                                    return (
+                                      <tr key={index}>
+                                        <td>{date && formatDate(date)}</td>
+                                        <td>{entry.pair}</td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.pct_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.pct_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.pct_change.toFixed(2)}%
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.two_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.two_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.two_week_change.toFixed(2)}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.three_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.three_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.three_week_change.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.four_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.four_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.four_week_change.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.five_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.five_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.five_week_change.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.six_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.six_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.six_week_change.toFixed(2)}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.seven_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.seven_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.seven_week_change.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.eight_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.eight_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.eight_week_change.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.nine_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.nine_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.nine_week_change.toFixed(
+                                                2
+                                              )}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                        <td>
+                                          <div
+                                            className="progress"
+                                            style={{ height: "25px" }}
+                                          >
+                                            <div
+                                              className="progress-bar progress-bar-striped progress-bar-animated"
+                                              style={{
+                                                width: `${entry.ten_week_change.toFixed(
+                                                  2
+                                                )}%`,
+                                              }}
+                                              aria-valuenow={entry.ten_week_change.toFixed(
+                                                2
+                                              )}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                            >
+                                              {entry.ten_week_change.toFixed(2)}
+                                              %
+                                            </div>
+                                          </div>
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
+                                </>
+                              )}
+                            </tbody>
+                          </table>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="row">
-                  <div className="col-lg-6">
+                  <div className="col-lg-12">
                     <div className="card card-primary card-outline">
                       <div className="card-header">
                         <h5 className="card-title">
@@ -678,7 +961,7 @@ const Cotdata = () => {
                             <Line
                               type="monotone"
                               dataKey="score"
-                              stroke="#9932cc"
+                              stroke="#1b1e25"
                             />
                             <CartesianGrid
                               stroke="#ccc"
@@ -692,7 +975,7 @@ const Cotdata = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-6">
+                  <div className="col-lg-12">
                     <div className="card card-primary card-outline">
                       <div className="card-header">
                         <h5 className="card-title">
@@ -732,8 +1015,8 @@ const Cotdata = () => {
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="long" fill="#9932cc" />
-                            <Bar dataKey="short" fill="#d08ef1" />
+                            <Bar dataKey="long" fill="#1b1e25" />
+                            <Bar dataKey="short" fill="#a4a8b1" />
                           </BarChart>
                         </ResponsiveContainer>
                       </div>
@@ -742,7 +1025,7 @@ const Cotdata = () => {
                 </div>
 
                 <div className="row">
-                  <div className="col-lg-6">
+                  <div className="col-lg-12">
                     <div className="card card-primary card-outline">
                       <div className="card-header">
                         <h5 className="card-title">
@@ -777,7 +1060,7 @@ const Cotdata = () => {
                             <Line
                               type="monotone"
                               dataKey="score"
-                              stroke="#9932cc"
+                              stroke="#1b1e25"
                             />
                             <CartesianGrid
                               stroke="#ccc"
@@ -791,7 +1074,7 @@ const Cotdata = () => {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-6">
+                  <div className="col-lg-12">
                     <div className="card card-primary card-outline">
                       <div className="card-header">
                         <h5 className="card-title">
@@ -826,8 +1109,8 @@ const Cotdata = () => {
                             <YAxis />
                             <Tooltip />
                             <Legend />
-                            <Bar dataKey="long" fill="#9932cc" />
-                            <Bar dataKey="short" fill="#d08ef1" />
+                            <Bar dataKey="long" fill="#1b1e25" />
+                            <Bar dataKey="short" fill="#a4a8b1" />
                           </BarChart>
                         </ResponsiveContainer>
                       </div>

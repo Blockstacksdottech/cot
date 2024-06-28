@@ -1,6 +1,7 @@
 import { get_token, isLogged } from "@/helpers";
 import Head from "next/head";
 import Link from "next/link";
+import Footer from "./components/footer";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
@@ -60,10 +61,13 @@ export default function Login() {
   return (
     <>
       <Head>
-        <title>Login | COT - Advanced COT Report Expert Advisor</title>
+        <title>
+          Login | Frantzdy Trading CO - Trading become easier when you trade
+          with us
+        </title>
         <meta
           name="description"
-          content="COT - Advanced COT Report Expert Advisor"
+          content="Frantzdy Trading CO - Trading become easier when you trade with us"
         />
       </Head>
 
@@ -73,11 +77,9 @@ export default function Login() {
             <a href="/">
               <img
                 src="/logo.png"
-                alt="COT - Advanced COT Report Expert Advisor"
-                className="h-25 img-fluid img-circle elevation-1"
+                alt="Frantzdy Trading CO - Trading become easier when you trade with us"
+                className="img-fluid"
               />
-              <br />
-              COT - Advanced COT Report Expert Advisor
             </a>
           </div>
 
@@ -115,11 +117,9 @@ export default function Login() {
                   </div>
                 </div>
                 <div className="row">
-                  {/* <div className="col-8">
-                    <a href="/forgot-password" className="small">
-                      I forgot my password
-                    </a>
-                  </div> */}
+                  <div className="col-8 my-auto">
+                    <a href="/forgot-password">I forgot my password</a>
+                  </div>
                   <div className="col-4">
                     <button type="submit" className="btn btn-primary btn-block">
                       Login
@@ -127,7 +127,7 @@ export default function Login() {
                   </div>
                 </div>
               </form>
-              <p className="mb-0 mt-2">
+              <p className="mb-0 mt-3">
                 Need an Account?{" "}
                 <a href="/register" className="text-center">
                   Register yourself
@@ -137,6 +137,7 @@ export default function Login() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

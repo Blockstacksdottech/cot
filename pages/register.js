@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import Footer from "./components/footer";
 import { adduser } from "@/helpers";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -70,10 +71,13 @@ export default function Register() {
   return (
     <>
       <Head>
-        <title>Register | COT - Advanced COT Report Expert Advisor</title>
+        <title>
+          Register | Frantzdy Trading CO - Trading become easier when you trade
+          with us
+        </title>
         <meta
           name="description"
-          content="COT - Advanced COT Report Expert Advisor"
+          content="Frantzdy Trading CO - Trading become easier when you trade with us"
         />
       </Head>
 
@@ -83,11 +87,9 @@ export default function Register() {
             <a href="/">
               <img
                 src="/logo.png"
-                alt="COT - Advanced COT Report Expert Advisor"
-                className="h-25 img-fluid img-circle elevation-1"
+                alt="Frantzdy Trading CO - Trading become easier when you trade with us"
+                className=" img-fluid"
               />
-              <br />
-              COT - Advanced COT Report Expert Advisor
             </a>
           </div>
 
@@ -153,7 +155,7 @@ export default function Register() {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-8">
+                  <div className="col-8 my-auto">
                     <div className="icheck-primary">
                       <input
                         type="checkbox"
@@ -187,6 +189,7 @@ export default function Register() {
           </div>
         </div>
       </div>
+      <Footer />
     </>
   );
 }

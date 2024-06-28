@@ -6,26 +6,42 @@ export default function Navbar({ user }) {
   const nav = useRouter();
 
   return (
-    <nav className="main-header navbar navbar-expand navbar-white navbar-light">
-      <div className="container">
-        <a href="/" className="navbar-brand">
-          <img
-            src="/logo.png"
-            alt="cot"
-            className="brand-image img-circle elevation-1"
-          />
-          <span className="brand-text font-weight-light">COT</span>
-        </a>
+    <nav className="main-header navbar navbar-expand-lg navbar-dark">
+      <a className="navbar-brand" href="#">
+        Navbar
+      </a>
+      <button
+        className="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarTogglerDemo02"
+        aria-controls="navbarTogglerDemo02"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span className="navbar-toggler-icon"></span>
+      </button>
+
+      <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
+        <ul className="navbar-nav mx-auto mt-2 mt-lg-0">
+          <li className="nav-item active">
+            <a className="nav-link" href="#">
+              COT DATA
+            </a>
+          </li>
+        </ul>
       </div>
-      <ul className="navbar-nav mr-auto">
-        <li className="nav-item d-none d-sm-inline-block">
-          <a href="#" className="nav-link active">
-            COT Reports
+      <ul className="navbar-nav ml-auto">
+        <li className="nav-item">
+          <a
+            className="nav-link"
+            data-widget="fullscreen"
+            href="#"
+            role="button"
+          >
+            <i className="fas fa-expand-arrows-alt"></i>
           </a>
         </li>
-      </ul>
-
-      <ul className="navbar-nav ml-auto">
         <li className="nav-item dropdown user-menu">
           <a
             href="#"
@@ -50,9 +66,9 @@ export default function Navbar({ user }) {
               <p className="mb-2">{user && user.username}</p>
             </li>
             <li className="user-footer">
-              {/* <a href="#" className="btn btn-default btn-flat">
-                Profile
-              </a> */}
+              <a href="/account" className="btn btn-default btn-flat">
+                Account
+              </a>
               <a
                 onClick={() => logout(nav)}
                 className="btn btn-default btn-flat float-right"
