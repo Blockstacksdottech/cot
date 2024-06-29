@@ -8,7 +8,7 @@ export default function Navbar({ user }) {
   return (
     <nav className="main-header navbar navbar-expand-lg navbar-dark">
       <a className="navbar-brand" href="#">
-        <img src="/logo-admin.png" className="img-fluid w-25" />
+        <img src="/logo-admin.png" className="img-fluid" />
       </a>
       <button
         className="navbar-toggler"
@@ -25,8 +25,8 @@ export default function Navbar({ user }) {
       <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
           <li className="nav-item active">
-            <a className="nav-link" href="#">
-              COT DATA
+            <a className="nav-link" href="/cot-data">
+              COT Reports
             </a>
           </li>
           <li className="nav-item">
@@ -48,7 +48,7 @@ export default function Navbar({ user }) {
               <img
                 src="/dist/img/avatar5.png"
                 className="user-image img-circle elevation-2"
-                alt="User Image"
+                alt="Frantzdy Trading CO - Trading become easier when you trade with us"
               />
               <span className="d-none d-md-inline">
                 {user && user.username}
@@ -59,7 +59,7 @@ export default function Navbar({ user }) {
                 <img
                   src="/dist/img/avatar5.png"
                   className="img-circle elevation-2"
-                  alt="User Image"
+                  alt="Frantzdy Trading CO - Trading become easier when you trade with us"
                 />
                 <p className="mb-2">{user && user.username}</p>
               </li>

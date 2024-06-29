@@ -1,12 +1,24 @@
-import { useRouter } from "next/router";
-import React, { useEffect } from "react";
+import Head from "next/head";
+import Navbarindex from "./components/navbarindex";
+import Footer from "./components/footer";
 
 function index() {
-  const nav = useRouter();
-  useEffect(() => {
-    nav.push("/login");
-  }, []);
-  return <></>;
+  return (
+    <>
+      <Head>
+        <title>
+          Frantzdy Trading CO - Trading become easier when you trade with us
+        </title>
+        <meta
+          name="description"
+          content="Frantzdy Trading CO - Trading become easier when you trade with us"
+        />
+      </Head>
+
+      <Navbarindex />
+      <Footer />
+    </>
+  );
 }
 
 export default index;
