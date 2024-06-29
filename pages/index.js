@@ -1,6 +1,6 @@
 import Head from "next/head";
-import Navbarindex from "./components/navbarindex";
-import Footer from "./components/footer";
+import Navbar from "./components/frontend/navbar";
+import Footer from "./components/frontend/footer";
 
 function index() {
   return (
@@ -9,13 +9,9 @@ function index() {
         <title>
           Frantzdy Trading CO - Trading become easier when you trade with us
         </title>
-        <meta
-          name="description"
-          content="Frantzdy Trading CO - Trading become easier when you trade with us"
-        />
       </Head>
+      <Navbar />
 
-      <Navbarindex />
       <Footer />
     </>
   );

@@ -10,6 +10,7 @@ export default function Document() {
           rel="stylesheet"
           href="/plugins/fontawesome-free/css/all.min.css"
         />
+        <link rel="stylesheet" href="/dist/css/frontend.css" />
         <link rel="stylesheet" href="/dist/css/adminlte.css" />
         <link
           rel="stylesheet"
