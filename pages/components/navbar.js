@@ -8,7 +8,7 @@ export default function Navbar({ user }) {
   return (
     <nav className="main-header navbar navbar-expand-lg navbar-dark">
       <a className="navbar-brand" href="#">
-        <img src="/logo-admin.png" className="img-fluid" />
+        <img src="/logo.png" className="img-fluid" />
       </a>
       <button
         className="navbar-toggler"

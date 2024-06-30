@@ -127,12 +127,6 @@ export default function Login() {
                   </div>
                 </div>
               </form>
-              <p className="mb-0 mt-3">
-                Need an Account?{" "}
-                <a href="/register" className="text-center">
-                  Register yourself
-                </a>
-              </p>
             </div>
           </div>
         </div>

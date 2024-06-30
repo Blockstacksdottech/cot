@@ -14,7 +14,7 @@ export default function Footer() {
         Designed and Developed by Blockstacks Technologies Limited
       </div>
       <strong>
-        Copyright &copy; {year} <a>Frantzdy Trading Co.</a>.
+        Copyright &copy; {year} <a>Frantzdy Trading Co.</a>
       </strong>{" "}
       All rights reserved.
     </footer>

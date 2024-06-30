@@ -1,0 +1,35 @@
+.bg-offwhite {
+  background: #e3eaf6 !important;
+}
+
+.text-fdark {
+  color: #1b1e25 !important;
+}
+
+.banner-text {
+  font-size: 20px !important;
+}
+
+.text-size-16 {
+  font-size: 16px !important;
+}
+
+.text-size-14 {
+  font-size: 14px !important;
+}
+
+.text-size-15 {
+  font-size: 15px !important;
+}
+
+.text-size-28 {
+  font-size: 28px !important;
+}
+
+.f-h1 {
+  font-size: 2.65rem !important;
+}
+
+.content-wrapper > .content-index {
+  padding: 0px !important;
+}

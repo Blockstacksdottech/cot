@@ -1777,6 +1777,7 @@ pre code {
   padding: 0.75rem;
   vertical-align: middle;
   border-top: 1px solid #dee2e6;
+  text-align: center !important;
 }
 
 .table thead th {
@@ -5705,8 +5706,8 @@ a.badge-dark.focus {
 .jumbotron {
   padding: 2rem 1rem;
   margin-bottom: 2rem;
-  background-color: #e9ecef;
-  border-radius: 0.3rem;
+  /* background-color: #e9ecef; */
+  border-radius: 1rem;
 }
 
 @media (min-width: 576px) {
@@ -10785,6 +10786,7 @@ a.text-dark:focus {
   .table td,
   .table th {
     background-color: #fff !important;
+    text-align: center !important;
   }
   .table-bordered th,
   .table-bordered td {

@@ -19,11 +19,9 @@ export default function Forgotpassword() {
             <a href="/">
               <img
                 src="/logo.png"
-                alt="COT - Advanced COT Report Expert Advisor"
-                className="h-25 img-fluid img-circle elevation-1"
+                alt="Frantzdy Trading CO - Trading become easier when you trade with us"
+                className="img-fluid"
               />
-              <br />
-              COT - Advanced COT Report Expert Advisor
             </a>
           </div>
 
@@ -56,13 +54,8 @@ export default function Forgotpassword() {
                 </div>
               </form>
               <p className="mb-0 mt-3">
-                <a href="/register" className="text-center">
+                <a href="/login" className="text-center">
                   Login
-                </a>
-              </p>
-              <p className="mb-0 mt-2">
-                <a href="/register" className="text-center">
-                  Register New Account
                 </a>
               </p>
             </div>

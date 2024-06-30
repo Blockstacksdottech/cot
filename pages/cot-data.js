@@ -426,7 +426,9 @@ const Cotdata = () => {
                   <div className="col-lg-12">
                     <div className="card card-primary card-outline">
                       <div className="card-header">
-                        <h3 className="card-title mb-0">% Change (10 Weeks)</h3>
+                        <h3 className="card-title mb-0">
+                          % Change in Position
+                        </h3>
 
                         <div className="card-tools">
                           {exportableData.length > 0 && (
@@ -456,7 +458,7 @@ const Cotdata = () => {
                               <tr>
                                 <th>Date</th>
                                 <th>Pair</th>
-                                <th>Percentage Change</th>
+                                <th>1 Week Change</th>
                                 <th>2 Week Change</th>
                                 <th>3 Week Change</th>
                                 <th>4 Week Change</th>
