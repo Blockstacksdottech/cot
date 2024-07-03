@@ -3,7 +3,7 @@ export default function Navbar() {
     <>
       <header>
         <nav className="main-header navbar navbar-expand-lg navbar-dark">
-          <a className="navbar-brand" href="#">
+          <a className="navbar-brand" href="./">
             <img src="/logo.png" className="img-fluid" />
           </a>
           <button
@@ -22,11 +22,18 @@ export default function Navbar() {
             <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
               <li className="nav-item active">
                 <a className="nav-link" href="/cot-data">
-                  COT Reports
+                  COT REPORTS
                 </a>
               </li>
               <li className="nav-item">
-                <a className="btn btn-secondary">Login</a>
+                <div class="btn-group">
+                  <a className="btn btn-secondary" href="/login">
+                    Login
+                  </a>
+                  <a className="btn btn-info" href="/joinus">
+                    Join Us
+                  </a>
+                </div>
               </li>
             </ul>
           </div>

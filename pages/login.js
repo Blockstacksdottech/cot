@@ -1,6 +1,6 @@
 import { get_token, isLogged } from "@/helpers";
 import Head from "next/head";
-import Link from "next/link";
+import Navbar from "./components/frontend/navbar";
 import Footer from "./components/footer";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -70,22 +70,13 @@ export default function Login() {
           content="Frantzdy Trading CO - Trading become easier when you trade with us"
         />
       </Head>
+      <Navbar />
 
       <div className="login-page">
         <div className="login-box">
-          <div className="login-logo">
-            <a href="/">
-              <img
-                src="/logo.png"
-                alt="Frantzdy Trading CO - Trading become easier when you trade with us"
-                className="img-fluid"
-              />
-            </a>
-          </div>
-
           <div className="card">
             <div className="card-body login-card-body">
-              <p className="login-box-msg">Login</p>
+              <p className="login-box-msg p-tag-big">Login</p>
 
               <form onSubmit={handleSubmit}>
                 <div className="input-group mb-3">

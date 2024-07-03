@@ -5,6 +5,7 @@ import { adduser } from "@/helpers";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
+import Navbar from "./components/frontend/navbar";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -80,19 +81,9 @@ export default function Register() {
           content="Frantzdy Trading CO - Trading become easier when you trade with us"
         />
       </Head>
-
+      <Navbar />
       <div className="register-page">
         <div className="register-box">
-          <div className="register-logo">
-            <a href="/">
-              <img
-                src="/logo.png"
-                alt="Frantzdy Trading CO - Trading become easier when you trade with us"
-                className=" img-fluid"
-              />
-            </a>
-          </div>
-
           <div className="card">
             <div className="card-body register-card-body">
               <p className="register-box-msg">Register</p>
@@ -178,13 +169,6 @@ export default function Register() {
                   </div>
                 </div>
               </form>
-
-              <p className="mb-0 mt-2">
-                Already have an account?{" "}
-                <a href="/login" className="text-center">
-                  Login here
-                </a>
-              </p>
             </div>
           </div>
         </div>

@@ -1,3 +1,9 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
+body {
+  overflow-x: hidden;
+}
+
 .bg-offwhite {
   background: #e3eaf6 !important;
 }
@@ -32,4 +38,22 @@
 
 .content-wrapper > .content-index {
   padding: 0px !important;
+}
+
+.tradingview-widget-container {
+  overflow: auto;
+  width: 100%;
+  height: 100px; /* Adjust height as needed */
+}
+
+.w-10 {
+  width: 10%;
+}
+
+.head-text-big {
+  font-size: 2.5rem !important;
+}
+
+.p-tag-big {
+  font-size: 16px !important;
 }
