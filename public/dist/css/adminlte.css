@@ -42271,7 +42271,7 @@ a.disabled.mailbox-attachment-close {
 .products-list > .item {
   border-radius: 0.25rem;
   background-color: transparent;
-  padding: 10px 0;
+  padding: 10px;
 }
 
 .products-list > .item::after {

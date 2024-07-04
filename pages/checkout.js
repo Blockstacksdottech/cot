@@ -35,8 +35,12 @@ export default class Checkout extends Component {
                       </div>
                       <div className="card-body">
                         <ul className="products-list product-list-in-card text-center">
-                          <li className="item">Plan: $499/Month</li>
-                          <li className="item">Duration: 1 Month</li>
+                          <li className="item text-size-15">
+                            Plan: BASIC - $499/Month
+                          </li>
+                          <li className="item text-size-15">
+                            Duration: 1 Month
+                          </li>
                           <li className="item">
                             <h5>Total: $499/Month</h5>
                           </li>

@@ -35,7 +35,7 @@ const TradingViewTicker = (props) => {
           },
         ],
         showSymbolLogo: true,
-        isTransparent: true,
+        isTransparent: false,
         displayMode: "adaptive",
         colorTheme: "dark",
         locale: "en",

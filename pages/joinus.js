@@ -17,49 +17,46 @@ export default class Joinus extends Component {
         <div className="content-wrapper">
           <section class="content-header">
             <div class="container-fluid">
-              <div class="row my-2">
-                <div class="col-sm-6 m-auto">
-                  <div className="card">
-                    <div className="card-body text-center">
-                      <h1 className="head-text-big">
-                        Join Frantzdy Trading CO
-                      </h1>
-                      <p className="mb-0 p-tag-big ">
-                        Trading become easier when you trade with us
-                      </p>
-                    </div>
-                  </div>
+              <div class="row my-4">
+                <div class="col-sm-12 text-center">
+                  <h1 className="head-text-big text-white">
+                    Join Frantzdy Trading CO
+                  </h1>
+                  <p className="mb-0 p-tag-big text-white">
+                    Trading become easier when you trade with us
+                  </p>
                 </div>
               </div>
             </div>
           </section>
           <div className="content">
             <section className="mt-3">
-              <div className="container-fluid">
+              <div className="container">
                 <div className="row">
-                  <div className="col-lg-4">
-                    <div className="card card-default">
+                  <div className="col-lg-3">
+                    <div className="h-100 card card-default">
                       <div className="card-header border-0 text-center">
-                        You will be charged <br />
-                        <h1 className="mb-0">$499/Month</h1>
+                        BASIC
+                        <h1 className="mb-0">$29/Month</h1>
+                        <p>7-days free trial</p>
                       </div>
-                      <div className="card-body">
+                      <div className="card-body p-0">
                         <ul className="products-list product-list-in-card text-center">
                           <li className="item">
-                            Receive real-time buy/sell signals.
+                            Weekly COT report signal summaries
                           </li>
                           <li className="item">
-                            See real-time profit/loss and open positions.
+                            Basic educational content on how to interpret COT
+                            reports
                           </li>
-                          <li className="item">
-                            Set up live Trading at a supported broker (You can
-                            do this after you subscribe).
-                          </li>
+                          <li className="item">Access to a community forum</li>
                         </ul>
+                      </div>
+                      <div className="card-footer">
                         <div className="text-center">
                           <a
                             type="button"
-                            className="btn btn-primary mt-4"
+                            className="btn btn-primary"
                             href="/register"
                           >
                             Select
@@ -68,29 +65,33 @@ export default class Joinus extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4">
-                    <div className="card card-secondary">
+                  <div className="col-lg-3">
+                    <div className="h-100 card card-secondary">
                       <div className="card-header border-0 text-center">
-                        You will be charged <br />
-                        <h1 className="mb-0">$499/Month</h1>
+                        STANDARD
+                        <h1 className="mb-0">$49/Month</h1>
                       </div>
-                      <div className="card-body">
+                      <div className="card-body p-0">
                         <ul className="products-list product-list-in-card text-center">
+                          <li className="item">All Basic Plan features</li>
                           <li className="item">
-                            Receive real-time buy/sell signals.
+                            Bi-weekly COT report signal analysis
                           </li>
                           <li className="item">
-                            See real-time profit/loss and open positions.
+                            Detailed breakdowns of major market positions (e.g.,
+                            futures, options)
                           </li>
                           <li className="item">
-                            Set up live Trading at a supported broker (You can
-                            do this after you subscribe).
+                            Monthly webinars with market experts
                           </li>
+                          <li className="item">Priority email support</li>
                         </ul>
+                      </div>
+                      <div className="card-footer">
                         <div className="text-center">
                           <a
                             type="button"
-                            className="btn btn-primary mt-4"
+                            className="btn btn-primary"
                             href="/register"
                           >
                             Select
@@ -99,29 +100,75 @@ export default class Joinus extends Component {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-4">
-                    <div className="card card-default">
+                  <div className="col-lg-3">
+                    <div className="h-100 card card-default">
                       <div className="card-header border-0 text-center">
-                        You will be charged <br />
-                        <h1 className="mb-0">$499/Month</h1>
+                        PREMIUM
+                        <h1 className="mb-0">$79/Month</h1>
                       </div>
-                      <div className="card-body">
+                      <div className="card-body p-0">
                         <ul className="products-list product-list-in-card text-center">
+                          <li className="item">All Standard Plan features</li>
                           <li className="item">
-                            Receive real-time buy/sell signals.
+                            Weekly in-depth COT report signal analysis
                           </li>
                           <li className="item">
-                            See real-time profit/loss and open positions.
+                            Real-time alerts on significant COT report changes
                           </li>
                           <li className="item">
-                            Set up live Trading at a supported broker (You can
-                            do this after you subscribe).
+                            Access to exclusive market trend reports
                           </li>
+                          <li className="item">
+                            One-on-one consultation sessions (1 per month)
+                          </li>
+                          <li className="item">Dedicated account manager</li>
                         </ul>
+                      </div>
+                      <div className="card-footer">
                         <div className="text-center">
                           <a
                             type="button"
-                            className="btn btn-primary mt-4"
+                            className="btn btn-primary"
+                            href="/register"
+                          >
+                            Select
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="col-lg-3">
+                    <div className="h-100 card card-secondary">
+                      <div className="card-header border-0 text-center">
+                        ENTERPRISE
+                        <h2 className="mb-0">Custom Price</h2>
+                      </div>
+                      <div className="card-body p-0">
+                        <ul className="products-list product-list-in-card text-center">
+                          <li className="item">All Premium Plan features</li>
+                          <li className="item">
+                            Tailored COT report signal analysis based on
+                            specific market interests
+                          </li>
+                          <li className="item">
+                            Regular strategy sessions with top analysts
+                          </li>
+                          <li className="item">
+                            On-demand market research reports
+                          </li>
+                          <li className="item">
+                            Full access to historical COT data archives
+                          </li>
+                          <li className="item">
+                            Priority support with a dedicated team
+                          </li>
+                        </ul>
+                      </div>
+                      <div className="card-footer">
+                        <div className="text-center">
+                          <a
+                            type="button"
+                            className="btn btn-primary"
                             href="/register"
                           >
                             Select

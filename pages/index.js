@@ -5,13 +5,6 @@ import React from "react";
 import TradingViewTicker from "./components/frontend/tradingviewticker";
 
 function index() {
-  const initDataTable = () => {
-    const script = document.createElement("script");
-    script.src = "/dist/js/datatable.js";
-    script.async = true;
-    document.body.appendChild(script);
-    return initDataTable();
-  };
   return (
     <>
       <Head>
@@ -65,50 +58,83 @@ function index() {
               </div>
             </div>
           </section>
-          <section className="container-fluid p-0">
-            <div className="row">
-              <div className="col-lg-12">
-                <TradingViewTicker symbol="AAPL" locale="en" theme="light" />
-              </div>
-            </div>
-          </section>
-          <section className="pt-5">
-            <div className="container">
+          <section className="bg-offwhite">
+            <div className="container-fluid">
               <div className="row">
-                <div className="col-lg-6 m-auto">
+                <div className="col-12 col-md-6 p-0">
                   <img
-                    className="img-fluid"
+                    className="img-fluid w-100 h-100 object-fit-cover"
                     loading="lazy"
                     src="./banner.jpg"
                     alt="Frantzdy Trading CO - Trading become easier when you trade with us"
                   />
                 </div>
-                <div className="col-lg-6">
-                  <h4 className="text-white pl-3">
-                    What is Commitments of Traders Data?
-                  </h4>
-                  <p className="text-white mt-2 text-size-15 pl-3">
-                    The Commitments of Traders (COT) report is a market report,
-                    which is published weekly by the CFTC (Commodity Futures
-                    Trading Commission). The COT report gives insights on the
-                    positions of different market participants in the US. The
-                    Position Data is based on REPORTS by different firms, like
-                    clearing members and brokers. The COT classification/
-                    category of each firm is based on the major business
-                    purpose. This business purpose is specified by the firm
-                    itself and is checked by the CFTC on veracity. At the point
-                    of checking the classification, the CFTC does not know the
-                    specific reasons for the positions of the traders. That
-                    could lead to misleading information, because one trader
-                    holds different positions of a specific future for different
-                    reasons, but is specified in one classification for the
-                    whole report. That's nothing evil, just something to keep in
-                    mind on deeper COT analysis. The Commitments of Traders
-                    Report is published on every Friday of the week at 03:30
-                    E.T. The latest Cot Data Table contains the positions of the
-                    different market participants from Tuesday the same week.
-                  </p>
+                <div className="col-12 col-md-6">
+                  <div className="row p-3">
+                    <div className="col-12 col-sm-10">
+                      <h4>Commitments of Traders (COT) Data</h4>
+                      <p className="text-size-15">
+                        Refers to a weekly report published by the Commodity
+                        Futures Trading Commission (CFTC) in the United States.
+                        It provides insights into the positions held by various
+                        market participants in futures markets. These
+                        participants include commercial traders (typically
+                        hedgers), non-commercial traders (such as large
+                        speculators like hedge funds), and non-reportable
+                        traders (small speculators).
+                      </p>
+
+                      <h4>Role of Frantzdy Trading Co. :</h4>
+                      <p className="text-size-15">
+                        Frantzdy Trading Co. specializes in analyzing and
+                        interpreting COT data to provide valuable insights to
+                        traders and investors. Our role includes:
+                      </p>
+                      <ul className="list-unstyled text-size-15">
+                        <li>
+                          <strong>1. Data Analysis:</strong> We meticulously
+                          analyze COT reports to identify trends and changes in
+                          market sentiment across different asset classes,
+                          including commodities, currencies, and financial
+                          futures.
+                        </li>
+                        <li>
+                          <strong>2. Market Insights:</strong> By interpreting
+                          COT data, we offer actionable insights on market
+                          positioning. This helps traders understand the
+                          dynamics between different types of market
+                          participants and potential future price movements.
+                        </li>
+                        <li>
+                          <strong>3. Strategic Advice:</strong> We provide
+                          strategic advice based on our analysis of COT data,
+                          helping traders make informed decisions and adjust
+                          their trading strategies accordingly.
+                        </li>
+                        <li>
+                          <strong>4. Educational Resources:</strong> Frantzdy
+                          Trading Co. also educates traders on how to interpret
+                          and utilize COT data effectively, empowering them to
+                          enhance their trading methodologies and risk
+                          management practices.
+                        </li>
+                      </ul>
+                      <p className="text-size-15">
+                        Through our expertise in COT data analysis, Frantzdy
+                        Trading Co. aims to support traders in gaining a
+                        competitive edge in the financial markets, enabling them
+                        to navigate market volatility with confidence.
+                      </p>
+                    </div>
+                  </div>
                 </div>
+              </div>
+            </div>
+          </section>
+          <section className="container-fluid p-0">
+            <div className="row">
+              <div className="col-lg-12">
+                <TradingViewTicker symbol="AAPL" locale="en" theme="light" />
               </div>
             </div>
           </section>
@@ -117,13 +143,23 @@ function index() {
               <div className="content-header">
                 <div className="row">
                   <div className="col-sm-12 text-center">
-                    <h3 className="mb-4 text-white">Change in Positions</h3>
+                    <h3 className="mb-4 text-white">
+                      Frantzdy Trading Co. : Expert Analysis on Change in
+                      Position
+                    </h3>
                     <p className="text-white text-size-16">
-                      In publishing and graphic design, Lorem ipsum is a
-                      placeholder text commonly used to demonstrate the visual
-                      form of a document or a typeface without relying on
-                      meaningful content. Lorem ipsum may be used as a
-                      placeholder before the final copy is available.
+                      At Frantzdy Trading Co., we specialize in providing
+                      insightful analysis on changes in market positions.
+                      Leveraging our expertise in tracking shifts in investor
+                      sentiment and market dynamics, we offer comprehensive
+                      reports that highlight key movements in positions across
+                      various asset classes. Our detailed analysis equips
+                      traders with the essential insights needed to navigate
+                      changing market conditions effectively. Whether you're
+                      interested in understanding shifts in futures positions or
+                      evaluating sentiment changes in forex markets, Frantzdy
+                      Trading Co. delivers timely and actionable information to
+                      optimize your trading strategies.
                     </p>
                   </div>
                 </div>
@@ -238,17 +274,18 @@ function index() {
                 </div>
               </div>
               <div class="row">
-                <div class="col-md-4 col-12">
-                  <div class="card">
+                <div class="col-md-4 mb-3">
+                  <div class="card h-100">
                     <div class="card-body">
                       <i class="mdi mdi-48px mdi-format-quote-open text-light-primary lh-1 mb-3 d-block"></i>
 
                       <p class="fs-3 text-dark fw-semibold">
-                        "Frantzy Trading Co. has been instrumental in my trading
-                        success. Their deep COT and CFTC data analysis has given
-                        me the edge I needed to make informed decisions. Their
-                        insights are always spot-on and timely. I highly
-                        recommend their services to any serious trader."
+                        "Frantzdy Trading Co. has been instrumental in my
+                        trading success. Their deep COT and CFTC data analysis
+                        has given me the edge I needed to make informed
+                        decisions. Their insights are always spot-on and timely.
+                        I highly recommend their services to any serious
+                        trader."
                       </p>
 
                       <div class="d-flex mt-4 align-items-center">
@@ -260,12 +297,12 @@ function index() {
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4 col-12">
-                  <div class="card">
+                <div class="col-md-4 mb-3">
+                  <div class="card h-100">
                     <div class="card-body">
                       <i class="mdi mdi-48px mdi-format-quote-open text-light-primary lh-1 mb-3 d-block"></i>
                       <p class="fs-3 text-dark fw-semibold">
-                        "I've been using Frantzy Trading Co.'s COT and CFTC
+                        "I've been using Frantzdy Trading Co.'s COT and CFTC
                         reports for the past year, and the results have been
                         phenomenal. Their data is comprehensive, and their
                         analysis is easy to understand and apply. I've
@@ -280,13 +317,13 @@ function index() {
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4 col-12">
-                  <div class="card">
+                <div class="col-md-4 mb-3">
+                  <div class="card h-100">
                     <div class="card-body">
                       <i class="mdi mdi-48px mdi-format-quote-open text-light-primary lh-1 mb-3 d-block"></i>
 
                       <p class="fs-3 text-dark fw-semibold">
-                        "Frantzy Trading Co. provides unparalleled detail in
+                        "Frantzdy Trading Co. provides unparalleled detail in
                         their COT and CFTC reports. The accuracy and depth of
                         their analysis have helped me stay ahead of market
                         trends. Their customer support is also exceptional,
@@ -301,12 +338,12 @@ function index() {
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4 col-12">
-                  <div class="card">
+                <div class="col-md-4 mb-3">
+                  <div class="card h-100">
                     <div class="card-body">
                       <i class="mdi mdi-48px mdi-format-quote-open text-light-primary lh-1 mb-3 d-block"></i>
                       <p class="fs-3 text-dark fw-semibold">
-                        "The expertise of Frantzy Trading Co. in COT and CFTC
+                        "The expertise of Frantzdy Trading Co. in COT and CFTC
                         data analysis is truly impressive. Their reports have
                         become a crucial part of my trading strategy. The
                         actionable insights I gained from their analysis have
@@ -321,17 +358,17 @@ function index() {
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4 col-12">
-                  <div class="card">
+                <div class="col-md-4 mb-3">
+                  <div class="card h-100 ">
                     <div class="card-body">
                       <i class="mdi mdi-48px mdi-format-quote-open text-light-primary lh-1 mb-3 d-block"></i>
                       <p class="fs-3 text-dark fw-semibold">
                         "As a seasoned trader, I've relied on various sources
-                        for market data, but Frantzy Trading Co. stands out with
-                        its exceptional COT and CFTC reports. Their detailed
-                        analysis and clear presentation make it easy to grasp
-                        complex market movements. I trust their insights to
-                        guide my trading decisions."
+                        for market data, but Frantzdy Trading Co. stands out
+                        with its exceptional COT and CFTC reports. Their
+                        detailed analysis and clear presentation make it easy to
+                        grasp complex market movements. I trust their insights
+                        to guide my trading decisions."
                       </p>
                       <div class="d-flex mt-4 align-items-center">
                         <div class="ml-2">
@@ -341,12 +378,12 @@ function index() {
                     </div>
                   </div>
                 </div>
-                <div class="col-md-4 col-12">
-                  <div class="card">
+                <div class="col-md-4 mb-3">
+                  <div class="card h-100">
                     <div class="card-body">
                       <i class="mdi mdi-48px mdi-format-quote-open text-light-primary lh-1 mb-3 d-block"></i>
                       <p class="fs-3 text-dark fw-semibold">
-                        "Frantzy Trading Co. has been a game-changer for my
+                        "Frantzdy Trading Co. has been a game-changer for my
                         trading approach. Their thorough analysis of COT and
                         CFTC data has provided me with valuable insights that
                         have consistently translated into profitable trades.
@@ -357,82 +394,6 @@ function index() {
                         <div class="ml-2">
                           <h5 class="text-primary mb-0">- Laura B.</h5>
                         </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-          <section className="mt-3">
-            <div className="container">
-              <div className="row mb-5">
-                <div className="col-lg-12">
-                  <h1 className="fw-bolder text-white text-center">
-                    Contact Us
-                  </h1>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-5 text-center d-flex align-items-center justify-content-center">
-                  <div class="text-white">
-                    <h2>Frantzdy Trading CO</h2>
-                    <p class="lead mb-5">
-                      Email: testing@mail.com
-                      <br />
-                      Phone: +1 234 56789012
-                    </p>
-                  </div>
-                </div>
-                <div class="col-7">
-                  <div className="row">
-                    <div className="col-lg-4">
-                      <div class="form-group">
-                        <label className="text-white">Name</label>
-                        <input
-                          type="text"
-                          id="inputName"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-lg-4">
-                      <div class="form-group">
-                        <label className="text-white">E-Mail</label>
-                        <input
-                          type="email"
-                          id="inputEmail"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                    <div className="col-lg-4">
-                      <div class="form-group">
-                        <label className="text-white">Subject</label>
-                        <input
-                          type="text"
-                          id="inputSubject"
-                          class="form-control"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                  <div className="row">
-                    <div className="col-lg-12">
-                      <div class="form-group">
-                        <label className="text-white">Message</label>
-                        <textarea
-                          id="inputMessage"
-                          class="form-control"
-                          rows="4"
-                        ></textarea>
-                      </div>
-                      <div class="form-group float-right">
-                        <input
-                          type="submit"
-                          class="btn btn-secondary"
-                          value="Send message"
-                        />
                       </div>
                     </div>
                   </div>
