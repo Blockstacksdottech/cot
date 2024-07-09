@@ -1,6 +1,6 @@
 import Head from "next/head";
-import Navbar from "./components/navbar";
-import Footer from "./components/footer";
+import Navbar from "./components/frontend/navbar";
+import Footer from "./components/frontend/footer";
 import React, { Component, useEffect, useState } from "react";
 import axios from "axios";
 import { isLogged, req } from "@/helpers";

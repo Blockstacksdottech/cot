@@ -252,6 +252,9 @@ const Sentimentdata = () => {
       <Navbar user={user} />
 
       <div className="content-wrapper">
+        <h4 className="text-white text-center pt-5 blink">
+          PLEASE WAIT SENTIMENT DATA ARE DOWNLOADING...
+        </h4>
         {!loading && (
           <>
             <div className="content">

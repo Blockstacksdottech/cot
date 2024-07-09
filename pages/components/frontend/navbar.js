@@ -76,7 +76,7 @@ export default function Navbar({ user }) {
                     className="user-image img-circle elevation-2"
                     alt="Frantzdy Trading CO - Trading become easier when you trade with us"
                   />
-                  <span className="d-none d-md-inline">
+                  <span className="d-none d-md-inline text-white">
                     {user && user.username}
                   </span>
                 </a>
@@ -87,7 +87,7 @@ export default function Navbar({ user }) {
                       className="img-circle elevation-2"
                       alt="Frantzdy Trading CO - Trading become easier when you trade with us"
                     />
-                    <p className="mb-2">{user && user.username}</p>
+                    <p className="mb-2 text-white">{user && user.username}</p>
                   </li>
                   <li className="user-footer">
                     <a href="/account" className="btn btn-default btn-flat">

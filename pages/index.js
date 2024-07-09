@@ -70,9 +70,11 @@ function index() {
                   />
                 </div>
                 <div className="col-12 col-md-6">
-                  <div className="row p-3">
+                  <div className="row pl-2 pt-3 pb-3">
                     <div className="col-12 col-sm-10">
-                      <h4>Commitments of Traders (COT) Data</h4>
+                      <h1 className="fw-bolder mb-4 text-fdark">
+                        Commitments of Traders (COT) Data
+                      </h1>
                       <p className="text-size-15">
                         Refers to a weekly report published by the Commodity
                         Futures Trading Commission (CFTC) in the United States.
@@ -143,10 +145,10 @@ function index() {
               <div className="content-header">
                 <div className="row">
                   <div className="col-sm-12 text-center">
-                    <h3 className="mb-4 text-white">
+                    <h1 class="fw-bolder mb-4 text-white">
                       Frantzdy Trading Co. : Expert Analysis on Change in
                       Position
-                    </h3>
+                    </h1>
                     <p className="text-white text-size-16">
                       At Frantzdy Trading Co., we specialize in providing
                       insightful analysis on changes in market positions.
@@ -266,10 +268,102 @@ function index() {
 
           <section className="my-5">
             <div class="container">
-              <div class="row">
-                <div class="offset-xl-3 col-xl-6 col-md-12">
-                  <div class="text-center mb-8">
-                    <h1 class="fw-bolder mb-3 text-white">Testimonials</h1>
+              <div className="content-header">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="text-center">
+                      <h1 class="fw-bolder mb-4 text-white">About Me</h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-6 mx-auto">
+                  <div className="text-white">
+                    <p className="text-size-16">Dear Reader,</p>
+                    <p className="text-size-16">
+                      I am Frantzdy Pierre, the CEO and founder of Frantzdy
+                      Trading Co., LLC. Over the past five years, I have
+                      navigated various trading strategies in my journey.
+                      Despite my efforts, maintaining consistent profitability
+                      has posed challenges. I believe many retail traders
+                      encounter similar difficulties, leading to behaviors like
+                      FOMO (Fear of Missing Out) that can undermine their
+                      trading success.
+                    </p>
+                    <p className="text-size-16">
+                      Driven by a passion for continuous improvement, I
+                      constantly seek new knowledge to enhance my trading
+                      skills. My exploration into Cot reports has significantly
+                      refined my trading approach. In response, I have developed
+                      a website where traders can not only learn my strategies
+                      but also customize them to suit their needs.
+                    </p>
+                    <p className="text-size-16">
+                      I am eager to share my insights and foster a community
+                      where we can learn and grow together.
+                    </p>
+                    <p className="text-size-16">Warm regards,</p>
+                    <p className="text-size-16">Frantzdy Pierre</p>
+                    <p className="text-size-16">
+                      <a
+                        className="btn btn-secondary mr-2"
+                        href="https://www.linkedin.com/in/frantzdy-trading-co-llc-179121318/"
+                        target="_blank"
+                      >
+                        <i class="fab fa-linkedin"></i> Linkedin
+                      </a>
+                      <a
+                        className="btn btn-secondary"
+                        href="https://www.youtube.com/@frantzdytradingco"
+                        target="_blank"
+                      >
+                        <i class="fab fa-youtube"></i> Youtube
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="my-5">
+            <div class="container">
+              <div className="content-header">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="text-center">
+                      <h1 class="fw-bolder mb-4 text-white">
+                        How to Interpret COT REPORT and Become Better Trader
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-12">
+                  <div className="text-center">
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <iframe
+                        class="embed-responsive-item"
+                        src="https://www.youtube.com/@frantzdytradingco"
+                        allowfullscreen
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="my-5">
+            <div class="container">
+              <div className="content-header">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="text-center">
+                      <h1 class="fw-bolder mb-3 text-white">Testimonials</h1>
+                    </div>
                   </div>
                 </div>
               </div>

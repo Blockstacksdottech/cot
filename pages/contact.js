@@ -45,7 +45,7 @@ export default class Contact extends Component {
                       <p className="mb-0">
                         <a
                           className="btn btn-secondary mr-2"
-                          href="https://t.me/frantzdytradingco"
+                          href="https://t.me/+ytdCx5c9JltmZjEx"
                           target="_blank"
                         >
                           <i class="fab fa-telegram"></i> Telegram

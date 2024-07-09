@@ -252,6 +252,9 @@ const Cotdata = () => {
       <Navbar user={user} />
 
       <div className="content-wrapper">
+        <h4 className="text-white text-center pt-5 blink">
+          PLEASE WAIT COT REPORTS ARE DOWNLOADING...
+        </h4>
         {!loading && (
           <>
             <div className="content">
@@ -481,7 +484,7 @@ const Cotdata = () => {
                                         <td>
                                           <div
                                             className="progress"
-                                            style={{ height: "25px" }}
+                                            style={{ height: "15px" }}
                                           >
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
@@ -495,15 +498,14 @@ const Cotdata = () => {
                                               )}
                                               aria-valuemin="0"
                                               aria-valuemax="100"
-                                            >
-                                              {entry.pct_change.toFixed(2)}%
-                                            </div>
+                                            ></div>
                                           </div>
+                                          {entry.pct_change.toFixed(2)}%
                                         </td>
                                         <td>
                                           <div
                                             className="progress"
-                                            style={{ height: "25px" }}
+                                            style={{ height: "15px" }}
                                           >
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
@@ -517,16 +519,14 @@ const Cotdata = () => {
                                               )}
                                               aria-valuemin="0"
                                               aria-valuemax="100"
-                                            >
-                                              {entry.two_week_change.toFixed(2)}
-                                              %
-                                            </div>
+                                            ></div>
                                           </div>
+                                          {entry.two_week_change.toFixed(2)}%
                                         </td>
                                         <td>
                                           <div
                                             className="progress"
-                                            style={{ height: "25px" }}
+                                            style={{ height: "15px" }}
                                           >
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
@@ -540,18 +540,14 @@ const Cotdata = () => {
                                               )}
                                               aria-valuemin="0"
                                               aria-valuemax="100"
-                                            >
-                                              {entry.three_week_change.toFixed(
-                                                2
-                                              )}
-                                              %
-                                            </div>
+                                            ></div>
                                           </div>
+                                          {entry.three_week_change.toFixed(2)}%
                                         </td>
                                         <td>
                                           <div
                                             className="progress"
-                                            style={{ height: "25px" }}
+                                            style={{ height: "15px" }}
                                           >
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
@@ -565,18 +561,14 @@ const Cotdata = () => {
                                               )}
                                               aria-valuemin="0"
                                               aria-valuemax="100"
-                                            >
-                                              {entry.four_week_change.toFixed(
-                                                2
-                                              )}
-                                              %
-                                            </div>
+                                            ></div>
                                           </div>
+                                          {entry.four_week_change.toFixed(2)}%
                                         </td>
                                         <td>
                                           <div
                                             className="progress"
-                                            style={{ height: "25px" }}
+                                            style={{ height: "15px" }}
                                           >
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
@@ -590,18 +582,14 @@ const Cotdata = () => {
                                               )}
                                               aria-valuemin="0"
                                               aria-valuemax="100"
-                                            >
-                                              {entry.five_week_change.toFixed(
-                                                2
-                                              )}
-                                              %
-                                            </div>
+                                            ></div>
                                           </div>
+                                          {entry.five_week_change.toFixed(2)}%
                                         </td>
                                         <td>
                                           <div
                                             className="progress"
-                                            style={{ height: "25px" }}
+                                            style={{ height: "15px" }}
                                           >
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
@@ -615,16 +603,14 @@ const Cotdata = () => {
                                               )}
                                               aria-valuemin="0"
                                               aria-valuemax="100"
-                                            >
-                                              {entry.six_week_change.toFixed(2)}
-                                              %
-                                            </div>
+                                            ></div>
                                           </div>
+                                          {entry.six_week_change.toFixed(2)}%
                                         </td>
                                         <td>
                                           <div
                                             className="progress"
-                                            style={{ height: "25px" }}
+                                            style={{ height: "15px" }}
                                           >
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
@@ -638,18 +624,14 @@ const Cotdata = () => {
                                               )}
                                               aria-valuemin="0"
                                               aria-valuemax="100"
-                                            >
-                                              {entry.seven_week_change.toFixed(
-                                                2
-                                              )}
-                                              %
-                                            </div>
+                                            ></div>
                                           </div>
+                                          {entry.seven_week_change.toFixed(2)}%
                                         </td>
                                         <td>
                                           <div
                                             className="progress"
-                                            style={{ height: "25px" }}
+                                            style={{ height: "15px" }}
                                           >
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
@@ -663,18 +645,14 @@ const Cotdata = () => {
                                               )}
                                               aria-valuemin="0"
                                               aria-valuemax="100"
-                                            >
-                                              {entry.eight_week_change.toFixed(
-                                                2
-                                              )}
-                                              %
-                                            </div>
+                                            ></div>
                                           </div>
+                                          {entry.eight_week_change.toFixed(2)}%
                                         </td>
                                         <td>
                                           <div
                                             className="progress"
-                                            style={{ height: "25px" }}
+                                            style={{ height: "15px" }}
                                           >
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
@@ -688,18 +666,14 @@ const Cotdata = () => {
                                               )}
                                               aria-valuemin="0"
                                               aria-valuemax="100"
-                                            >
-                                              {entry.nine_week_change.toFixed(
-                                                2
-                                              )}
-                                              %
-                                            </div>
+                                            ></div>
                                           </div>
+                                          {entry.nine_week_change.toFixed(2)}%
                                         </td>
                                         <td>
                                           <div
                                             className="progress"
-                                            style={{ height: "25px" }}
+                                            style={{ height: "15px" }}
                                           >
                                             <div
                                               className="progress-bar progress-bar-striped progress-bar-animated"
@@ -713,11 +687,9 @@ const Cotdata = () => {
                                               )}
                                               aria-valuemin="0"
                                               aria-valuemax="100"
-                                            >
-                                              {entry.ten_week_change.toFixed(2)}
-                                              %
-                                            </div>
+                                            ></div>
                                           </div>
+                                          {entry.ten_week_change.toFixed(2)}%
                                         </td>
                                       </tr>
                                     );
