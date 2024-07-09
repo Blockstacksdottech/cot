@@ -303,8 +303,10 @@ function index() {
                       I am eager to share my insights and foster a community
                       where we can learn and grow together.
                     </p>
-                    <p className="text-size-16">Warm regards,</p>
-                    <p className="text-size-16">Frantzdy Pierre</p>
+                    <p className="text-size-16 mb-0">Warm regards,</p>
+                    <p className="text-size-16 font-weight-bold">
+                      Frantzdy Pierre
+                    </p>
                     <p className="text-size-16">
                       <a
                         className="btn btn-secondary mr-2"
@@ -346,8 +348,7 @@ function index() {
                     <div class="embed-responsive embed-responsive-16by9">
                       <iframe
                         class="embed-responsive-item"
-                        src="https://www.youtube.com/@frantzdytradingco"
-                        allowfullscreen
+                        src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
                       ></iframe>
                     </div>
                   </div>
