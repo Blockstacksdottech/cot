@@ -1,10 +1,26 @@
 import Head from "next/head";
 import Navbar from "./components/frontend/navbar";
 import Footer from "./components/frontend/footer";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import TradingViewTicker from "./components/frontend/tradingviewticker";
+import { req } from "@/helpers";
 
-function index() {
+function Index() {
+  const [data, setData] = useState([]);
+  const [date, setDate] = useState(null);
+
+  const fetchData = async () => {
+    const resp = await req("top");
+    if (resp && resp.length > 0) {
+      setData(resp[0].data);
+      setDate(resp[0].date);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <Head>
@@ -191,71 +207,25 @@ function index() {
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>USD/EURO</td>
-                              <td>100%</td>
-                              <td>30%</td>
-                              <td>16%</td>
-                              <td>12%</td>
-                              <td>9%</td>
-                              <td>1%</td>
-                              <td>4%</td>
-                              <td>2%</td>
-                              <td>5%</td>
-                              <td>10%</td>
-                            </tr>
-                            <tr>
-                              <td>USD/EURO</td>
-                              <td>100%</td>
-                              <td>30%</td>
-                              <td>16%</td>
-                              <td>12%</td>
-                              <td>9%</td>
-                              <td>1%</td>
-                              <td>4%</td>
-                              <td>2%</td>
-                              <td>5%</td>
-                              <td>10%</td>
-                            </tr>
-                            <tr>
-                              <td>USD/EURO</td>
-                              <td>100%</td>
-                              <td>30%</td>
-                              <td>16%</td>
-                              <td>12%</td>
-                              <td>9%</td>
-                              <td>1%</td>
-                              <td>4%</td>
-                              <td>2%</td>
-                              <td>5%</td>
-                              <td>10%</td>
-                            </tr>
-                            <tr>
-                              <td>USD/EURO</td>
-                              <td>100%</td>
-                              <td>30%</td>
-                              <td>16%</td>
-                              <td>12%</td>
-                              <td>9%</td>
-                              <td>1%</td>
-                              <td>4%</td>
-                              <td>2%</td>
-                              <td>5%</td>
-                              <td>10%</td>
-                            </tr>
-                            <tr>
-                              <td>USD/EURO</td>
-                              <td>100%</td>
-                              <td>30%</td>
-                              <td>16%</td>
-                              <td>12%</td>
-                              <td>9%</td>
-                              <td>1%</td>
-                              <td>4%</td>
-                              <td>2%</td>
-                              <td>5%</td>
-                              <td>10%</td>
-                            </tr>
+                            {date &&
+                              data.length > 0 &&
+                              data.map((e, i) => {
+                                return (
+                                  <tr>
+                                    <td>{e.pair}</td>
+                                    <td>{e.pair_pct_change.toFixed(2)}%</td>
+                                    <td>{e.pair_2_week_change.toFixed(2)}%</td>
+                                    <td>{e.pair_3_week_change.toFixed(2)}%</td>
+                                    <td>{e.pair_4_week_change.toFixed(2)}%</td>
+                                    <td>{e.pair_5_week_change.toFixed(2)}%</td>
+                                    <td>{e.pair_6_week_change.toFixed(2)}%</td>
+                                    <td>{e.pair_7_week_change.toFixed(2)}%</td>
+                                    <td>{e.pair_8_week_change.toFixed(2)}%</td>
+                                    <td>{e.pair_9_week_change.toFixed(2)}%</td>
+                                    <td>{e.pair_10_week_change.toFixed(2)}%</td>
+                                  </tr>
+                                );
+                              })}
                           </tbody>
                         </table>
                       </div>
@@ -504,4 +474,4 @@ function index() {
   );
 }
 
-export default index;
+export default Index;

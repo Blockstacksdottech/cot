@@ -2,16 +2,17 @@ import Head from "next/head";
 import Navbar from "./components/frontend/navbar";
 import Footer from "./components/frontend/footer";
 import React, { Component } from "react";
+import Checker from "./components/Checker";
 
-export default class Contact extends Component {
-  render() {
-    return (
-      <>
-        <Head>
-          <title>
-            Frantzdy Trading CO - Trading become easier when you trade with us
-          </title>
-        </Head>
+export default function ContactUs() {
+  return (
+    <>
+      <Head>
+        <title>
+          Frantzdy Trading CO - Trading become easier when you trade with us
+        </title>
+      </Head>
+      <Checker no_check={true}>
         <Navbar />
 
         <div className="content-wrapper">
@@ -118,8 +119,9 @@ export default class Contact extends Component {
             </section>
           </div>
         </div>
-        <Footer />
-      </>
-    );
-  }
+      </Checker>
+
+      <Footer />
+    </>
+  );
 }

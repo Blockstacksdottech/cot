@@ -3,15 +3,12 @@ import Head from "next/head";
 import Navbar from "./components/frontend/navbar";
 import Footer from "./components/footer";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import { UserContext } from "../contexts/UserContextData";
 
 export default function Login() {
-  const [user, setUser] = useState({
-    logged: false,
-    username: "",
-    email: "",
-  });
+  const { user, setUser } = useContext(UserContext);
   const [loading, setLoading] = useState(true);
   const nav = useRouter();
   const [email, setEmail] = useState("");
@@ -26,6 +23,9 @@ export default function Login() {
         obj.logged = true;
         obj.username = resp.username;
         obj.email = resp.email;
+        obj.valid = resp.isValidSub;
+        obj.tier = resp.tier;
+        obj.isAdmin = resp.is_superuser;
         setUser(obj);
         //await updateSuppliers();
         return obj;
@@ -36,9 +36,15 @@ export default function Login() {
 
     test().then((obj) => {
       if (obj.logged) {
-        nav.push("/cot-data");
+        if (obj.isAdmin) {
+          nav.push("/cot-data");
+        } else if (obj.valid) {
+          nav.push("/cotscanner");
+        } else {
+          nav.push("/joinus");
+        }
       } else {
-        setLoading(false);
+        nav.push("/login");
       }
     });
   }, []);
@@ -47,7 +53,7 @@ export default function Login() {
     const res = await get_token(email, password);
     if (res) {
       toast.success("logged in");
-      nav.push("/cot-data");
+      nav.push("/cotscanner");
     } else {
       toast.error("Failed");
     }

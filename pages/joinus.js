@@ -1,11 +1,78 @@
 import Head from "next/head";
 import Navbar from "./components/frontend/navbar";
 import Footer from "./components/frontend/footer";
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
+import Checker from "./components/Checker";
+import { postReq, req } from "@/helpers";
+import { loadStripe } from "@stripe/stripe-js";
+import { toast } from "react-toastify";
+import { public_stripe_key } from "@/helpers/constants";
 
-export default class Joinus extends Component {
-  render() {
-    return (
+export default function Joinus(props) {
+  const [payments, setPayments] = useState([]);
+
+  const fetchSessionId = async (body) => {
+    const res = await postReq("checkout", body);
+    if (res) {
+      await redirect_to_checkout(res.session_id);
+    } else {
+      toast.error("Failed checkout");
+    }
+  };
+
+  const redirect_to_checkout = async (sess_id) => {
+    const stripe = await loadStripe(public_stripe_key);
+    console.log("before");
+    const res = await stripe.redirectToCheckout({
+      sessionId: sess_id,
+    });
+  };
+
+  const fetchPayments = async () => {
+    const resp = await req("/payment/subscribable-product", true);
+    if (resp) {
+      console.log(resp);
+      setPayments(resp);
+    }
+  };
+
+  useEffect(() => {
+    fetchPayments();
+  }, []);
+
+  function filterByNameKeyword(array, keyword) {
+    return array.filter((obj) =>
+      obj.name.toLowerCase().includes(keyword.toLowerCase())
+    );
+  }
+
+  const handleCheckout = async (keyword) => {
+    const objects = filterByNameKeyword(payments, keyword);
+    if (objects.length > 0) {
+      console.log(objects[0]);
+      const payment_id = objects[0].price_id;
+      const body = {
+        price_id: payment_id,
+      };
+      await fetchSessionId(body);
+    } else {
+      toast.error("Not supported");
+    }
+  };
+
+  const getPrice = (keyword) => {
+    const objects = filterByNameKeyword(payments, keyword);
+    if (objects.length > 0) {
+      console.log(objects[0]);
+      const price = objects[0].price / 100;
+      return price;
+    } else {
+      return null;
+    }
+  };
+
+  return (
+    <Checker>
       <>
         <Head>
           <title>
@@ -37,8 +104,14 @@ export default class Joinus extends Component {
                     <div className="h-100 card card-default">
                       <div className="card-header border-0 text-center">
                         BASIC
-                        <h1 className="mb-0">$29/Month</h1>
-                        <p>7-days free trial</p>
+                        <h2 className="mb-0">
+                          $
+                          {getPrice("basic")
+                            ? getPrice("basic").toFixed(2)
+                            : "Undefined"}
+                          /Month
+                        </h2>
+                        {/* <p>7-days free trial</p> */}
                       </div>
                       <div className="card-body p-0">
                         <ul className="products-list product-list-in-card text-center">
@@ -57,7 +130,7 @@ export default class Joinus extends Component {
                           <a
                             type="button"
                             className="btn btn-primary"
-                            href="/register"
+                            onClick={() => handleCheckout("basic")}
                           >
                             Select
                           </a>
@@ -69,7 +142,13 @@ export default class Joinus extends Component {
                     <div className="h-100 card card-secondary">
                       <div className="card-header border-0 text-center">
                         STANDARD
-                        <h1 className="mb-0">$49/Month</h1>
+                        <h2 className="mb-0">
+                          $
+                          {getPrice("standard")
+                            ? getPrice("standard").toFixed(2)
+                            : "Undefined"}
+                          /Month
+                        </h2>
                       </div>
                       <div className="card-body p-0">
                         <ul className="products-list product-list-in-card text-center">
@@ -92,7 +171,7 @@ export default class Joinus extends Component {
                           <a
                             type="button"
                             className="btn btn-primary"
-                            href="/register"
+                            onClick={() => handleCheckout("standard")}
                           >
                             Select
                           </a>
@@ -104,7 +183,13 @@ export default class Joinus extends Component {
                     <div className="h-100 card card-default">
                       <div className="card-header border-0 text-center">
                         PREMIUM
-                        <h1 className="mb-0">$79/Month</h1>
+                        <h2 className="mb-0">
+                          $
+                          {getPrice("premium")
+                            ? getPrice("premium").toFixed(2)
+                            : "Undefined"}
+                          /Month
+                        </h2>
                       </div>
                       <div className="card-body p-0">
                         <ul className="products-list product-list-in-card text-center">
@@ -129,7 +214,7 @@ export default class Joinus extends Component {
                           <a
                             type="button"
                             className="btn btn-primary"
-                            href="/register"
+                            onClick={() => handleCheckout("premium")}
                           >
                             Select
                           </a>
@@ -184,6 +269,6 @@ export default class Joinus extends Component {
         </div>
         <Footer />
       </>
-    );
-  }
+    </Checker>
+  );
 }

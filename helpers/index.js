@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //export const base = "http://127.0.0.1:8000";
-export const base = "http://194.164.72.71";
+export const base = "https://frantzdytradingco.com";
 export const api = base + "/api/";
 //var fileDownload = require('js-file-download');
 function set_header(token = null) {
@@ -261,8 +261,11 @@ export const uploadFiles = async (files, body, key, endpoint) => {
   let access = sessionStorage.getItem("accessToken");
   //access =  "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjQ4OTc3OTkwLCJqdGkiOiIyY2EyY2NjMjFmMjQ0YjQyYTc3MjgzYjAzZGM2MTdhMSIsInVzZXJfaWQiOjJ9.uGyjMDKwWTMowoBgxNLiDbfijFcwutbKBkLNrXlvnTA"
   let headers = set_header(access, true);
+  headers["Content-Type"] = "multipart/form-data";
   console.log(files);
+  console.log(files.length);
   for (let i = 0; i < files.length; i++) {
+    console.log("adding");
     form_data.append(key, files[i], files[i].name);
   }
 
@@ -273,6 +276,7 @@ export const uploadFiles = async (files, body, key, endpoint) => {
   for (let key of Object.keys(body)) {
     form_data.append(key, body[key]);
   }
+  console.log(form_data);
   let url = api + endpoint;
   try {
     let resp = await axios.post(url, form_data, {
@@ -280,7 +284,7 @@ export const uploadFiles = async (files, body, key, endpoint) => {
     });
     console.log(resp.status);
 
-    if (resp.status == 201) {
+    if (resp.status == 201 || resp.status === 200) {
       return true;
     } else {
       console.log("other errors");
@@ -379,7 +383,7 @@ export async function refreshToken() {
   }
 }
 
-export async function postReq(url, body) {
+export async function postReq(url, body, base_use = false) {
   let access = sessionStorage.getItem("accessToken");
   let headers = set_header(access);
 
@@ -395,7 +399,7 @@ export async function postReq(url, body) {
     mode: "cors",
   };
 
-  let preResp = await fetch(api + url, options);
+  let preResp = await fetch((base_use ? base : api) + url, options);
   if (preResp.ok) {
     let resp = await preResp.json();
     console.log(resp);
@@ -403,7 +407,7 @@ export async function postReq(url, body) {
   } else if (preResp.status == 401) {
     let dec = await refreshToken();
     if (dec) {
-      return postReq(url, body);
+      return postReq(url, body, base_use);
     } else {
       return false;
     }
@@ -413,7 +417,41 @@ export async function postReq(url, body) {
   }
 }
 
-export async function req(url) {
+export async function patchReq(url, body, base_use = false) {
+  let access = sessionStorage.getItem("accessToken");
+  let headers = set_header(access);
+
+  /* let body = {
+        title,
+        keywords
+    } */
+
+  let options = {
+    method: "patch",
+    body: JSON.stringify(body),
+    headers: headers,
+    mode: "cors",
+  };
+
+  let preResp = await fetch((base_use ? base : api) + url, options);
+  if (preResp.ok) {
+    let resp = await preResp.json();
+    console.log(resp);
+    return resp;
+  } else if (preResp.status == 401) {
+    let dec = await refreshToken();
+    if (dec) {
+      return patchReq(url, body, base_use);
+    } else {
+      return false;
+    }
+  } else {
+    console.log("other errors");
+    return false;
+  }
+}
+
+export async function req(url, base_use = false) {
   let access = sessionStorage.getItem("accessToken");
   let headers = set_header(access);
 
@@ -423,14 +461,14 @@ export async function req(url) {
     mode: "cors",
   };
 
-  let preResp = await fetch(api + url, options);
+  let preResp = await fetch((base_use ? base : api) + url, options);
   if (preResp.ok) {
     let resp = await preResp.json();
     return resp;
   } else if (preResp.status == 401) {
     let dec = await refreshToken();
     if (dec) {
-      return req(url);
+      return req(url, base_use);
     } else {
       return false;
     }
@@ -473,9 +511,17 @@ export async function isLogged() {
   return resp;
 }
 
-export function logout(nav) {
+export function logout(nav, setUser) {
   sessionStorage.removeItem("accessToken");
   sessionStorage.removeItem("refreshToken");
+  setUser({
+    logged: false,
+    username: "",
+    email: "",
+    tier: 0,
+    valid: false,
+    id: null,
+  });
   nav.push("/login");
 }
 
@@ -489,4 +535,82 @@ export function formatDate(date) {
     padTo2Digits(date.getMonth() + 1),
     date.getFullYear(),
   ].join("/");
+}
+
+export function getRating(a, b) {
+  // Determine the number of interest
+  const interest = Math.abs(a) >= Math.abs(b) ? a : b;
+
+  let stars;
+  let signal;
+
+  // Determine the number of stars and signal
+  if (Math.abs(interest) <= 5) {
+    stars = 1;
+    signal = "Neutral";
+  } else if (Math.abs(interest) <= 15) {
+    stars = 2;
+    signal = interest > 0 ? "Buy" : "Sell";
+  } else if (Math.abs(interest) <= 37) {
+    stars = 3;
+    signal = interest > 0 ? "Buy" : "Sell";
+  } else if (Math.abs(interest) <= 48) {
+    stars = 4;
+    signal = interest > 0 ? "Strong Buy" : "Strong Sell";
+  } else if (Math.abs(interest) > 48) {
+    stars = 5;
+    signal = interest > 0 ? "Strong Buy" : "Strong Sell";
+  } else {
+    throw new Error("Interest value is out of the expected range.");
+  }
+
+  return { stars, signal };
+}
+
+export function getThresholdSignal(interest) {
+  let signal;
+
+  // Determine the signal
+  if (interest >= 0 && interest <= 10) {
+    signal = "Neutral";
+  } else if (interest > 10 && interest <= 30) {
+    signal = "Buy";
+  } else if (interest > 30) {
+    signal = "Strong Buy";
+  } else if (interest >= -10 && interest < 0) {
+    signal = "Neutral";
+  } else if (interest < -10 && interest >= -30) {
+    signal = "Sell";
+  } else if (interest < -30) {
+    signal = "Strong Sell";
+  } else {
+    throw new Error("Interest value is out of the expected range.");
+  }
+
+  return signal;
+}
+
+export function formatImage(path) {
+  return base + path;
+}
+
+export function calculateNet(entry) {
+  let quote_currency = entry.pair.split("/").slice(-1)[0];
+  let base_currency = entry.pair.split("/")[0];
+  let pair_long, pair_short, pair_net_position;
+
+  if (quote_currency === "USD") {
+    pair_long = entry.base_long;
+    pair_short = entry.base_short;
+    pair_net_position = entry.base_net_position;
+  } else if (base_currency === "USD") {
+    pair_long = entry.quote_short;
+    pair_short = entry.quote_long;
+    pair_net_position = -entry.quote_net_position;
+  } else {
+    pair_long = entry.base_long;
+    pair_short = entry.base_short;
+    pair_net_position = entry.base_net_position;
+  }
+  return pair_net_position;
 }

@@ -1,42 +1,24 @@
 import Head from "next/head";
 import Navbar from "./components/frontend/navbar";
 import Footer from "./components/frontend/footer";
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, useContext, useEffect, useState } from "react";
 import axios from "axios";
-import { isLogged, req } from "@/helpers";
-import { useRouter } from "next/router";
 import {
-  LineChart,
-  Line,
-  CartesianGrid,
-  XAxis,
-  YAxis,
-  Tooltip,
-  BarChart,
-  Legend,
-  Bar,
-  ResponsiveContainer,
-} from "recharts";
+  getRating,
+  getThresholdSignal,
+  isLogged,
+  postReq,
+  req,
+} from "@/helpers";
+import { useRouter } from "next/router";
 import Downloader from "react-csv-downloader";
+import Checker from "./components/Checker";
+import { UserContext } from "@/contexts/UserContextData";
 
 const Cotscanner = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [user, setUser] = useState({
-    logged: false,
-    username: "",
-    email: "",
-  });
-  const [crowdingData, setCrowdingData] = useState([]);
-  const [sentimentData, setSentimentData] = useState([]);
-  const [selectedCrowded, setSelectedCrowded] = useState(null);
-  const [selectedSentiment, setSelectedSentiment] = useState(null);
-  const [CommcrowdingData, setCommCrowdingData] = useState([]);
-  const [CommsentimentData, setCommSentimentData] = useState([]);
-  const [selectedCommCrowded, setSelectedCommCrowded] = useState(null);
-  const [selectedCommSentiment, setSelectedCommSentiment] = useState(null);
-  const [keys, setKeys] = useState([]);
+  const { user, setUser } = useContext(UserContext);
   const nav = useRouter();
   const [exportableData, setExportableData] = useState([]);
   const [date, setDate] = useState(null);
@@ -56,30 +38,6 @@ const Cotscanner = () => {
   useEffect(() => {
     return initDataTable();
   }, [loading]);
-
-  useEffect(() => {
-    async function test() {
-      let resp = await isLogged();
-      console.log(resp);
-      let obj = { ...user };
-      if (resp) {
-        obj.logged = true;
-        obj.username = resp.username;
-        obj.email = resp.email;
-        setUser(obj);
-        return obj;
-      } else {
-        return obj;
-      }
-    }
-
-    test().then((obj) => {
-      if (obj.logged) {
-      } else {
-        nav.push("/login");
-      }
-    });
-  }, []);
 
   const toPercentage = (num) => {
     // Check if the input is a valid number
@@ -103,81 +61,97 @@ const Cotscanner = () => {
     return date.toLocaleDateString(undefined, options);
   }
 
+  function get_stars(a, b) {
+    const { stars, signal } = getRating(a, b);
+    return stars;
+  }
+
+  function get_diff_signal(a, b) {
+    const { stars, signal } = getRating(a, b);
+    return signal;
+  }
+
   const handleExport = (dt) => {
-    console.log(dt);
+    const date = dt.date;
+    dt = dt.data;
     const temp = [
       // Add headers for your CSV data
       [
-        "Date",
-        "Pair",
-        "Base Long",
-        "Base Short",
-        "Base Net Position",
-        "Quote Long",
-        "Quote Short",
-        "Quote Net Position",
-        "Base Comm Long",
-        "Base Comm Short",
-        "Base Comm Net Position",
-        "Quote Comm Long",
-        "Quote Comm Short",
-        "Quote Comm Net Position",
-        "Base Nonrep Long",
-        "Base Nonrep Short",
-        "Base Nonrep Net Position",
-        "Quote Nonrep Long",
-        "Quote Nonrep Short",
-        "Quote Nonrep Net Position",
-        "Pair Long",
-        "Pair Short",
-        "Pair Net Position",
-        "Percentage Change",
-        "2 Week Change",
-        "3 Week Change",
-        "4 Week Change",
-        "5 Week Change",
-        "6 Week Change",
-        "7 Week Change",
-        "8 Week Change",
-        "9 Week Change",
-        "10 Week Change",
-        "Sentiment",
+        "PAIR",
+        "OVERALL NON-COM SIGNAL",
+        "OVERALL COM SIGNAL",
+        "5 WEEK NON-COM COT SIGNAL",
+        "5 WEEK NON-COM % NET SHIFT",
+        "3 WEEK NON-COM COT SIGNAL",
+        "3 WEEK NON-COM % NET SHIFT",
+        "5 WEEK COM COT SIGNAL",
+        "5 WEEK COM % NET SHIFT",
+        "3 WEEK COM COT SIGNAL",
+        "3 WEEK COM % NET SHIFT",
+        "ADR",
+        "LONG TERM NON-COM COT SIGNAL",
+        "SENTIMENT NON-COM SIGNAL",
+        "% NON-COM LONG",
+        "% NON-COM SHORT",
+        "NON-COM CROWDED MARKET ALERT",
+        "LONG TERM COM COT SIGNAL",
+        "SENTIMENT COM SIGNAL",
+        "% COM LONG",
+        "% COM SHORT",
+        "COM CROWDED MARKET ALERT",
       ],
       ...dt.map((e) => [
-        e.date,
         e.pair,
-        e.base_long,
-        e.base_short,
-        e.base_net_position,
-        e.quote_long,
-        e.quote_short,
-        e.quote_net_position,
-        e.base_comm_long,
-        e.base_comm_short,
-        e.base_comm_net_position,
-        e.quote_comm_long,
-        e.quote_comm_short,
-        e.quote_comm_net_position,
-        e.base_nonrep_long,
-        e.base_nonrep_short,
-        e.base_nonrep_net_position,
-        e.quote_nonrep_long,
-        e.quote_nonrep_short,
-        e.quote_nonrep_net_position,
-        e.pair_long,
-        e.pair_short,
-        e.pair_net_position,
-        e.pct_change.toFixed(2),
-        e.two_week_change.toFixed(2),
-        e.three_week_change.toFixed(2),
-        e.four_week_change.toFixed(2),
-        e.five_week_change.toFixed(2),
-        e.six_week_change.toFixed(2),
-        e.seven_week_change.toFixed(2),
-        e.eight_week_change.toFixed(2),
-        e.nine_week_change.toFixed(2),
-        e.ten_week_change.toFixed(2),
-        e.sentiment,
+        getThresholdSignal(e.pair_pct_change),
+        getThresholdSignal(e.pair_comm_pct_change),
+        getThresholdSignal(e.pair_5_week_change),
+        e.pair_5_week_change,
+        getThresholdSignal(e.pair_3_week_change),
+        e.pair_3_week_change,
+        getThresholdSignal(e.pair_comm_5_week_change),
+        e.pair_comm_5_week_change,
+        getThresholdSignal(e.pair_comm_3_week_change),
+        e.pair_comm_3_week_change,
+        60,
+        get_diff_signal(
+          e.noncomm_10_diff_absolute_long,
+          e.noncomm_10_diff_absolute_short
+        ),
+        get_diff_signal(
+          e.noncomm_diff_absolute_long,
+          e.noncomm_diff_absolute_short
+        ),
+        toPercentage(
+          (e.base_long + e.quote_long) /
+            (e.base_long + e.base_short + e.quote_long + e.quote_short)
+        ),
+        toPercentage(
+          (e.base_short + e.quote_short) /
+            (e.base_long + e.base_short + e.quote_long + e.quote_short)
+        ),
+        get_stars(e.noncomm_diff_absolute_long, e.noncomm_diff_absolute_short) +
+          " stars",
+        get_diff_signal(
+          e.comm_10_diff_absolute_long,
+          e.comm_10_diff_absolute_short
+        ),
+        get_diff_signal(e.comm_diff_absolute_long, e.comm_diff_absolute_short),
+        toPercentage(
+          (e.base_comm_long + e.quote_comm_long) /
+            (e.base_comm_long +
+              e.base_comm_short +
+              e.quote_comm_long +
+              e.quote_comm_short)
+        ),
+        toPercentage(
+          (e.base_comm_short + e.quote_comm_short) /
+            (e.base_comm_long +
+              e.base_comm_short +
+              e.quote_comm_long +
+              e.quote_comm_short)
+        ),
+        get_stars(e.comm_diff_absolute_long, e.comm_diff_absolute_short) +
+          " stars",
       ]),
     ];
     console.log(temp);
@@ -186,48 +160,15 @@ const Cotscanner = () => {
 
   const fetchData = async () => {
     try {
-      const response = await req("data");
+      const response = await postReq("scanner-data", {});
       console.log("formating export");
-      handleExport(response[0].data);
-      setData(response[0].data);
-      setDate(response[0].date);
-      const response1 = await req("crowding_positions");
-      setCrowdingData(response1);
-      const response2 = await req("net_speculative");
-      setSentimentData(response2);
-      const response3 = await req("crowding_comm_positions");
-      setCommCrowdingData(response3);
-      const response4 = await req("net_comm_speculative");
-      setCommSentimentData(response4);
-      const keys = Object.keys(response1);
-      console.log(keys);
-      setKeys(keys);
-      setSelectedCrowded(keys[0]);
-      setSelectedSentiment(keys[0]);
-      setSelectedCommCrowded(keys[0]);
-      setSelectedCommSentiment(keys[0]);
+      handleExport(response);
+      setData(response.data);
+      setDate(response.date);
     } catch (error) {
       console.log(error);
     } finally {
       setLoading(false);
-    }
-  };
-
-  const handleSelectChange = (e, target) => {
-    const o = e.target;
-    if (target === "crowded") {
-      setSelectedCrowded(o.value);
-    } else {
-      setSelectedSentiment(o.value);
-    }
-  };
-
-  const handleSelectCommChange = (e, target) => {
-    const o = e.target;
-    if (target === "crowded") {
-      setSelectedCommCrowded(o.value);
-    } else {
-      setSelectedCommSentiment(o.value);
     }
   };
 
@@ -248,267 +189,358 @@ const Cotscanner = () => {
           content="Commitments of Traders (COT) Reports"
         />
       </Head>
+      <Checker tier={1}>
+        <Navbar user={user} />
 
-      <Navbar user={user} />
+        <div className="content-wrapper">
+          {loading && (
+            <h4 className="text-white text-center pt-5 blink">
+              PLEASE WAIT COT REPORTS ARE DOWNLOADING...
+            </h4>
+          )}
 
-      <div className="content-wrapper">
-        <h4 className="text-white text-center pt-5 blink">
-          PLEASE WAIT COT REPORTS ARE DOWNLOADING...
-        </h4>
-        {!loading && (
-          <>
-            <div className="content">
-              <div className="container-fluid">
-                <div className="row pt-4">
-                  <div className="col-lg-12 ">
-                    <div className="card card-primary card-outline">
-                      <div className="card-header">
-                        <h5 className="card-title mb-0">COT SCANNER</h5>
-                        <div className="card-tools">
-                          {exportableData.length > 0 && (
-                            <>
-                              <Downloader
-                                filename="my_data.csv"
-                                elementType="button"
-                                disabled={false} // Set to true to disable download
-                                datas={exportableData}
-                              >
-                                <a className="btn btn-sm btn-primary">
-                                  Export Data
-                                </a>
-                              </Downloader>
-                            </>
-                          )}
+          {!loading && (
+            <>
+              <div className="content">
+                <div className="container-fluid">
+                  <div className="row pt-4">
+                    <div className="col-lg-12 ">
+                      <div className="card card-primary card-outline">
+                        <div className="card-header">
+                          <h5 className="card-title mb-0">COT SCANNER</h5>
+                          <div className="card-tools">
+                            {exportableData.length > 0 && (
+                              <>
+                                <Downloader
+                                  filename="my_data.csv"
+                                  elementType="button"
+                                  disabled={false} // Set to true to disable download
+                                  datas={exportableData}
+                                >
+                                  <a className="btn btn-sm btn-primary">
+                                    Export Data
+                                  </a>
+                                </Downloader>
+                              </>
+                            )}
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="card-body">
-                        <div className="table-responsive p-0">
-                          <table
-                            id="datatable-change"
-                            className="table table-bordered table-hover table-sm"
-                          >
-                            <thead>
-                              <tr>
-                                <th>PAIR</th>
-                                <th>OVERALL SIGNAL</th>
-                                <th>5 WEEK NON-COM COT SIGNAL</th>
-                                <th>5 WEEK NON-COM % NET SHIFT</th>
-                                <th>3 WEEK NON-COM COT SIGNAL</th>
-                                <th>3 WEEK NON-COM % NET SHIFT</th>
-                                <th>LONG TERM COT SIGNAL</th>
-                                <th>ADR</th>
-                                <th>SENTIMENT SIGNAL</th>
-                                <th>% LONG</th>
-                                <th>% SHORT</th>
-                                <th>CROWDED MARKET ALERT</th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td>EURUSD</td>
-                                <td>STRONG BUY</td>
-                                <td>STRONG BUY</td>
-                                <td>39.04</td>
-                                <td>STRONG BUY</td>
-                                <td>35.36</td>
-                                <td>BUY</td>
-                                <td>60</td>
-                                <td>STRONG BUY</td>
-                                <td>
-                                  <div
-                                    class="progress progress-sm"
-                                    style={{ height: "15px" }}
-                                  >
-                                    <div
-                                      class="progress-bar progress-bar-striped progress-bar-animated"
-                                      aria-valuenow="77"
-                                      aria-valuemin="0"
-                                      aria-valuemax="100"
-                                      style={{ width: "77%" }}
-                                    ></div>
-                                  </div>
-                                  77%
-                                </td>
-                                <td>
-                                  <div
-                                    class="progress progress-sm"
-                                    style={{ height: "15px" }}
-                                  >
-                                    <div
-                                      class="progress-bar progress-bar-striped progress-bar-animated"
-                                      aria-valuenow="17"
-                                      aria-valuemin="0"
-                                      aria-valuemax="100"
-                                      style={{ width: "17%" }}
-                                    ></div>
-                                  </div>
-                                  17%
-                                </td>
-                                <td>
-                                  <span class="fa fa-star checked"></span>
-                                  <span class="fa fa-star checked"></span>
-                                  <span class="fa fa-star checked"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>EURUSD</td>
-                                <td>STRONG BUY</td>
-                                <td>STRONG BUY</td>
-                                <td>39.04</td>
-                                <td>STRONG BUY</td>
-                                <td>35.36</td>
-                                <td>BUY</td>
-                                <td>60</td>
-                                <td>STRONG BUY</td>
-                                <td>
-                                  <div
-                                    class="progress progress-sm"
-                                    style={{ height: "15px" }}
-                                  >
-                                    <div
-                                      class="progress-bar progress-bar-striped progress-bar-animated"
-                                      aria-valuenow="77"
-                                      aria-valuemin="0"
-                                      aria-valuemax="100"
-                                      style={{ width: "77%" }}
-                                    ></div>
-                                  </div>
-                                  77%
-                                </td>
-                                <td>
-                                  <div
-                                    class="progress progress-sm"
-                                    style={{ height: "15px" }}
-                                  >
-                                    <div
-                                      class="progress-bar progress-bar-striped progress-bar-animated"
-                                      aria-valuenow="17"
-                                      aria-valuemin="0"
-                                      aria-valuemax="100"
-                                      style={{ width: "17%" }}
-                                    ></div>
-                                  </div>
-                                  17%
-                                </td>
-                                <td>
-                                  <span class="fa fa-star checked"></span>
-                                  <span class="fa fa-star checked"></span>
-                                  <span class="fa fa-star checked"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>EURUSD</td>
-                                <td>STRONG BUY</td>
-                                <td>STRONG BUY</td>
-                                <td>39.04</td>
-                                <td>STRONG BUY</td>
-                                <td>35.36</td>
-                                <td>BUY</td>
-                                <td>60</td>
-                                <td>STRONG BUY</td>
-                                <td>
-                                  <div
-                                    class="progress progress-sm"
-                                    style={{ height: "15px" }}
-                                  >
-                                    <div
-                                      class="progress-bar progress-bar-striped progress-bar-animated"
-                                      aria-valuenow="77"
-                                      aria-valuemin="0"
-                                      aria-valuemax="100"
-                                      style={{ width: "77%" }}
-                                    ></div>
-                                  </div>
-                                  77%
-                                </td>
-                                <td>
-                                  <div
-                                    class="progress progress-sm"
-                                    style={{ height: "15px" }}
-                                  >
-                                    <div
-                                      class="progress-bar progress-bar-striped progress-bar-animated"
-                                      aria-valuenow="17"
-                                      aria-valuemin="0"
-                                      aria-valuemax="100"
-                                      style={{ width: "17%" }}
-                                    ></div>
-                                  </div>
-                                  17%
-                                </td>
-                                <td>
-                                  <span class="fa fa-star checked"></span>
-                                  <span class="fa fa-star checked"></span>
-                                  <span class="fa fa-star checked"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>EURUSD</td>
-                                <td>STRONG BUY</td>
-                                <td>STRONG BUY</td>
-                                <td>39.04</td>
-                                <td>STRONG BUY</td>
-                                <td>35.36</td>
-                                <td>BUY</td>
-                                <td>60</td>
-                                <td>STRONG BUY</td>
-                                <td>
-                                  <div
-                                    class="progress progress-sm"
-                                    style={{ height: "15px" }}
-                                  >
-                                    <div
-                                      class="progress-bar progress-bar-striped progress-bar-animated"
-                                      aria-valuenow="77"
-                                      aria-valuemin="0"
-                                      aria-valuemax="100"
-                                      style={{ width: "77%" }}
-                                    ></div>
-                                  </div>
-                                  77%
-                                </td>
-                                <td>
-                                  <div
-                                    class="progress progress-sm"
-                                    style={{ height: "15px" }}
-                                  >
-                                    <div
-                                      class="progress-bar progress-bar-striped progress-bar-animated"
-                                      aria-valuenow="17"
-                                      aria-valuemin="0"
-                                      aria-valuemax="100"
-                                      style={{ width: "17%" }}
-                                    ></div>
-                                  </div>
-                                  17%
-                                </td>
-                                <td>
-                                  <span class="fa fa-star checked"></span>
-                                  <span class="fa fa-star checked"></span>
-                                  <span class="fa fa-star checked"></span>
-                                  <span class="fa fa-star"></span>
-                                  <span class="fa fa-star"></span>
-                                </td>
-                              </tr>
-                            </tbody>
-                          </table>
+                        <div className="card-body">
+                          <div className="table-responsive p-0">
+                            <table
+                              id="datatable-change"
+                              className="table table-bordered table-hover table-sm"
+                            >
+                              <thead>
+                                <tr>
+                                  <th>PAIR</th>
+                                  <th>OVERALL NON-COM SIGNAL</th>
+                                  <th>OVERALL COM SIGNAL</th>
+                                  <th>5 WEEK NON-COM COT SIGNAL</th>
+                                  <th>5 WEEK NON-COM % NET SHIFT</th>
+                                  <th>3 WEEK NON-COM COT SIGNAL</th>
+                                  <th>3 WEEK NON-COM % NET SHIFT</th>
+                                  <th>5 WEEK COM COT SIGNAL</th>
+                                  <th>5 WEEK COM % NET SHIFT</th>
+                                  <th>3 WEEK COM COT SIGNAL</th>
+                                  <th>3 WEEK COM % NET SHIFT</th>
+                                  <th>ADR</th>
+                                  <th>LONG TERM NON-COM COT SIGNAL</th>
+                                  <th>SENTIMENT NON-COM SIGNAL</th>
+                                  <th>% NON-COM LONG</th>
+                                  <th>% NON-COM SHORT</th>
+                                  <th>NON-COM CROWDED MARKET ALERT</th>
+                                  <th>LONG TERM COM COT SIGNAL</th>
+                                  <th>SENTIMENT COM SIGNAL</th>
+                                  <th>% COM LONG</th>
+                                  <th>% COM SHORT</th>
+                                  <th>COM CROWDED MARKET ALERT</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {data &&
+                                  data.length > 0 &&
+                                  data.map((e, i) => {
+                                    return (
+                                      <tr>
+                                        <td>{e.pair}</td>
+                                        <td>
+                                          {getThresholdSignal(
+                                            e.pair_pct_change
+                                          )}
+                                        </td>
+                                        <td>
+                                          {getThresholdSignal(
+                                            e.pair_comm_pct_change
+                                          )}
+                                        </td>
+                                        <td>
+                                          {getThresholdSignal(
+                                            e.pair_5_week_change
+                                          )}
+                                        </td>
+                                        <td>{e.pair_5_week_change}</td>
+                                        <td>
+                                          {getThresholdSignal(
+                                            e.pair_3_week_change
+                                          )}
+                                        </td>
+                                        <td>{e.pair_3_week_change}</td>
+                                        <td>
+                                          {getThresholdSignal(
+                                            e.pair_comm_5_week_change
+                                          )}
+                                        </td>
+                                        <td>{e.pair_comm_5_week_change}</td>
+                                        <td>
+                                          {getThresholdSignal(
+                                            e.pair_comm_3_week_change
+                                          )}
+                                        </td>
+                                        <td>{e.pair_comm_3_week_change}</td>
+                                        <td>60</td>
+                                        <td>
+                                          {get_diff_signal(
+                                            e.noncomm_10_diff_absolute_long,
+                                            e.noncomm_10_diff_absolute_short
+                                          )}
+                                        </td>
+                                        <td>
+                                          {get_diff_signal(
+                                            e.noncomm_diff_absolute_long,
+                                            e.noncomm_diff_absolute_short
+                                          )}
+                                        </td>
+                                        <td>
+                                          <div
+                                            class="progress progress-sm"
+                                            style={{ height: "15px" }}
+                                          >
+                                            <div
+                                              class="progress-bar progress-bar-striped progress-bar-animated"
+                                              aria-valuenow={toPercentage(
+                                                (e.base_long + e.quote_long) /
+                                                  (e.base_long +
+                                                    e.base_short +
+                                                    e.quote_long +
+                                                    e.quote_short)
+                                              ).replace("%", "")}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                              style={{
+                                                width: toPercentage(
+                                                  (e.base_long + e.quote_long) /
+                                                    (e.base_long +
+                                                      e.base_short +
+                                                      e.quote_long +
+                                                      e.quote_short)
+                                                ),
+                                              }}
+                                            ></div>
+                                          </div>
+                                          {toPercentage(
+                                            (e.base_long + e.quote_long) /
+                                              (e.base_long +
+                                                e.base_short +
+                                                e.quote_long +
+                                                e.quote_short)
+                                          )}
+                                        </td>
+                                        <td>
+                                          <div
+                                            class="progress progress-sm"
+                                            style={{ height: "15px" }}
+                                          >
+                                            <div
+                                              class="progress-bar progress-bar-striped progress-bar-animated"
+                                              aria-valuenow={toPercentage(
+                                                (e.base_short + e.quote_short) /
+                                                  (e.base_long +
+                                                    e.base_short +
+                                                    e.quote_long +
+                                                    e.quote_short)
+                                              ).replace("%", "")}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                              style={{
+                                                width: toPercentage(
+                                                  (e.base_short +
+                                                    e.quote_short) /
+                                                    (e.base_long +
+                                                      e.base_short +
+                                                      e.quote_long +
+                                                      e.quote_short)
+                                                ),
+                                              }}
+                                            ></div>
+                                          </div>
+                                          {toPercentage(
+                                            (e.base_short + e.quote_short) /
+                                              (e.base_long +
+                                                e.base_short +
+                                                e.quote_long +
+                                                e.quote_short)
+                                          )}
+                                        </td>
+                                        <td>
+                                          {new Array(
+                                            get_stars(
+                                              e.noncomm_diff_absolute_long,
+                                              e.noncomm_diff_absolute_short
+                                            )
+                                          )
+                                            .fill(0)
+                                            .map(() => {
+                                              return (
+                                                <span class="fa fa-star checked"></span>
+                                              );
+                                            })}
+                                          {new Array(
+                                            5 -
+                                              get_stars(
+                                                e.noncomm_diff_absolute_long,
+                                                e.noncomm_diff_absolute_short
+                                              )
+                                          )
+                                            .fill(0)
+                                            .map(() => {
+                                              return (
+                                                <span class="fa fa-star"></span>
+                                              );
+                                            })}
+                                        </td>
+                                        <td>
+                                          {get_diff_signal(
+                                            e.comm_10_diff_absolute_long,
+                                            e.comm_10_diff_absolute_short
+                                          )}
+                                        </td>
+                                        <td>
+                                          {get_diff_signal(
+                                            e.comm_diff_absolute_long,
+                                            e.comm_diff_absolute_short
+                                          )}
+                                        </td>
+                                        <td>
+                                          <div
+                                            class="progress progress-sm"
+                                            style={{ height: "15px" }}
+                                          >
+                                            <div
+                                              class="progress-bar progress-bar-striped progress-bar-animated"
+                                              aria-valuenow={toPercentage(
+                                                (e.base_comm_long +
+                                                  e.quote_comm_long) /
+                                                  (e.base_comm_long +
+                                                    e.base_comm_short +
+                                                    e.quote_comm_long +
+                                                    e.quote_comm_short)
+                                              ).replace("%", "")}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                              style={{
+                                                width: toPercentage(
+                                                  (e.base_comm_long +
+                                                    e.quote_comm_long) /
+                                                    (e.base_comm_long +
+                                                      e.base_comm_short +
+                                                      e.quote_comm_long +
+                                                      e.quote_comm_short)
+                                                ),
+                                              }}
+                                            ></div>
+                                          </div>
+                                          {toPercentage(
+                                            (e.base_comm_long +
+                                              e.quote_comm_long) /
+                                              (e.base_comm_long +
+                                                e.base_comm_short +
+                                                e.quote_comm_long +
+                                                e.quote_comm_short)
+                                          )}
+                                        </td>
+                                        <td>
+                                          <div
+                                            class="progress progress-sm"
+                                            style={{ height: "15px" }}
+                                          >
+                                            <div
+                                              class="progress-bar progress-bar-striped progress-bar-animated"
+                                              aria-valuenow={toPercentage(
+                                                (e.base_comm_short +
+                                                  e.quote_comm_short) /
+                                                  (e.base_comm_long +
+                                                    e.base_comm_short +
+                                                    e.quote_comm_long +
+                                                    e.quote_comm_short)
+                                              ).replace("%", "")}
+                                              aria-valuemin="0"
+                                              aria-valuemax="100"
+                                              style={{
+                                                width: toPercentage(
+                                                  (e.base_comm_short +
+                                                    e.quote_comm_short) /
+                                                    (e.base_comm_long +
+                                                      e.base_comm_short +
+                                                      e.quote_comm_long +
+                                                      e.quote_comm_short)
+                                                ),
+                                              }}
+                                            ></div>
+                                          </div>
+                                          {toPercentage(
+                                            (e.base_comm_short +
+                                              e.quote_comm_short) /
+                                              (e.base_comm_long +
+                                                e.base_comm_short +
+                                                e.quote_comm_long +
+                                                e.quote_comm_short)
+                                          )}
+                                        </td>
+                                        <td>
+                                          {new Array(
+                                            get_stars(
+                                              e.comm_diff_absolute_long,
+                                              e.comm_diff_absolute_short
+                                            )
+                                          )
+                                            .fill(0)
+                                            .map(() => {
+                                              return (
+                                                <span class="fa fa-star checked"></span>
+                                              );
+                                            })}
+                                          {new Array(
+                                            5 -
+                                              get_stars(
+                                                e.comm_diff_absolute_long,
+                                                e.comm_diff_absolute_short
+                                              )
+                                          )
+                                            .fill(0)
+                                            .map(() => {
+                                              return (
+                                                <span class="fa fa-star"></span>
+                                              );
+                                            })}
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </>
-        )}
-      </div>
+            </>
+          )}
+        </div>
+      </Checker>
 
       <Footer />
     </>

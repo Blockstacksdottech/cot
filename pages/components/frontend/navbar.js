@@ -1,9 +1,29 @@
 "use client";
 import { useRouter } from "next/router";
-import { logout } from "@/helpers";
+import { formatImage, logout, req } from "@/helpers";
+import { useContext, useEffect, useState } from "react";
+import { UserContext } from "@/contexts/UserContextData";
 
-export default function Navbar({ user }) {
+export default function Navbar({}) {
   const nav = useRouter();
+  const { user, setUser } = useContext(UserContext);
+  const [image, setImage] = useState(null);
+  const fetchUserImage = async () => {
+    const resp = await req("user-image");
+    if (resp) {
+      console.log(resp);
+      setImage(resp);
+    } else {
+      setImage(null);
+    }
+  };
+
+  useEffect(() => {
+    if (user.logged) {
+      fetchUserImage();
+    }
+  }, [user]);
+
   return (
     <>
       <header>
@@ -45,16 +65,19 @@ export default function Navbar({ user }) {
                   CONTACT US
                 </a>
               </li>
-              <li className="nav-item">
-                <div class="btn-group">
-                  <a className="btn btn-secondary" href="/login">
-                    Login
-                  </a>
-                  <a className="btn btn-info" href="/joinus">
-                    Join Us
-                  </a>
-                </div>
-              </li>
+              {(!user || !user.logged) && (
+                <li className="nav-item">
+                  <div class="btn-group">
+                    <a className="btn btn-secondary" href="/login">
+                      Login
+                    </a>
+                    <a className="btn btn-info" href="/register">
+                      Join Us
+                    </a>
+                  </div>
+                </li>
+              )}
+
               <li className="nav-item">
                 <a
                   className="nav-link"
@@ -65,43 +88,53 @@ export default function Navbar({ user }) {
                   <i className="fas fa-expand-arrows-alt"></i>
                 </a>
               </li>
-              <li className="nav-item dropdown user-menu">
-                <a
-                  href="#"
-                  className="nav-link dropdown-toggle"
-                  data-toggle="dropdown"
-                >
-                  <img
-                    src="/dist/img/avatar5.png"
-                    className="user-image img-circle elevation-2"
-                    alt="Frantzdy Trading CO - Trading become easier when you trade with us"
-                  />
-                  <span className="d-none d-md-inline text-white">
-                    {user && user.username}
-                  </span>
-                </a>
-                <ul className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                  <li className="user-header bg-primary">
+              {user && user.logged && (
+                <li className="nav-item dropdown user-menu">
+                  <a
+                    href="#"
+                    className="nav-link dropdown-toggle"
+                    data-toggle="dropdown"
+                  >
                     <img
-                      src="/dist/img/avatar5.png"
-                      className="img-circle elevation-2"
+                      src={
+                        image
+                          ? formatImage(image.profile_picture)
+                          : "/dist/img/avatar5.png"
+                      }
+                      className="user-image img-circle elevation-2"
                       alt="Frantzdy Trading CO - Trading become easier when you trade with us"
                     />
-                    <p className="mb-2 text-white">{user && user.username}</p>
-                  </li>
-                  <li className="user-footer">
-                    <a href="/account" className="btn btn-default btn-flat">
-                      Account
-                    </a>
-                    <a
-                      onClick={() => logout(nav)}
-                      className="btn btn-default btn-flat float-right"
-                    >
-                      Logout
-                    </a>
-                  </li>
-                </ul>
-              </li>
+                    <span className="d-none d-md-inline text-white">
+                      {user && user.username}
+                    </span>
+                  </a>
+                  <ul className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                    <li className="user-header bg-primary">
+                      <img
+                        src={
+                          image
+                            ? formatImage(image.profile_picture)
+                            : "/dist/img/avatar5.png"
+                        }
+                        className="img-circle elevation-2"
+                        alt="Frantzdy Trading CO - Trading become easier when you trade with us"
+                      />
+                      <p className="mb-2 text-white">{user && user.username}</p>
+                    </li>
+                    <li className="user-footer">
+                      <a href="/account" className="btn btn-default btn-flat">
+                        Account
+                      </a>
+                      <a
+                        onClick={() => logout(nav, setUser)}
+                        className="btn btn-default btn-flat float-right"
+                      >
+                        Logout
+                      </a>
+                    </li>
+                  </ul>
+                </li>
+              )}
             </ul>
           </div>
         </nav>
