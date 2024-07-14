@@ -136,8 +136,8 @@ const Settings = () => {
   return (
     <>
       <Head>
-        <title>Registered Users</title>
-        <meta name="description" content="Register Users" />
+        <title>Settings</title>
+        <meta name="description" content="Settings" />
       </Head>
 
       <Checker no_check={true}>
