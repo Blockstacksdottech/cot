@@ -340,7 +340,7 @@ const Cotdata = () => {
   return (
     <>
       <Head>
-        <title>Commitments of Traders (COT) Reports</title>
+        <title>COT Reports Exclusive for ADMIN</title>
         <meta
           name="description"
           content="Commitments of Traders (COT) Reports"
@@ -388,10 +388,7 @@ const Cotdata = () => {
 
                         <div className="card-body">
                           <div className="table-responsive p-0">
-                            <table
-                              id="datatable-Cotdata"
-                              className="table table-bordered table-hover table-sm"
-                            >
+                            <table className="table table-bordered table-hover table-sm datatable">
                               <thead>
                                 <tr>
                                   <th>Date</th>
@@ -493,7 +490,7 @@ const Cotdata = () => {
                           <div className="table-responsive p-0">
                             <table
                               id="datatable-Cotdata2"
-                              className="table table-bordered table-hover table-sm"
+                              className="table table-bordered table-hover table-sm datatable"
                             >
                               <thead>
                                 <tr>
@@ -562,10 +559,7 @@ const Cotdata = () => {
 
                         <div className="card-body">
                           <div className="table-responsive p-0">
-                            <table
-                              id="datatable-change"
-                              className="table table-bordered table-hover table-sm"
-                            >
+                            <table className="table table-bordered table-hover table-sm datatable">
                               <thead>
                                 <tr>
                                   <th>Date</th>
@@ -868,10 +862,7 @@ const Cotdata = () => {
 
                         <div className="card-body">
                           <div className="table-responsive p-0">
-                            <table
-                              id="datatable-change"
-                              className="table table-bordered table-hover table-sm"
-                            >
+                            <table className="table table-bordered table-hover table-sm datatable">
                               <thead>
                                 <tr>
                                   <th>Date</th>

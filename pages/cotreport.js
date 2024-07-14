@@ -181,10 +181,7 @@ const Cotreport = () => {
 
                         <div className="card-body">
                           <div className="table-responsive p-0">
-                            <table
-                              id="datatable-change"
-                              className="table table-bordered table-hover table-sm"
-                            >
+                            <table className="table table-bordered table-hover table-sm datatable">
                               <thead>
                                 <tr>
                                   <th>Date</th>
@@ -485,10 +482,7 @@ const Cotreport = () => {
 
                         <div className="card-body">
                           <div className="table-responsive p-0">
-                            <table
-                              id="datatable-change"
-                              className="table table-bordered table-hover table-sm"
-                            >
+                            <table className="table table-bordered table-hover table-sm datatable">
                               <thead>
                                 <tr>
                                   <th>Date</th>
@@ -792,10 +786,7 @@ const Cotreport = () => {
 
                         <div className="card-body">
                           <div className="table-responsive p-0">
-                            <table
-                              id="datatable-change"
-                              className="table table-bordered table-hover table-sm"
-                            >
+                            <table className="table table-bordered table-hover table-sm datatable">
                               <thead>
                                 <tr>
                                   <th>Date</th>

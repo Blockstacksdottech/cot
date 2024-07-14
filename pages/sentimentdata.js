@@ -142,7 +142,7 @@ const Sentimentdata = () => {
 
                         <div className="card-body">
                           <div className="table-responsive p-0">
-                            <table className="table table-bordered table-hover table-sm">
+                            <table className="table table-bordered table-sm">
                               <thead>
                                 <tr>
                                   <th>Symbol</th>

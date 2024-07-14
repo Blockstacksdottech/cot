@@ -41,7 +41,7 @@ export default function ContactUs() {
                           frantzdytradingco@gmail.com
                         </a>
                         <br />
-                        Phone: +1 40 7969 8519
+                        Phone: +1 (407) 969-8519
                       </p>
                       <p className="mb-0">
                         <a

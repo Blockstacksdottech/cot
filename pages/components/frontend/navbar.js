@@ -46,6 +46,11 @@ export default function Navbar({}) {
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
               <li className="nav-item active">
+                <a className="nav-link" href="/cot-data">
+                  COT DATA
+                </a>
+              </li>
+              <li className="nav-item active">
                 <a className="nav-link" href="/cotreport">
                   COT REPORTS
                 </a>
@@ -78,16 +83,6 @@ export default function Navbar({}) {
                 </li>
               )}
 
-              <li className="nav-item">
-                <a
-                  className="nav-link"
-                  data-widget="fullscreen"
-                  href="#"
-                  role="button"
-                >
-                  <i className="fas fa-expand-arrows-alt"></i>
-                </a>
-              </li>
               {user && user.logged && (
                 <li className="nav-item dropdown user-menu">
                   <a
@@ -108,27 +103,21 @@ export default function Navbar({}) {
                       {user && user.username}
                     </span>
                   </a>
-                  <ul className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                    <li className="user-header bg-primary">
-                      <img
-                        src={
-                          image
-                            ? formatImage(image.profile_picture)
-                            : "/dist/img/avatar5.png"
-                        }
-                        className="img-circle elevation-2"
-                        alt="Frantzdy Trading CO - Trading become easier when you trade with us"
-                      />
-                      <p className="mb-2 text-white">{user && user.username}</p>
+                  <ul className="dropdown-menu dropdown-menu-lg dropdown-menu-right text-right">
+                    <li className="user-footer bg-primary">
+                      <a href="/userlist">Users</a>
                     </li>
-                    <li className="user-footer">
-                      <a href="/account" className="btn btn-default btn-flat">
-                        Account
-                      </a>
-                      <a
-                        onClick={() => logout(nav, setUser)}
-                        className="btn btn-default btn-flat float-right"
-                      >
+                    <li className="user-footer bg-primary">
+                      <a href="/account">Account Management</a>
+                    </li>
+                    <li className="user-footer bg-primary">
+                      <a href="/settings">Settings</a>
+                    </li>
+                    <li className="bg-primary">
+                      <hr className="m-0" />
+                    </li>
+                    <li className="user-footer bg-primary">
+                      <a onClick={() => logout(nav, setUser)} href="#">
                         Logout
                       </a>
                     </li>
