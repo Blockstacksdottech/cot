@@ -242,6 +242,73 @@ function Index() {
                 <div class="row">
                   <div class="col-md-12">
                     <div class="text-center">
+                      <h1 class="fw-bolder mb-4 text-white">
+                        How to Interpret COT REPORT and Become Better Trader
+                      </h1>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-lg-6 mx-auto mb-3">
+                  <div className="text-center">
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <iframe
+                        class="embed-responsive-item"
+                        src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6 mx-auto mb-3">
+                  <div className="text-center">
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <iframe
+                        class="embed-responsive-item"
+                        src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6 mx-auto mb-3">
+                  <div className="text-center">
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <iframe
+                        class="embed-responsive-item"
+                        src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-lg-6 mx-auto mb-3">
+                  <div className="text-center">
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <iframe
+                        class="embed-responsive-item"
+                        src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
+                      ></iframe>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="row mt-4">
+                <div className="col-lg-12">
+                  <div className="text-center">
+                    <a className="btn btn-secondary" href="" download>
+                      Download PDF
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section className="my-5">
+            <div class="container">
+              <div className="content-header">
+                <div class="row">
+                  <div class="col-md-12">
+                    <div class="text-center">
                       <h1 class="fw-bolder mb-4 text-white">About Me</h1>
                     </div>
                   </div>
@@ -305,61 +372,62 @@ function Index() {
                 <div class="row">
                   <div class="col-md-12">
                     <div class="text-center">
-                      <h1 class="fw-bolder mb-4 text-white">
-                        How to Interpret COT REPORT and Become Better Trader
-                      </h1>
+                      <h1 class="fw-bolder mb-4 text-white">Our Team</h1>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="row">
-                <div className="col-lg-6 mx-auto mb-3">
-                  <div className="text-center">
-                    <div class="embed-responsive embed-responsive-16by9">
-                      <iframe
-                        class="embed-responsive-item"
-                        src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
-                      ></iframe>
+                <div className="col-lg-3 mx-auto mb-3">
+                  <div class="card">
+                    <img
+                      class="card-img-top"
+                      src="../dist/img/ceo.jpg"
+                      alt="Card image cap"
+                    />
+                    <div class="card-body">
+                      <h5 class="card-title">Frantzdy Pierre</h5>
+                      <p class="card-text">FOUNDER & CEO</p>
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-6 mx-auto mb-3">
-                  <div className="text-center">
-                    <div class="embed-responsive embed-responsive-16by9">
-                      <iframe
-                        class="embed-responsive-item"
-                        src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
-                      ></iframe>
+                <div className="col-lg-3 mx-auto mb-3">
+                  <div class="card">
+                    <img
+                      class="card-img-top"
+                      src="../dist/img/pm.jpg"
+                      alt="Card image cap"
+                    />
+                    <div class="card-body">
+                      <h5 class="card-title">George Edward</h5>
+                      <p class="card-text">PROJECT MANAGER</p>
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-6 mx-auto mb-3">
-                  <div className="text-center">
-                    <div class="embed-responsive embed-responsive-16by9">
-                      <iframe
-                        class="embed-responsive-item"
-                        src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
-                      ></iframe>
+                <div className="col-lg-3 mx-auto mb-3">
+                  <div class="card">
+                    <img
+                      class="card-img-top"
+                      src="../dist/img/AD.jpg"
+                      alt="Card image cap"
+                    />
+                    <div class="card-body">
+                      <h5 class="card-title">Ahmed Jabnati</h5>
+                      <p class="card-text">DEVELOPER</p>
                     </div>
                   </div>
                 </div>
-                <div className="col-lg-6 mx-auto mb-3">
-                  <div className="text-center">
-                    <div class="embed-responsive embed-responsive-16by9">
-                      <iframe
-                        class="embed-responsive-item"
-                        src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
-                      ></iframe>
+                <div className="col-lg-3 mx-auto mb-3">
+                  <div class="card">
+                    <img
+                      class="card-img-top"
+                      src="../dist/img/KD.jpg"
+                      alt="Card image cap"
+                    />
+                    <div class="card-body">
+                      <h5 class="card-title">Krishna Dipak</h5>
+                      <p class="card-text">DEVELOPER</p>
                     </div>
-                  </div>
-                </div>
-              </div>
-              <div className="row mt-4">
-                <div className="col-lg-12">
-                  <div className="text-center">
-                    <a className="btn btn-secondary" href="" download>
-                      Download PDF
-                    </a>
                   </div>
                 </div>
               </div>

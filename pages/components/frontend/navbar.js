@@ -94,7 +94,7 @@ export default function Navbar({}) {
                       src={
                         image
                           ? formatImage(image.profile_picture)
-                          : "/dist/img/avatar5.png"
+                          : "/dist/img/avatar.png"
                       }
                       className="user-image img-circle elevation-2"
                       alt="Frantzdy Trading CO - Trading become easier when you trade with us"
