@@ -364,9 +364,7 @@ const Cotdata = () => {
                     <div className="col-lg-12">
                       <div className="card card-primary card-outline">
                         <div className="card-header">
-                          <h3 className="card-title mb-0">
-                            Commitments of Traders (COT) Reports
-                          </h3>
+                          <h3 className="card-title mb-0">Base Report</h3>
 
                           <div className="card-tools">
                             {exportableData.length > 0 && (
@@ -393,24 +391,15 @@ const Cotdata = () => {
                                 <tr>
                                   <th>Date</th>
                                   <th>Pair</th>
-                                  <th>Base Long</th>
-                                  <th>Base Short</th>
-                                  <th>Base Net Position</th>
-                                  <th>Quote Long</th>
-                                  <th>Quote Short</th>
-                                  <th>Quote Net Position</th>
-                                  <th>Base Comm Long</th>
-                                  <th>Base Comm Short</th>
-                                  <th>Base Comm Net Position</th>
-                                  <th>Quote Comm Long</th>
-                                  <th>Quote Comm Short</th>
-                                  <th>Quote Comm Net Position</th>
-                                  <th>Base Nonrep Long</th>
-                                  <th>Base Nonrep Short</th>
-                                  <th>Base Nonrep Net Position</th>
-                                  <th>Quote Nonrep Long</th>
-                                  <th>Quote Nonrep Short</th>
-                                  <th>Quote Nonrep Net Position</th>
+                                  <th>Long</th>
+                                  <th>Short</th>
+                                  <th>Net Position</th>
+                                  <th>Comm Long</th>
+                                  <th>Comm Short</th>
+                                  <th>Comm Net Position</th>
+                                  <th>Nonrep Long</th>
+                                  <th>Nonrep Short</th>
+                                  <th>Nonrep Net Position</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -424,23 +413,86 @@ const Cotdata = () => {
                                           <td>{entry.base_long}</td>
                                           <td>{entry.base_short}</td>
                                           <td>{entry.base_net_position}</td>
-                                          <td>{entry.quote_long}</td>
-                                          <td>{entry.quote_short}</td>
-                                          <td>{entry.quote_net_position}</td>
                                           <td>{entry.base_comm_long}</td>
                                           <td>{entry.base_comm_short}</td>
                                           <td>
                                             {entry.base_comm_net_position}
                                           </td>
-                                          <td>{entry.quote_comm_long}</td>
-                                          <td>{entry.quote_comm_short}</td>
-                                          <td>
-                                            {entry.quote_comm_net_position}
-                                          </td>
                                           <td>{entry.base_nonrep_long}</td>
                                           <td>{entry.base_nonrep_short}</td>
                                           <td>
                                             {entry.base_nonrep_net_position}
+                                          </td>
+                                        </tr>
+                                      );
+                                    })}
+                                  </>
+                                )}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row pt-4">
+                    <div className="col-lg-12">
+                      <div className="card card-primary card-outline">
+                        <div className="card-header">
+                          <h3 className="card-title mb-0">Quote Report</h3>
+
+                          <div className="card-tools">
+                            {exportableData.length > 0 && (
+                              <>
+                                <Downloader
+                                  filename="my_data.csv"
+                                  elementType="button"
+                                  disabled={false} // Set to true to disable download
+                                  datas={exportableData}
+                                >
+                                  <a className="btn btn-sm btn-primary">
+                                    Export COT Data
+                                  </a>
+                                </Downloader>
+                              </>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="card-body">
+                          <div className="table-responsive p-0">
+                            <table className="table table-bordered table-hover table-sm datatable">
+                              <thead>
+                                <tr>
+                                  <th>Date</th>
+                                  <th>Pair</th>
+                                  <th>Long</th>
+                                  <th>Short</th>
+                                  <th>Net Position</th>
+                                  <th>Comm Long</th>
+                                  <th>Comm Short</th>
+                                  <th>Comm Net Position</th>
+                                  <th>Nonrep Long</th>
+                                  <th>Nonrep Short</th>
+                                  <th>Nonrep Net Position</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {data && (
+                                  <>
+                                    {data.map((entry, index) => {
+                                      return (
+                                        <tr key={index}>
+                                          <td>{date && formatDate(date)}</td>
+                                          <td>{entry.pair}</td>
+                                          <td>{entry.quote_long}</td>
+                                          <td>{entry.quote_short}</td>
+                                          <td>{entry.quote_net_position}</td>
+                                          <td>{entry.quote_comm_long}</td>
+                                          <td>{entry.quote_comm_short}</td>
+                                          <td>
+                                            {entry.quote_comm_net_position}
                                           </td>
                                           <td>{entry.quote_nonrep_long}</td>
                                           <td>{entry.quote_nonrep_short}</td>
@@ -496,9 +548,9 @@ const Cotdata = () => {
                                 <tr>
                                   <th>Date</th>
                                   <th>Pair</th>
-                                  <th>Pair Long</th>
-                                  <th>Pair Short</th>
-                                  <th>Pair Net Position</th>
+                                  <th>Long</th>
+                                  <th>Short</th>
+                                  <th>Net Position</th>
                                   <th>Sentiment</th>
                                 </tr>
                               </thead>
