@@ -35,6 +35,7 @@ export default function VideoPdf() {
                         <iframe
                           class="embed-responsive-item"
                           src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
+                          allowFullScreen
                         ></iframe>
                       </div>
                       <h5 className="text-white my-4 text-center">
@@ -46,6 +47,7 @@ export default function VideoPdf() {
                         <iframe
                           class="embed-responsive-item"
                           src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
+                          allowFullScreen
                         ></iframe>
                       </div>
                       <h5 className="text-white my-4 text-center">
