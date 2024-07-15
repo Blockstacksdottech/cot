@@ -457,7 +457,7 @@ function Index() {
                     <div class="card">
                       <img
                         class="card-img-top"
-                        src="../dist/img/pm.jpg"
+                        src="../dist/img/PM.jpg"
                         alt="Card image cap"
                       />
                       <div class="card-body">
