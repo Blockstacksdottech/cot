@@ -61,24 +61,29 @@ export default function VideoPdf() {
                       <div class="card-body p-0">
                         <ul class="nav nav-pills flex-column">
                           <li class="nav-item">
-                            <p class="nav-link p-tag-big">
+                            <a class="nav-link p-tag-big" href="#" download>
                               <i class="fas fa-file-pdf"></i> Topic goes here
-                            </p>
+                            </a>
                           </li>
                           <li class="nav-item">
-                            <p class="nav-link p-tag-big">
+                            <a class="nav-link p-tag-big" href="#" download>
                               <i class="fas fa-file-pdf"></i> Topic goes here
-                            </p>
+                            </a>
                           </li>
                           <li class="nav-item">
-                            <p class="nav-link p-tag-big">
+                            <a class="nav-link p-tag-big" href="#" download>
                               <i class="fas fa-file-pdf"></i> Topic goes here
-                            </p>
+                            </a>
                           </li>
                           <li class="nav-item">
-                            <p class="nav-link p-tag-big">
+                            <a class="nav-link p-tag-big" href="#" download>
                               <i class="fas fa-file-pdf"></i> Topic goes here
-                            </p>
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link p-tag-big" href="#" download>
+                              <i class="fas fa-file-pdf"></i> Topic goes here
+                            </a>
                           </li>
                         </ul>
                       </div>
