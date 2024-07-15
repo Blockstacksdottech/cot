@@ -17,119 +17,79 @@ import { UserContext } from "@/contexts/UserContextData";
 import { toast } from "react-toastify";
 
 const Settings = () => {
-  const [data, setData] = useState(null);
-  const [image, setImage] = useState(null);
+  const [file, setFile] = useState(null);
+  const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user, setUser } = useContext(UserContext);
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [newLink, setNewLink] = useState(null);
 
-  const fetchUserDetails = async () => {
-    const resp = await req("user-details");
+  const fetchFile = async () => {
+    const resp = await req("pdf-file");
     if (resp) {
       console.log(resp);
-      setData(resp);
-    }
-  };
-
-  const fetchUserImage = async () => {
-    const resp = await req("user-image");
-    if (resp) {
-      console.log(resp);
-      setImage(resp);
+      setFile(resp);
     } else {
-      setImage(null);
+      setFile(null);
     }
   };
 
-  const refreshUser = async () => {
-    await fetchUserDetails();
-    await fetchUserImage();
+  const fetchLink = async () => {
+    const resp = await req("video-link");
+    if (resp) {
+      console.log(resp);
+      setLinks(resp);
+    } else {
+      setLinks(null);
+    }
+  };
+
+  const refreshData = async () => {
+    await fetchLink();
+    await fetchFile();
   };
 
   useEffect(() => {
     if (user.logged) {
-      refreshUser().then(() => setLoading(false));
+      refreshData().then(() => setLoading(false));
     }
   }, [user]);
 
-  async function uploadPicture() {
-    const files = document.getElementById("profilePicture").files;
+  async function updateFile() {
+    const files = document.getElementById("pdf").files;
     if (files.length === 0) {
       toast.error("Please select a picture");
     } else {
-      const res = await uploadFiles(files, {}, "profile_picture", "user-image");
+      const res = await uploadFiles(files, {}, "file", "pdf-file");
       if (res) {
         toast.success("Updated");
-        await fetchUserImage();
+        await fetchFile();
       } else {
         toast.error("failed upload");
       }
     }
   }
 
-  async function submitForm() {
-    const fullName = document.getElementById("fullName").value;
-    const mobile = document.getElementById("mobile").value;
-    const address = document.getElementById("address").value;
-    const city = document.getElementById("city").value;
-    const state = document.getElementById("state").value;
-    const country = document.getElementById("country").value;
-    const zipCode = document.getElementById("zipCode").value;
-
-    // Append form data
+  const updateLink = async () => {
     const body = {
-      full_name: fullName,
-      mobile: mobile,
-      address: address,
-      city: city,
-      state: state,
-      country: country,
-      zip_code: zipCode,
+      link: newLink,
     };
-    setLoading(true);
-    const resp = await postReq("user-details", body);
+    const resp = await postReq("video-link", body);
     if (resp) {
-      toast.success("Updated");
-      await fetchUserDetails();
+      toast.success("updated");
+      fetchLink();
     } else {
-      toast.error("Failed updating User details");
+      toast.error("Failed Updating link");
     }
-    setLoading(false);
-  }
+  };
 
-  const handleChange = async (e) => {
-    e.preventDefault();
-
-    // Validate new and confirm passwords
-    if (newPassword !== confirmPassword) {
-      toast.error("New password and confirm password don't match.");
-      return;
-    }
-
-    // Prepare data for API request
-    const data = {
-      old_password: currentPassword,
-      new_password: newPassword,
-    };
-
-    try {
-      // Make API request to update password
-      const resp = await postReq("change-password", data);
-      if (resp) {
-        // Password updated successfully
-        toast.success("Password updated successfully.");
-        // Optionally, clear form fields
-        setCurrentPassword("");
-        setNewPassword("");
-        setConfirmPassword("");
-      } else {
-        toast.error("Failed to update password. Please try again.");
-      }
-    } catch (error) {
-      console.error("Password update error:", error);
-      toast.error("Failed to update password. Please try again.");
+  const deleteVid = async (vid) => {
+    console.log(`deleting vid id : ${vid}`);
+    const resp = await postReq("delete-video-link", { vid });
+    if (resp) {
+      toast.success("deleted");
+      fetchLink();
+    } else {
+      toast.error("Failed deleting link");
     }
   };
 
@@ -140,7 +100,7 @@ const Settings = () => {
         <meta name="description" content="Settings" />
       </Head>
 
-      <Checker no_check={true}>
+      <Checker only_admin={true}>
         {!loading && (
           <>
             <Navbar user={user} />
@@ -173,29 +133,37 @@ const Settings = () => {
                                 className="form-control"
                                 placeholder="Youtube Link"
                                 defaultValue=""
+                                value={newLink}
+                                onChange={(e) => setNewLink(e.target.value)}
                               />
                             </div>
                             <div className="form-group float-right">
-                              <a className="btn btn-primary">Save</a>
+                              <a
+                                className="btn btn-primary"
+                                onClick={updateLink}
+                              >
+                                Save
+                              </a>
                             </div>
                           </form>
-                          <div className="form-group">
-                            <table className="table table-sm table-bordered">
-                              <tbody>
-                                <tr>
-                                  <td>#</td>
-                                  <td>
-                                    https://www.youtube.com/embed/zpOULjyy-n8?rel=0
-                                  </td>
-                                  <td>
-                                    <a className="btn btn-sm btn-danger">
-                                      <i className="fa fa-trash"></i>
-                                    </a>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
+                          {links &&
+                            links.map((e, i) => (
+                              <div className="form-group">
+                                <table className="table table-sm table-bordered">
+                                  <tbody>
+                                    <tr>
+                                      <td>#</td>
+                                      <td>{e.link}</td>
+                                      <td onClick={() => deleteVid(e.id)}>
+                                        <a className="btn btn-sm btn-danger">
+                                          <i className="fa fa-trash"></i>
+                                        </a>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            ))}
                         </div>
                       </div>
                     </div>
@@ -212,35 +180,37 @@ const Settings = () => {
                                 type="file"
                                 className="form-control"
                                 placeholder="PDF"
-                                defaultValue=""
                               />
                             </div>
                             <div className="form-group float-right">
-                              <a className="btn btn-primary">Save</a>
+                              <a
+                                className="btn btn-primary"
+                                onClick={updateFile}
+                              >
+                                Save
+                              </a>
                             </div>
                           </form>
-                          <div className="form-group">
-                            <table className="table table-sm table-bordered">
-                              <tbody>
-                                <tr>
-                                  <td>#</td>
-                                  <td>
-                                    <a
-                                      href="http://localhost:3000/settings"
-                                      download
-                                    >
-                                      http://localhost:3000/settings
-                                    </a>
-                                  </td>
-                                  <td>
-                                    <a className="btn btn-sm btn-danger">
-                                      <i className="fa fa-trash"></i>
-                                    </a>
-                                  </td>
-                                </tr>
-                              </tbody>
-                            </table>
-                          </div>
+                          {file && (
+                            <div className="form-group">
+                              <table className="table table-sm table-bordered">
+                                <tbody>
+                                  <tr>
+                                    <td>#</td>
+                                    <td>
+                                      <a
+                                        href={formatImage(file.file)}
+                                        download
+                                        target="_blank"
+                                      >
+                                        {file.file}
+                                      </a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          )}
                         </div>
                       </div>
                     </div>

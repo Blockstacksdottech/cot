@@ -12,7 +12,7 @@ export default function ContactUs() {
           Frantzdy Trading CO - Trading become easier when you trade with us
         </title>
       </Head>
-      <Checker no_check={true}>
+      <Checker no_check={true} no_login={true}>
         <Navbar />
 
         <div className="content-wrapper">

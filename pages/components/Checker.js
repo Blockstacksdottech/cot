@@ -3,7 +3,7 @@ import { UserContext } from "../../contexts/UserContextData";
 import { isLogged } from "@/helpers";
 import { useRouter } from "next/router";
 
-function Checker({ children, tier, no_check, only_admin }) {
+function Checker({ children, tier, no_check, only_admin, no_login }) {
   const { user, setUser } = useContext(UserContext);
   const nav = useRouter();
   useEffect(() => {
@@ -26,6 +26,9 @@ function Checker({ children, tier, no_check, only_admin }) {
     }
 
     test().then((obj) => {
+      if (no_login) {
+        return;
+      }
       if (obj.logged) {
         if (only_admin) {
           if (obj.isAdmin) {

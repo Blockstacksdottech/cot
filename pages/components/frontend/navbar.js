@@ -45,11 +45,14 @@ export default function Navbar({}) {
 
           <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
             <ul className="navbar-nav ml-auto mt-2 mt-lg-0">
-              <li className="nav-item active">
-                <a className="nav-link" href="/cot-data">
-                  COT DATA
-                </a>
-              </li>
+              {user && user.isAdmin && (
+                <li className="nav-item active">
+                  <a className="nav-link" href="/cot-data">
+                    COT DATA
+                  </a>
+                </li>
+              )}
+
               <li className="nav-item active">
                 <a className="nav-link" href="/cotreport">
                   COT REPORTS
@@ -104,15 +107,21 @@ export default function Navbar({}) {
                     </span>
                   </a>
                   <ul className="dropdown-menu dropdown-menu-lg dropdown-menu-right text-right">
-                    <li className="user-footer bg-primary">
-                      <a href="/userlist">Users</a>
-                    </li>
+                    {user && user.isAdmin && (
+                      <li className="user-footer bg-primary">
+                        <a href="/userlist">Users</a>
+                      </li>
+                    )}
+
                     <li className="user-footer bg-primary">
                       <a href="/account">Account Management</a>
                     </li>
-                    <li className="user-footer bg-primary">
-                      <a href="/settings">Settings</a>
-                    </li>
+                    {user && user.isAdmin && (
+                      <li className="user-footer bg-primary">
+                        <a href="/settings">Settings</a>
+                      </li>
+                    )}
+
                     <li className="bg-primary">
                       <hr className="m-0" />
                     </li>

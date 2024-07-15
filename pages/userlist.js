@@ -17,121 +17,33 @@ import { UserContext } from "@/contexts/UserContextData";
 import { toast } from "react-toastify";
 
 const Userlist = () => {
-  const [data, setData] = useState(null);
-  const [image, setImage] = useState(null);
   const [loading, setLoading] = useState(true);
   const { user, setUser } = useContext(UserContext);
-  const [currentPassword, setCurrentPassword] = useState("");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [users, setUsers] = useState([]);
 
-  const fetchUserDetails = async () => {
-    const resp = await req("user-details");
+  const fetchUsers = async () => {
+    const resp = await req("userlist");
     if (resp) {
-      console.log(resp);
-      setData(resp);
+      setUsers(resp);
     }
+    setLoading(false);
   };
 
-  const fetchUserImage = async () => {
-    const resp = await req("user-image");
+  const switchStatus = async (id) => {
+    const resp = await postReq("userlist", {
+      userid: id,
+    });
     if (resp) {
-      console.log(resp);
-      setImage(resp);
+      toast.success("User Banned");
+      fetchUsers();
     } else {
-      setImage(null);
+      toast.error("Failed");
     }
-  };
-
-  const refreshUser = async () => {
-    await fetchUserDetails();
-    await fetchUserImage();
   };
 
   useEffect(() => {
-    if (user.logged) {
-      refreshUser().then(() => setLoading(false));
-    }
-  }, [user]);
-
-  async function uploadPicture() {
-    const files = document.getElementById("profilePicture").files;
-    if (files.length === 0) {
-      toast.error("Please select a picture");
-    } else {
-      const res = await uploadFiles(files, {}, "profile_picture", "user-image");
-      if (res) {
-        toast.success("Updated");
-        await fetchUserImage();
-      } else {
-        toast.error("failed upload");
-      }
-    }
-  }
-
-  async function submitForm() {
-    const fullName = document.getElementById("fullName").value;
-    const mobile = document.getElementById("mobile").value;
-    const address = document.getElementById("address").value;
-    const city = document.getElementById("city").value;
-    const state = document.getElementById("state").value;
-    const country = document.getElementById("country").value;
-    const zipCode = document.getElementById("zipCode").value;
-
-    // Append form data
-    const body = {
-      full_name: fullName,
-      mobile: mobile,
-      address: address,
-      city: city,
-      state: state,
-      country: country,
-      zip_code: zipCode,
-    };
-    setLoading(true);
-    const resp = await postReq("user-details", body);
-    if (resp) {
-      toast.success("Updated");
-      await fetchUserDetails();
-    } else {
-      toast.error("Failed updating User details");
-    }
-    setLoading(false);
-  }
-
-  const handleChange = async (e) => {
-    e.preventDefault();
-
-    // Validate new and confirm passwords
-    if (newPassword !== confirmPassword) {
-      toast.error("New password and confirm password don't match.");
-      return;
-    }
-
-    // Prepare data for API request
-    const data = {
-      old_password: currentPassword,
-      new_password: newPassword,
-    };
-
-    try {
-      // Make API request to update password
-      const resp = await postReq("change-password", data);
-      if (resp) {
-        // Password updated successfully
-        toast.success("Password updated successfully.");
-        // Optionally, clear form fields
-        setCurrentPassword("");
-        setNewPassword("");
-        setConfirmPassword("");
-      } else {
-        toast.error("Failed to update password. Please try again.");
-      }
-    } catch (error) {
-      console.error("Password update error:", error);
-      toast.error("Failed to update password. Please try again.");
-    }
-  };
+    fetchUsers();
+  }, []);
 
   return (
     <>
@@ -140,7 +52,7 @@ const Userlist = () => {
         <meta name="description" content="Register Users" />
       </Head>
 
-      <Checker no_check={true}>
+      <Checker only_admin={true}>
         {!loading && (
           <>
             <Navbar user={user} />
@@ -178,136 +90,50 @@ const Userlist = () => {
                                 <th></th>
                               </thead>
                               <tbody>
-                                <tr>
-                                  <td>
-                                    <img
-                                      alt="Avatar"
-                                      className="table-avatar"
-                                      src="/dist/img/avatar5.png"
-                                    />
-                                  </td>
-                                  <td>Full Name</td>
-                                  <td>email@email.com</td>
-                                  <td>9999999999</td>
-                                  <td>47 W 13th Street</td>
-                                  <td>New York</td>
-                                  <td>New York</td>
-                                  <td>USA</td>
-                                  <td>10011</td>
-                                  <td>
-                                    <a className="badge bg-success">Active</a>
-                                    <a className="badge bg-danger">Banned</a>
-                                  </td>
-                                  <td>
-                                    <a className="btn btn-sm btn-danger">
-                                      <i className="fa fa-ban"></i>
-                                    </a>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <img
-                                      alt="Avatar"
-                                      className="table-avatar"
-                                      src="/dist/img/avatar5.png"
-                                    />
-                                  </td>
-                                  <td>Full Name</td>
-                                  <td>email@email.com</td>
-                                  <td>9999999999</td>
-                                  <td>47 W 13th Street</td>
-                                  <td>New York</td>
-                                  <td>New York</td>
-                                  <td>USA</td>
-                                  <td>10011</td>
-                                  <td>
-                                    <a className="badge bg-success">Active</a>
-                                    <a className="badge bg-danger">Banned</a>
-                                  </td>
-                                  <td>
-                                    <a className="btn btn-sm btn-danger">
-                                      <i className="fa fa-ban"></i>
-                                    </a>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <img
-                                      alt="Avatar"
-                                      className="table-avatar"
-                                      src="/dist/img/avatar5.png"
-                                    />
-                                  </td>
-                                  <td>Full Name</td>
-                                  <td>email@email.com</td>
-                                  <td>9999999999</td>
-                                  <td>47 W 13th Street</td>
-                                  <td>New York</td>
-                                  <td>New York</td>
-                                  <td>USA</td>
-                                  <td>10011</td>
-                                  <td>
-                                    <a className="badge bg-success">Active</a>
-                                    <a className="badge bg-danger">Banned</a>
-                                  </td>
-                                  <td>
-                                    <a className="btn btn-sm btn-danger">
-                                      <i className="fa fa-ban"></i>
-                                    </a>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <img
-                                      alt="Avatar"
-                                      className="table-avatar"
-                                      src="/dist/img/avatar5.png"
-                                    />
-                                  </td>
-                                  <td>Full Name</td>
-                                  <td>email@email.com</td>
-                                  <td>9999999999</td>
-                                  <td>47 W 13th Street</td>
-                                  <td>New York</td>
-                                  <td>New York</td>
-                                  <td>USA</td>
-                                  <td>10011</td>
-                                  <td>
-                                    <a className="badge bg-success">Active</a>
-                                    <a className="badge bg-danger">Banned</a>
-                                  </td>
-                                  <td>
-                                    <a className="btn btn-sm btn-danger">
-                                      <i className="fa fa-ban"></i>
-                                    </a>
-                                  </td>
-                                </tr>
-                                <tr>
-                                  <td>
-                                    <img
-                                      alt="Avatar"
-                                      className="table-avatar"
-                                      src="/dist/img/avatar5.png"
-                                    />
-                                  </td>
-                                  <td>Full Name</td>
-                                  <td>email@email.com</td>
-                                  <td>9999999999</td>
-                                  <td>47 W 13th Street</td>
-                                  <td>New York</td>
-                                  <td>New York</td>
-                                  <td>USA</td>
-                                  <td>10011</td>
-                                  <td>
-                                    <a className="badge bg-success">Active</a>
-                                    <a className="badge bg-danger">Banned</a>
-                                  </td>
-                                  <td>
-                                    <a className="btn btn-sm btn-danger">
-                                      <i className="fa fa-ban"></i>
-                                    </a>
-                                  </td>
-                                </tr>
+                                {users.map((e, i) => {
+                                  return (
+                                    <tr>
+                                      <td>
+                                        <img
+                                          alt="Avatar"
+                                          className="table-avatar"
+                                          src={
+                                            e.image
+                                              ? formatImage(
+                                                  e.image.profile_picture
+                                                )
+                                              : "/dist/img/avatar.png"
+                                          }
+                                        />
+                                      </td>
+                                      <td>{e.details.full_name}</td>
+                                      <td>{e.email}</td>
+                                      <td>{e.details.mobile}</td>
+                                      <td>{e.details.address}</td>
+                                      <td>{e.details.city}</td>
+                                      <td>{e.details.state}</td>
+                                      <td>{e.details.country}</td>
+                                      <td>{e.details.zip_code}</td>
+                                      <td>
+                                        {e.is_active && (
+                                          <a className="badge bg-success">
+                                            Active
+                                          </a>
+                                        )}
+                                        {!e.is_active && (
+                                          <a className="badge bg-danger">
+                                            Banned
+                                          </a>
+                                        )}
+                                      </td>
+                                      <td onClick={() => switchStatus(e.id)}>
+                                        <a className="btn btn-sm btn-danger">
+                                          <i className="fa fa-ban"></i>
+                                        </a>
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
                               </tbody>
                             </table>
                           </div>

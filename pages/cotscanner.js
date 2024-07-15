@@ -451,7 +451,7 @@ const Cotscanner = () => {
 
                                         <td>
                                           {getThresholdSignal(
-                                            e.pair_comm_pct_change
+                                            e.pair_pct_change
                                           )}
                                         </td>
                                         <td>
@@ -466,7 +466,7 @@ const Cotscanner = () => {
                                           )}
                                         </td>
 
-                                        <td>{e.pair_comm_3_week_change}</td>
+                                        <td>{e.pair_3_week_change}</td>
                                         <td>60</td>
                                         <td>
                                           {get_diff_signal(

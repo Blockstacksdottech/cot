@@ -1,6 +1,25 @@
+import { postReq } from "@/helpers";
 import Head from "next/head";
+import { useRouter } from "next/router";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 export default function Forgotpassword() {
+  const [email, setEmail] = useState("");
+  const nav = useRouter();
+
+  const requestChange = async (e) => {
+    e.preventDefault();
+    const resp = await postReq("request-password-reset", { email });
+
+    if (resp) {
+      toast.success("Request Sent. Please check your email");
+      //nav.push("/");
+    } else {
+      toast.error("Failed");
+    }
+  };
+
   return (
     <>
       <Head>
@@ -32,12 +51,14 @@ export default function Forgotpassword() {
                 password.
               </p>
 
-              <form action="/cot-data" method="post">
+              <form>
                 <div className="input-group mb-3">
                   <input
                     type="email"
                     className="form-control"
                     placeholder="Email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
                   />
                   <div className="input-group-append">
                     <div className="input-group-text">
@@ -47,7 +68,11 @@ export default function Forgotpassword() {
                 </div>
                 <div className="row">
                   <div className="col-12">
-                    <button type="submit" className="btn btn-primary btn-block">
+                    <button
+                      type="submit"
+                      className="btn btn-primary btn-block"
+                      onClick={requestChange}
+                    >
                       Request New Password
                     </button>
                   </div>

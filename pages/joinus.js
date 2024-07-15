@@ -1,15 +1,19 @@
 import Head from "next/head";
 import Navbar from "./components/frontend/navbar";
 import Footer from "./components/frontend/footer";
-import React, { Component, useEffect, useState } from "react";
+import React, { Component, useContext, useEffect, useState } from "react";
 import Checker from "./components/Checker";
 import { postReq, req } from "@/helpers";
 import { loadStripe } from "@stripe/stripe-js";
 import { toast } from "react-toastify";
 import { public_stripe_key } from "@/helpers/constants";
+import { UserContext } from "@/contexts/UserContextData";
+import { useRouter } from "next/router";
 
 export default function Joinus(props) {
   const [payments, setPayments] = useState([]);
+  const { user, setUser } = useContext(UserContext);
+  const nav = useRouter();
 
   const fetchSessionId = async (body) => {
     const res = await postReq("checkout", body);
@@ -47,16 +51,24 @@ export default function Joinus(props) {
   }
 
   const handleCheckout = async (keyword) => {
-    const objects = filterByNameKeyword(payments, keyword);
-    if (objects.length > 0) {
-      console.log(objects[0]);
-      const payment_id = objects[0].price_id;
-      const body = {
-        price_id: payment_id,
-      };
-      await fetchSessionId(body);
+    if (!user.logged) {
+      toast.info("Register first");
+      nav.push("/register");
     } else {
-      toast.error("Not supported");
+      if (user.valid) {
+        nav.push("/cotscanner");
+      }
+      const objects = filterByNameKeyword(payments, keyword);
+      if (objects.length > 0) {
+        console.log(objects[0]);
+        const payment_id = objects[0].price_id;
+        const body = {
+          price_id: payment_id,
+        };
+        await fetchSessionId(body);
+      } else {
+        toast.error("Not supported");
+      }
     }
   };
 
@@ -72,7 +84,7 @@ export default function Joinus(props) {
   };
 
   return (
-    <Checker>
+    <Checker no_login={true}>
       <>
         <Head>
           <title>

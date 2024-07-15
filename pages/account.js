@@ -173,7 +173,7 @@ const Account = () => {
                                   src={
                                     image
                                       ? formatImage(image.profile_picture)
-                                      : "/dist/img/avatar5.png"
+                                      : "/dist/img/avatar.png"
                                   }
                                   className="img-circle elevation-1 img-fluid"
                                   style={{ width: 200 }}
