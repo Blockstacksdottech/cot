@@ -69,6 +69,11 @@ export default function Navbar({}) {
                 </a>
               </li>
               <li className="nav-item active">
+                <a className="nav-link" href="/video-pdf">
+                  Video's & Pdf
+                </a>
+              </li>
+              <li className="nav-item active">
                 <a className="nav-link" href="/contact">
                   CONTACT US
                 </a>

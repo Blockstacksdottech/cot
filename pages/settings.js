@@ -128,6 +128,14 @@ const Settings = () => {
                           <form>
                             <div className="form-group">
                               <input
+                                id="youtubeTopic"
+                                type="text"
+                                className="form-control"
+                                placeholder="Topic of Youtube Video"
+                              />
+                            </div>
+                            <div className="form-group">
+                              <input
                                 id="youtubeLink"
                                 type="text"
                                 className="form-control"
@@ -146,24 +154,30 @@ const Settings = () => {
                               </a>
                             </div>
                           </form>
-                          {links &&
-                            links.map((e, i) => (
-                              <div className="form-group">
-                                <table className="table table-sm table-bordered">
-                                  <tbody>
+
+                          <div className="form-group">
+                            <table className="table table-sm table-bordered">
+                              <tbody>
+                                {links &&
+                                  links.map((e, i) => (
                                     <tr>
                                       <td>#</td>
-                                      <td>{e.link}</td>
+                                      <td>
+                                        <h6 className="mb-1">
+                                          Topic goes here
+                                        </h6>
+                                        {e.link}
+                                      </td>
                                       <td onClick={() => deleteVid(e.id)}>
                                         <a className="btn btn-sm btn-danger">
                                           <i className="fa fa-trash"></i>
                                         </a>
                                       </td>
                                     </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            ))}
+                                  ))}
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -174,6 +188,14 @@ const Settings = () => {
                         </div>
                         <div className="card-body">
                           <form>
+                            <div className="form-group">
+                              <input
+                                id="pdfTopic"
+                                type="text"
+                                className="form-control"
+                                placeholder="Topic of PDF"
+                              />
+                            </div>
                             <div className="form-group">
                               <input
                                 id="pdf"
@@ -191,13 +213,15 @@ const Settings = () => {
                               </a>
                             </div>
                           </form>
-                          {file && (
-                            <div className="form-group">
-                              <table className="table table-sm table-bordered">
-                                <tbody>
+
+                          <div className="form-group">
+                            <table className="table table-sm table-bordered">
+                              <tbody>
+                                {file && (
                                   <tr>
                                     <td>#</td>
                                     <td>
+                                      <h6 className="mb-1">Topic goes here</h6>
                                       <a
                                         href={formatImage(file.file)}
                                         download
@@ -207,10 +231,10 @@ const Settings = () => {
                                       </a>
                                     </td>
                                   </tr>
-                                </tbody>
-                              </table>
-                            </div>
-                          )}
+                                )}
+                              </tbody>
+                            </table>
+                          </div>
                         </div>
                       </div>
                     </div>

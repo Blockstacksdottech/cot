@@ -29,7 +29,7 @@ export default function ContactUs() {
             <section className="mt-5">
               <div className="container">
                 <div class="row">
-                  <div class="col-5 m-auto text-center">
+                  <div class="col-lg-5 m-auto text-center">
                     <div class="text-white">
                       <h2>Frantzdy Trading CO</h2>
                       <p class="lead mb-3">
@@ -61,7 +61,7 @@ export default function ContactUs() {
                       </p>
                     </div>
                   </div>
-                  <div class="col-7">
+                  <div class="col-lg-7">
                     <div className="row">
                       <div className="col-lg-4">
                         <div class="form-group">

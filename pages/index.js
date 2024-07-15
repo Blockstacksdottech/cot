@@ -298,23 +298,7 @@ function Index() {
                   </div>
                 </div>
                 <div className="row">
-                  {links &&
-                    links.map((e, i) => {
-                      return (
-                        <div className="col-lg-6 mx-auto mb-3">
-                          <div className="text-center">
-                            <div class="embed-responsive embed-responsive-16by9">
-                              <iframe
-                                class="embed-responsive-item"
-                                src={e.link}
-                              ></iframe>
-                            </div>
-                          </div>
-                        </div>
-                      );
-                    })}
-
-                  {/* <div className="col-lg-6 mx-auto mb-3">
+                  <div className="col-lg-12 mb-3">
                     <div className="text-center">
                       <div class="embed-responsive embed-responsive-16by9">
                         <iframe
@@ -324,43 +308,7 @@ function Index() {
                       </div>
                     </div>
                   </div>
-                  <div className="col-lg-6 mx-auto mb-3">
-                    <div className="text-center">
-                      <div class="embed-responsive embed-responsive-16by9">
-                        <iframe
-                          class="embed-responsive-item"
-                          src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
-                        ></iframe>
-                      </div>
-                    </div>
-                  </div>
-                  <div className="col-lg-6 mx-auto mb-3">
-                    <div className="text-center">
-                      <div class="embed-responsive embed-responsive-16by9">
-                        <iframe
-                          class="embed-responsive-item"
-                          src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
-                        ></iframe>
-                      </div>
-                    </div>
-                  </div> */}
                 </div>
-                {pdf && (
-                  <div className="row mt-4">
-                    <div className="col-lg-12">
-                      <div className="text-center">
-                        <a
-                          className="btn btn-secondary"
-                          href={formatImage(pdf.file)}
-                          download
-                          target="_blank"
-                        >
-                          Download PDF
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                )}
               </div>
             </section>
 
