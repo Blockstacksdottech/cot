@@ -8,6 +8,7 @@ import { toast } from "react-toastify";
 
 export default function ContactUs() {
   const submitMessage = async () => {
+    toast.info("Sending...");
     const name = document.getElementById("inputName").value;
     const email = document.getElementById("inputEmail").value;
     const subject = document.getElementById("inputSubject").value;
@@ -23,6 +24,7 @@ export default function ContactUs() {
     if (resp) {
       toast.success("Sent");
     } else {
+      toast.error("Failed");
     }
   };
 

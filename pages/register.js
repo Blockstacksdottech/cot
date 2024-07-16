@@ -1,8 +1,8 @@
 import Head from "next/head";
 import Link from "next/link";
 import Footer from "./components/footer";
-import { adduser } from "@/helpers";
-import { useState } from "react";
+import { adduser, isLogged } from "@/helpers";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import Navbar from "./components/frontend/navbar";
@@ -13,6 +13,41 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const nav = useRouter();
+
+  useEffect(() => {
+    async function test() {
+      let resp = await isLogged();
+      console.log(resp);
+      let obj = { ...user };
+      if (resp) {
+        obj.logged = true;
+        obj.username = resp.username;
+        obj.email = resp.email;
+        obj.valid = resp.isValidSub;
+        obj.tier = resp.tier;
+        obj.isAdmin = resp.is_superuser;
+        setUser(obj);
+        //await updateSuppliers();
+        return obj;
+      } else {
+        return obj;
+      }
+    }
+
+    test().then((obj) => {
+      if (obj.logged) {
+        if (obj.isAdmin) {
+          nav.push("/cot-data");
+        } else if (obj.valid) {
+          nav.push("/cotscanner");
+        } else {
+          nav.push("/joinus");
+        }
+      } else {
+        nav.push("/login");
+      }
+    });
+  }, []);
 
   const handleRegister = async (e) => {
     e.preventDefault(); // Prevent default form submission behavior
