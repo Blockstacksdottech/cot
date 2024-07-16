@@ -337,6 +337,25 @@ const Cotdata = () => {
 
   useEffect(() => {}, [data]);
 
+  const calculate_comm_percentage = (entry) => {
+    let pair_long = 0;
+    let pair_short = 0;
+    if (entry.is_contract) {
+      pair_long = entry.base_comm_long;
+      pair_short = entry.base_comm_short;
+    } else {
+      pair_long = entry.base_comm_long + entry.quote_comm_long;
+      pair_short = entry.base_comm_short + entry.quote_comm_short;
+    }
+    return {
+      pair_long,
+      pair_short,
+      perc_long: toPercentage(pair_long / (pair_long + pair_short)),
+      perc_short: toPercentage(pair_short / (pair_long + pair_short)),
+      pair_diff: pair_long - pair_short,
+    };
+  };
+
   return (
     <>
       <Head>
@@ -364,7 +383,9 @@ const Cotdata = () => {
                     <div className="col-lg-12">
                       <div className="card card-primary card-outline">
                         <div className="card-header">
-                          <h3 className="card-title mb-0">Base Report</h3>
+                          <h3 className="card-title mb-0">
+                            Non Commercial Report
+                          </h3>
 
                           <div className="card-tools">
                             {exportableData.length > 0 && (
@@ -391,15 +412,19 @@ const Cotdata = () => {
                                 <tr>
                                   <th>Date</th>
                                   <th>Pair</th>
-                                  <th>Long</th>
-                                  <th>Short</th>
-                                  <th>Net Position</th>
-                                  <th>Comm Long</th>
-                                  <th>Comm Short</th>
-                                  <th>Comm Net Position</th>
-                                  <th>Nonrep Long</th>
-                                  <th>Nonrep Short</th>
-                                  <th>Nonrep Net Position</th>
+                                  <th>Base Long</th>
+                                  <th>Base Short</th>
+                                  <th>Base Net Position</th>
+                                  <th>Quote Long</th>
+                                  <th>Quote Short</th>
+                                  <th>Quote Net Position</th>
+                                  <th>Pair Long</th>
+                                  <th>Pair Short</th>
+                                  <th>Pair Net Position</th>
+                                  <th>% Pair long</th>
+                                  <th>% Pair Short</th>
+                                  <th>% Diff Absolute Long</th>
+                                  <th>% Diff Absolute Short</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -412,16 +437,39 @@ const Cotdata = () => {
                                           <td>{entry.pair}</td>
                                           <td>{entry.base_long}</td>
                                           <td>{entry.base_short}</td>
-                                          <td>{entry.base_net_position}</td>
-                                          <td>{entry.base_comm_long}</td>
-                                          <td>{entry.base_comm_short}</td>
                                           <td>
-                                            {entry.base_comm_net_position}
+                                            {entry.base_long - entry.base_short}
                                           </td>
-                                          <td>{entry.base_nonrep_long}</td>
-                                          <td>{entry.base_nonrep_short}</td>
+                                          <td>{entry.quote_long}</td>
+                                          <td>{entry.quote_short}</td>
                                           <td>
-                                            {entry.base_nonrep_net_position}
+                                            {entry.quote_long -
+                                              entry.quote_short}
+                                          </td>
+                                          <td>{entry.pair_long}</td>
+                                          <td>{entry.pair_short}</td>
+                                          <td>
+                                            {entry.pair_long - entry.pair_short}
+                                          </td>
+                                          <td>
+                                            {toPercentage(
+                                              entry.pair_long /
+                                                (entry.pair_long +
+                                                  entry.pair_short)
+                                            )}
+                                          </td>
+                                          <td>
+                                            {toPercentage(
+                                              entry.pair_short /
+                                                (entry.pair_long +
+                                                  entry.pair_short)
+                                            )}
+                                          </td>
+                                          <td>
+                                            {entry.noncomm_diff_absolute_long}
+                                          </td>
+                                          <td>
+                                            {entry.noncomm_diff_absolute_short}
                                           </td>
                                         </tr>
                                       );
@@ -440,7 +488,7 @@ const Cotdata = () => {
                     <div className="col-lg-12">
                       <div className="card card-primary card-outline">
                         <div className="card-header">
-                          <h3 className="card-title mb-0">Quote Report</h3>
+                          <h3 className="card-title mb-0">Commercial Report</h3>
 
                           <div className="card-tools">
                             {exportableData.length > 0 && (
@@ -467,15 +515,19 @@ const Cotdata = () => {
                                 <tr>
                                   <th>Date</th>
                                   <th>Pair</th>
-                                  <th>Long</th>
-                                  <th>Short</th>
-                                  <th>Net Position</th>
-                                  <th>Comm Long</th>
-                                  <th>Comm Short</th>
-                                  <th>Comm Net Position</th>
-                                  <th>Nonrep Long</th>
-                                  <th>Nonrep Short</th>
-                                  <th>Nonrep Net Position</th>
+                                  <th>Base Long</th>
+                                  <th>Base Short</th>
+                                  <th>Base Net Position</th>
+                                  <th>Quote Long</th>
+                                  <th>Quote Short</th>
+                                  <th>Quote Net Position</th>
+                                  <th>Pair Long</th>
+                                  <th>Pair Short</th>
+                                  <th>Pair Net Position</th>
+                                  <th>% Pair long</th>
+                                  <th>% Pair Short</th>
+                                  <th>% Diff Absolute Long</th>
+                                  <th>% Diff Absolute Short</th>
                                 </tr>
                               </thead>
                               <tbody>
@@ -486,18 +538,159 @@ const Cotdata = () => {
                                         <tr key={index}>
                                           <td>{date && formatDate(date)}</td>
                                           <td>{entry.pair}</td>
-                                          <td>{entry.quote_long}</td>
-                                          <td>{entry.quote_short}</td>
-                                          <td>{entry.quote_net_position}</td>
+                                          <td>{entry.base_comm_long}</td>
+                                          <td>{entry.base_comm_short}</td>
+                                          <td>
+                                            {entry.base_comm_long -
+                                              entry.base_comm_short}
+                                          </td>
                                           <td>{entry.quote_comm_long}</td>
                                           <td>{entry.quote_comm_short}</td>
                                           <td>
-                                            {entry.quote_comm_net_position}
+                                            {entry.quote_comm_long -
+                                              entry.quote_comm_short}
+                                          </td>
+                                          <td>
+                                            {
+                                              calculate_comm_percentage(entry)
+                                                .pair_long
+                                            }
+                                          </td>
+                                          <td>
+                                            {
+                                              calculate_comm_percentage(entry)
+                                                .pair_short
+                                            }
+                                          </td>
+                                          <td>
+                                            {calculate_comm_percentage(entry)
+                                              .pair_long -
+                                              calculate_comm_percentage(entry)
+                                                .pair_short}
+                                          </td>
+                                          <td>
+                                            {
+                                              calculate_comm_percentage(entry)
+                                                .perc_long
+                                            }
+                                          </td>
+                                          <td>
+                                            {
+                                              calculate_comm_percentage(entry)
+                                                .perc_short
+                                            }
+                                          </td>
+                                          <td>
+                                            {entry.comm_diff_absolute_long}
+                                          </td>
+                                          <td>
+                                            {entry.comm_diff_absolute_short}
+                                          </td>
+                                        </tr>
+                                      );
+                                    })}
+                                  </>
+                                )}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="row pt-4">
+                    <div className="col-lg-12">
+                      <div className="card card-primary card-outline">
+                        <div className="card-header">
+                          <h3 className="card-title mb-0">
+                            Non-Reportable Report
+                          </h3>
+
+                          <div className="card-tools">
+                            {exportableData.length > 0 && (
+                              <>
+                                <Downloader
+                                  filename="my_data.csv"
+                                  elementType="button"
+                                  disabled={false} // Set to true to disable download
+                                  datas={exportableData}
+                                >
+                                  <a className="btn btn-sm btn-primary">
+                                    Export COT Data
+                                  </a>
+                                </Downloader>
+                              </>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="card-body">
+                          <div className="table-responsive p-0">
+                            <table className="table table-bordered table-hover table-sm datatable">
+                              <thead>
+                                <tr>
+                                  <th>Date</th>
+                                  <th>Pair</th>
+                                  <th>Base Long</th>
+                                  <th>Base Short</th>
+                                  <th>Base Net Position</th>
+                                  <th>% Base long</th>
+                                  <th>% Base Short</th>
+                                  <th>Quote Long</th>
+                                  <th>Quote Short</th>
+                                  <th>Quote Net Position</th>
+                                  <th>% Quote long</th>
+                                  <th>% Quote Short</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {data && (
+                                  <>
+                                    {data.map((entry, index) => {
+                                      return (
+                                        <tr key={index}>
+                                          <td>{date && formatDate(date)}</td>
+                                          <td>{entry.pair}</td>
+                                          <td>{entry.base_nonrep_long}</td>
+                                          <td>{entry.base_nonrep_short}</td>
+                                          <td>
+                                            {entry.base_nonrep_long -
+                                              entry.base_nonrep_short}
+                                          </td>
+                                          <td>
+                                            {toPercentage(
+                                              entry.base_nonrep_long /
+                                                (entry.base_nonrep_long +
+                                                  entry.base_nonrep_short)
+                                            )}
+                                          </td>
+                                          <td>
+                                            {toPercentage(
+                                              entry.base_nonrep_short /
+                                                (entry.base_nonrep_long +
+                                                  entry.base_nonrep_short)
+                                            )}
                                           </td>
                                           <td>{entry.quote_nonrep_long}</td>
                                           <td>{entry.quote_nonrep_short}</td>
                                           <td>
-                                            {entry.quote_nonrep_net_position}
+                                            {entry.quote_nonrep_long -
+                                              entry.quote_nonrep_short}
+                                          </td>
+                                          <td>
+                                            {toPercentage(
+                                              entry.quote_nonrep_long /
+                                                (entry.quote_nonrep_long +
+                                                  entry.quote_nonrep_short)
+                                            )}
+                                          </td>
+                                          <td>
+                                            {toPercentage(
+                                              entry.quote_nonrep_short /
+                                                (entry.quote_nonrep_long +
+                                                  entry.quote_nonrep_short)
+                                            )}
                                           </td>
                                         </tr>
                                       );

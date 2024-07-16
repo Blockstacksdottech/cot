@@ -433,7 +433,7 @@ const Cotscanner = () => {
                                   <th>5 WEEK % NET SHIFT</th>
                                   <th>3 WEEK COT SIGNAL</th>
                                   <th>3 WEEK % NET SHIFT</th>
-                                  <th>ADR</th>
+                                  {/* <th>ADR</th> */}
                                   <th>LONG TERM COT SIGNAL</th>
                                   <th>SENTIMENT SIGNAL</th>
                                   <th>% LONG</th>
@@ -467,7 +467,7 @@ const Cotscanner = () => {
                                         </td>
 
                                         <td>{e.pair_3_week_change}</td>
-                                        <td>60</td>
+                                        {/* <td>60</td> */}
                                         <td>
                                           {get_diff_signal(
                                             e.noncomm_10_diff_absolute_long,
@@ -584,6 +584,20 @@ const Cotscanner = () => {
                               </tbody>
                             </table>
                           </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <div className="row pt-4">
+                      <div className="col-lg-12 ">
+                        <div>
+                          <iframe
+                            src="https://widgets.myfxbook.com/widgets/market-volatility.html?symbols=8,47,9,10,1234,11,103,12,46,1245,6,13,14,15,17,18,7,2114,19,20,21,22,1246,23,1,1233,107,24,25,4,2872,137,48,1236,1247,2012,2,1863,3240,26,49,27,28,2090,131,5,29,5779,31,34,3,36,37,38,2076,40,41,42,43,45,3005,3473,50,2115,2603,2119,1815,2521,51,5435,5079,1893&type=0"
+                            width="100%"
+                            height="100%"
+                            frameBorder={0}
+                          />
                         </div>
                       </div>
                     </div>

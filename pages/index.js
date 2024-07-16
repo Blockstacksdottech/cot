@@ -9,28 +9,6 @@ import Checker from "./components/Checker";
 function Index() {
   const [data, setData] = useState([]);
   const [date, setDate] = useState(null);
-  const [links, setLinks] = useState([]);
-  const [pdf, setPdf] = useState(null);
-
-  const fetchFile = async () => {
-    const resp = await req("public-pdf-file");
-    if (resp) {
-      console.log(resp);
-      setPdf(resp);
-    } else {
-      setPdf(null);
-    }
-  };
-
-  const fetchLink = async () => {
-    const resp = await req("public-video-link");
-    if (resp) {
-      console.log(resp);
-      setLinks(resp);
-    } else {
-      setLinks(null);
-    }
-  };
 
   const fetchData = async () => {
     const resp = await req("top");
@@ -41,8 +19,6 @@ function Index() {
   };
 
   const refreshData = async () => {
-    await fetchLink();
-    await fetchFile();
     await fetchData();
   };
 

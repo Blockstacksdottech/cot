@@ -3,8 +3,29 @@ import Navbar from "./components/frontend/navbar";
 import Footer from "./components/frontend/footer";
 import React, { Component } from "react";
 import Checker from "./components/Checker";
+import { postReq } from "@/helpers";
+import { toast } from "react-toastify";
 
 export default function ContactUs() {
+  const submitMessage = async () => {
+    const name = document.getElementById("inputName").value;
+    const email = document.getElementById("inputEmail").value;
+    const subject = document.getElementById("inputSubject").value;
+    const message = document.getElementById("inputMessage").value;
+    const body = {
+      name,
+      email,
+      subject,
+      message,
+    };
+
+    const resp = await postReq("contact", body);
+    if (resp) {
+      toast.success("Sent");
+    } else {
+    }
+  };
+
   return (
     <>
       <Head>
@@ -108,7 +129,10 @@ export default function ContactUs() {
                           <input
                             type="submit"
                             class="btn btn-secondary"
-                            value="Send message"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              submitMessage();
+                            }}
                           />
                         </div>
                       </div>

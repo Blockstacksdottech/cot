@@ -17,7 +17,7 @@ import { UserContext } from "@/contexts/UserContextData";
 import { toast } from "react-toastify";
 
 const Settings = () => {
-  const [file, setFile] = useState(null);
+  const [file, setFile] = useState([]);
   const [links, setLinks] = useState([]);
   const [loading, setLoading] = useState(true);
   const { user, setUser } = useContext(UserContext);
@@ -55,11 +55,12 @@ const Settings = () => {
   }, [user]);
 
   async function updateFile() {
+    const topic = document.getElementById("pdfTopic").value;
     const files = document.getElementById("pdf").files;
     if (files.length === 0) {
-      toast.error("Please select a picture");
+      toast.error("Please select a file");
     } else {
-      const res = await uploadFiles(files, {}, "file", "pdf-file");
+      const res = await uploadFiles(files, { topic }, "file", "pdf-file");
       if (res) {
         toast.success("Updated");
         await fetchFile();
@@ -70,8 +71,11 @@ const Settings = () => {
   }
 
   const updateLink = async () => {
+    const topic = document.getElementById("youtubeTopic").value;
+
     const body = {
       link: newLink,
+      topic,
     };
     const resp = await postReq("video-link", body);
     if (resp) {
@@ -88,6 +92,16 @@ const Settings = () => {
     if (resp) {
       toast.success("deleted");
       fetchLink();
+    } else {
+      toast.error("Failed deleting link");
+    }
+  };
+  const deleteFile = async (fid) => {
+    console.log(`deleting file id : ${fid}`);
+    const resp = await postReq("delete-pdf-file", { fid });
+    if (resp) {
+      toast.success("deleted");
+      fetchFile();
     } else {
       toast.error("Failed deleting link");
     }
@@ -163,9 +177,7 @@ const Settings = () => {
                                     <tr>
                                       <td>#</td>
                                       <td>
-                                        <h6 className="mb-1">
-                                          Topic goes here
-                                        </h6>
+                                        <h6 className="mb-1">{e.topic}</h6>
                                         {e.link}
                                       </td>
                                       <td onClick={() => deleteVid(e.id)}>
@@ -217,21 +229,29 @@ const Settings = () => {
                           <div className="form-group">
                             <table className="table table-sm table-bordered">
                               <tbody>
-                                {file && (
-                                  <tr>
-                                    <td>#</td>
-                                    <td>
-                                      <h6 className="mb-1">Topic goes here</h6>
-                                      <a
-                                        href={formatImage(file.file)}
-                                        download
-                                        target="_blank"
-                                      >
-                                        {file.file}
-                                      </a>
-                                    </td>
-                                  </tr>
-                                )}
+                                {file &&
+                                  file.map((e, i) => {
+                                    return (
+                                      <tr>
+                                        <td>#</td>
+                                        <td>
+                                          <h6 className="mb-1">{e.topic}</h6>
+                                          <a
+                                            href={formatImage(e.file)}
+                                            download
+                                            target="_blank"
+                                          >
+                                            {e.file}
+                                          </a>
+                                        </td>
+                                        <td onClick={() => deleteFile(e.id)}>
+                                          <a className="btn btn-sm btn-danger">
+                                            <i className="fa fa-trash"></i>
+                                          </a>
+                                        </td>
+                                      </tr>
+                                    );
+                                  })}
                               </tbody>
                             </table>
                           </div>

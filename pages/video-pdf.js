@@ -1,10 +1,43 @@
 import Head from "next/head";
 import Navbar from "./components/frontend/navbar";
 import Footer from "./components/frontend/footer";
-import React, { Component } from "react";
+import React, { Component, useEffect, useState } from "react";
 import Checker from "./components/Checker";
+import { formatImage, req } from "@/helpers";
 
 export default function VideoPdf() {
+  const [links, setLinks] = useState([]);
+  const [pdf, setPdf] = useState(null);
+
+  const fetchFile = async () => {
+    const resp = await req("public-pdf-file");
+    if (resp) {
+      console.log(resp);
+      setPdf(resp);
+    } else {
+      setPdf(null);
+    }
+  };
+
+  const fetchLink = async () => {
+    const resp = await req("public-video-link");
+    if (resp) {
+      console.log(resp);
+      setLinks(resp);
+    } else {
+      setLinks(null);
+    }
+  };
+
+  const refreshData = async () => {
+    await fetchLink();
+    await fetchFile();
+  };
+
+  useEffect(() => {
+    refreshData();
+  }, []);
+
   return (
     <>
       <Head>
@@ -12,7 +45,7 @@ export default function VideoPdf() {
           Frantzdy Trading CO - Trading become easier when you trade with us
         </title>
       </Head>
-      <Checker no_check={true} no_login={true}>
+      <Checker tier={1}>
         <Navbar />
 
         <div className="content-wrapper">
@@ -30,30 +63,23 @@ export default function VideoPdf() {
               <div className="container-fluid">
                 <div class="row">
                   <div className="col-lg-8">
-                    <div className="video">
-                      <div class="embed-responsive embed-responsive-16by9">
-                        <iframe
-                          class="embed-responsive-item"
-                          src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
-                          allowFullScreen
-                        ></iframe>
-                      </div>
-                      <h5 className="text-white my-4 text-center">
-                        Topic of Video goes here
-                      </h5>
-                    </div>
-                    <div className="video">
-                      <div class="embed-responsive embed-responsive-16by9 mb-4">
-                        <iframe
-                          class="embed-responsive-item"
-                          src="https://www.youtube.com/embed/zpOULjyy-n8?rel=0"
-                          allowFullScreen
-                        ></iframe>
-                      </div>
-                      <h5 className="text-white my-4 text-center">
-                        Topic of Video goes here
-                      </h5>
-                    </div>
+                    {links &&
+                      links.map((e, i) => {
+                        return (
+                          <div className="video">
+                            <div class="embed-responsive embed-responsive-16by9">
+                              <iframe
+                                class="embed-responsive-item"
+                                src={e.link}
+                                allowFullScreen
+                              ></iframe>
+                            </div>
+                            <h5 className="text-white my-4 text-center">
+                              {e.topic}
+                            </h5>
+                          </div>
+                        );
+                      })}
                   </div>
                   <div className="col-lg-4">
                     <div class="card">
@@ -62,31 +88,20 @@ export default function VideoPdf() {
                       </div>
                       <div class="card-body p-0">
                         <ul class="nav nav-pills flex-column">
-                          <li class="nav-item">
-                            <a class="nav-link p-tag-big" href="#" download>
-                              <i class="fas fa-file-pdf"></i> Topic goes here
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link p-tag-big" href="#" download>
-                              <i class="fas fa-file-pdf"></i> Topic goes here
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link p-tag-big" href="#" download>
-                              <i class="fas fa-file-pdf"></i> Topic goes here
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link p-tag-big" href="#" download>
-                              <i class="fas fa-file-pdf"></i> Topic goes here
-                            </a>
-                          </li>
-                          <li class="nav-item">
-                            <a class="nav-link p-tag-big" href="#" download>
-                              <i class="fas fa-file-pdf"></i> Topic goes here
-                            </a>
-                          </li>
+                          {pdf &&
+                            pdf.map((e, i) => {
+                              return (
+                                <li class="nav-item">
+                                  <a
+                                    class="nav-link p-tag-big"
+                                    href={formatImage(e.file)}
+                                    download
+                                  >
+                                    <i class="fas fa-file-pdf"></i> {e.topic}
+                                  </a>
+                                </li>
+                              );
+                            })}
                         </ul>
                       </div>
                     </div>

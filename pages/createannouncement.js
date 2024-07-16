@@ -1,10 +1,50 @@
 import Head from "next/head";
 import Navbar from "./components/frontend/navbar";
 import Footer from "./components/frontend/footer";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Checker from "./components/Checker";
+import { req, postReq, deleteReq, formatDate } from "@/helpers";
+import { toast } from "react-toastify";
 
 export default function CreateAnnouncement() {
+  const [announcements, setAnnouncements] = useState([]);
+  const [topic, setTopic] = useState("");
+  const [description, setDescription] = useState("");
+
+  const fetchAnnouncements = async () => {
+    const resp = await req("adm-announcement");
+    if (resp) {
+      setAnnouncements(resp);
+    }
+  };
+
+  useEffect(() => {
+    fetchAnnouncements();
+  }, []);
+
+  const create_Announcement = async (e) => {
+    e.preventDefault();
+    const body = {
+      topic,
+      description,
+    };
+    const resp = await postReq("adm-announcement/", body);
+    if (resp) {
+      toast.success("Announcement created");
+      fetchAnnouncements();
+    }
+  };
+
+  const deleteAnnounc = async (id) => {
+    const resp = await deleteReq(`adm-announcement/${id}`);
+    if (resp) {
+      toast.success("Deleted");
+      fetchAnnouncements();
+    } else {
+      toast.error("Failed");
+    }
+  };
+
   return (
     <>
       <Head>
@@ -12,7 +52,7 @@ export default function CreateAnnouncement() {
           Frantzdy Trading CO - Trading become easier when you trade with us
         </title>
       </Head>
-      <Checker no_check={true} no_login={true}>
+      <Checker only_admin={true}>
         <Navbar />
 
         <div className="content-wrapper">
@@ -42,6 +82,8 @@ export default function CreateAnnouncement() {
                               type="text"
                               className="form-control"
                               placeholder="Topic of Announcement"
+                              value={topic}
+                              onChange={(e) => setTopic(e.target.value)}
                             />
                           </div>
                           <div className="form-group">
@@ -49,10 +91,21 @@ export default function CreateAnnouncement() {
                               className="form-control"
                               placeholder="Description"
                               rows={7}
+                              value={description}
+                              onChange={(e) => setDescription(e.target.value)}
                             ></textarea>
                           </div>
                           <div className="form-group float-right">
-                            <a className="btn btn-primary">Save</a>
+                            <button
+                              className="btn btn-primary"
+                              onClick={(e) => {
+                                e.preventDefault();
+                                console.log("clicked");
+                                create_Announcement(e);
+                              }}
+                            >
+                              Save
+                            </button>
                           </div>
                         </form>
                       </div>
@@ -71,42 +124,32 @@ export default function CreateAnnouncement() {
                             <thead>
                               <tr>
                                 <th>Date</th>
-                                <th>Time</th>
                                 <th>Topic</th>
                                 <th>Description</th>
                                 <th></th>
                               </tr>
                             </thead>
                             <tbody>
-                              <tr>
-                                <td>Tue, 16 July, 2024</td>
-                                <td>01:12 PM</td>
-                                <td>Lorem ipsum dolor sit amet</td>
-                                <td style={{ width: "50%" }}>
-                                  Contrary to popular belief, Lorem Ipsum is not
-                                  simply random text. It has roots in a piece of
-                                  classical Latin literature from 45 BC, making
-                                  it over 2000 years old. Richard McClintock, a
-                                  Latin professor at Hampden-Sydney College in
-                                  Virginia, looked up one of the more obscure
-                                  Latin words, consectetur, from a Lorem Ipsum
-                                  passage, and going through the cites of the
-                                  word in classical literature, discovered the
-                                  undoubtable source. Lorem Ipsum comes from
-                                  sections 1.10.32 and 1.10.33 of "de Finibus
-                                  Bonorum et Malorum" (The Extremes of Good and
-                                  Evil) by Cicero, written in 45 BC. This book
-                                  is a treatise on the theory of ethics, very
-                                  popular during the Renaissance. The first line
-                                  of Lorem Ipsum, "Lorem ipsum dolor sit
-                                  amet..", comes from a line in section 1.10.32.
-                                </td>
-                                <td>
-                                  <a className="btn btn-sm btn-danger">
-                                    <i className="fa fa-trash"></i>
-                                  </a>
-                                </td>
-                              </tr>
+                              {announcements &&
+                                announcements.map((e, i) => {
+                                  return (
+                                    <tr>
+                                      <td>{formatDate(new Date(e.date))}</td>
+                                      <td>{e.topic}</td>
+                                      <td style={{ width: "50%" }}>
+                                        {e.description}
+                                      </td>
+                                      <td>
+                                        <a
+                                          className="btn btn-sm btn-danger"
+                                          onClick={() => deleteAnnounc(e.id)}
+                                        >
+                                          <i className="fa fa-trash"></i>
+                                        </a>
+                                      </td>
+                                    </tr>
+                                  );
+                                })}
                             </tbody>
                           </table>
                         </div>

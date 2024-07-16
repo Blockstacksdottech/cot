@@ -1,7 +1,7 @@
 import axios from "axios";
 
-//export const base = "http://127.0.0.1:8000";
-export const base = "https://frantzdytradingco.com";
+export const base = "http://127.0.0.1:8000";
+//export const base = "https://frantzdytradingco.com";
 export const api = base + "/api/";
 //var fileDownload = require('js-file-download');
 function set_header(token = null) {
@@ -478,6 +478,32 @@ export async function req(url, base_use = false) {
   }
 }
 
+export async function deleteReq(url, base_use = false) {
+  let access = sessionStorage.getItem("accessToken");
+  let headers = set_header(access);
+
+  let options = {
+    method: "delete",
+    headers: headers,
+    mode: "cors",
+  };
+
+  let preResp = await fetch((base_use ? base : api) + url, options);
+  if (preResp.ok) {
+    return true;
+  } else if (preResp.status == 401) {
+    let dec = await refreshToken();
+    if (dec) {
+      return deleteReq(url, base_use);
+    } else {
+      return false;
+    }
+  } else {
+    console.log("other errors");
+    return false;
+  }
+}
+
 export async function req_body(url, body) {
   let access = sessionStorage.getItem("accessToken");
   let headers = set_header(access);
@@ -613,4 +639,13 @@ export function calculateNet(entry) {
     pair_net_position = entry.base_net_position;
   }
   return pair_net_position;
+}
+
+export function formatDateLocal(dateString) {
+  // Create a new Date object from the input string
+  const date = new Date(dateString);
+
+  // Format the date using toLocaleDateString
+  const options = { year: "numeric", month: "long", day: "numeric" };
+  return date.toLocaleDateString(undefined, options);
 }
