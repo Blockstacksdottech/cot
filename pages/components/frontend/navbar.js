@@ -74,6 +74,11 @@ export default function Navbar({}) {
                 </a>
               </li>
               <li className="nav-item active">
+                <a className="nav-link" href="/announcement">
+                  ANNOUNCEMENT
+                </a>
+              </li>
+              <li className="nav-item active">
                 <a className="nav-link" href="/contact">
                   CONTACT US
                 </a>
@@ -118,9 +123,16 @@ export default function Navbar({}) {
                       </li>
                     )}
 
+                    {user && user.isAdmin && (
+                      <li className="user-footer bg-primary">
+                        <a href="/createannouncement">Create Announcement</a>
+                      </li>
+                    )}
+
                     <li className="user-footer bg-primary">
                       <a href="/account">Account Management</a>
                     </li>
+
                     {user && user.isAdmin && (
                       <li className="user-footer bg-primary">
                         <a href="/settings">Settings</a>

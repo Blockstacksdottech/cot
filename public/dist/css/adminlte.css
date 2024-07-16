@@ -2112,16 +2112,20 @@ pre code {
 }
 
 @-webkit-keyframes blinker {
-  from {opacity: 1.0;}
-  to {opacity: 0.0;}
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
 }
-.blink{
-	text-decoration: blink;
-	-webkit-animation-name: blinker;
-	-webkit-animation-duration: 0.6s;
-	-webkit-animation-iteration-count:infinite;
-	-webkit-animation-timing-function:ease-in-out;
-	-webkit-animation-direction: alternate;
+.blink {
+  text-decoration: blink;
+  -webkit-animation-name: blinker;
+  -webkit-animation-duration: 0.6s;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: ease-in-out;
+  -webkit-animation-direction: alternate;
 }
 
 .form-control {
@@ -13405,7 +13409,7 @@ body:not(.layout-fixed) .main-sidebar .sidebar {
 .main-header .nav-link {
   height: 2.5rem;
   position: relative;
-  font-size: 1rem;
+  font-size: 14px;
   text-transform: uppercase;
 }
 
@@ -68832,5 +68836,11 @@ a.text-muted:hover {
 .dark-mode .border-dark {
   border-color: #4b545c !important;
 }
+
+.contact-form-control {
+  color: #e3eaf6 !important;
+}
+
 /*# sourceMappingURL=adminlte.css.map */
+
 

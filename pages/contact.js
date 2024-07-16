@@ -69,7 +69,7 @@ export default function ContactUs() {
                           <input
                             type="text"
                             id="inputName"
-                            class="form-control"
+                            class="form-control contact-form-control"
                           />
                         </div>
                       </div>
@@ -79,7 +79,7 @@ export default function ContactUs() {
                           <input
                             type="email"
                             id="inputEmail"
-                            class="form-control"
+                            class="form-control contact-form-control"
                           />
                         </div>
                       </div>
@@ -89,7 +89,7 @@ export default function ContactUs() {
                           <input
                             type="text"
                             id="inputSubject"
-                            class="form-control"
+                            class="form-control contact-form-control"
                           />
                         </div>
                       </div>
@@ -100,7 +100,7 @@ export default function ContactUs() {
                           <label className="text-white">Message</label>
                           <textarea
                             id="inputMessage"
-                            class="form-control"
+                            class="form-control contact-form-control"
                             rows="4"
                           ></textarea>
                         </div>
