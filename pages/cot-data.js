@@ -337,6 +337,25 @@ const Cotdata = () => {
 
   useEffect(() => {}, [data]);
 
+  const calculate_percentage = (entry) => {
+    let pair_long = 0;
+    let pair_short = 0;
+    if (entry.is_contract) {
+      pair_long = entry.base_long;
+      pair_short = entry.base_short;
+    } else {
+      pair_long = entry.base_long + entry.quote_long;
+      pair_short = entry.base_short + entry.quote_short;
+    }
+    return {
+      pair_long,
+      pair_short,
+      perc_long: toPercentage(pair_long / (pair_long + pair_short)),
+      perc_short: toPercentage(pair_short / (pair_long + pair_short)),
+      pair_diff: pair_long - pair_short,
+    };
+  };
+
   const calculate_comm_percentage = (entry) => {
     let pair_long = 0;
     let pair_short = 0;
@@ -446,24 +465,35 @@ const Cotdata = () => {
                                             {entry.quote_long -
                                               entry.quote_short}
                                           </td>
-                                          <td>{entry.pair_long}</td>
-                                          <td>{entry.pair_short}</td>
                                           <td>
-                                            {entry.pair_long - entry.pair_short}
+                                            {
+                                              calculate_percentage(entry)
+                                                .pair_long
+                                            }
                                           </td>
                                           <td>
-                                            {toPercentage(
-                                              entry.pair_long /
-                                                (entry.pair_long +
-                                                  entry.pair_short)
-                                            )}
+                                            {
+                                              calculate_percentage(entry)
+                                                .pair_short
+                                            }
                                           </td>
                                           <td>
-                                            {toPercentage(
-                                              entry.pair_short /
-                                                (entry.pair_long +
-                                                  entry.pair_short)
-                                            )}
+                                            {calculate_percentage(entry)
+                                              .pair_long -
+                                              calculate_percentage(entry)
+                                                .pair_short}
+                                          </td>
+                                          <td>
+                                            {
+                                              calculate_percentage(entry)
+                                                .perc_long
+                                            }
+                                          </td>
+                                          <td>
+                                            {
+                                              calculate_percentage(entry)
+                                                .perc_short
+                                            }
                                           </td>
                                           <td>
                                             {entry.noncomm_diff_absolute_long}

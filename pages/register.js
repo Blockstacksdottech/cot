@@ -2,10 +2,11 @@ import Head from "next/head";
 import Link from "next/link";
 import Footer from "./components/footer";
 import { adduser, isLogged } from "@/helpers";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useRouter } from "next/router";
 import Navbar from "./components/frontend/navbar";
+import { UserContext } from "@/contexts/UserContextData";
 
 export default function Register() {
   const [name, setName] = useState("");
@@ -13,6 +14,7 @@ export default function Register() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const nav = useRouter();
+  const { user, setUser } = useContext(UserContext);
 
   useEffect(() => {
     async function test() {
@@ -43,8 +45,6 @@ export default function Register() {
         } else {
           nav.push("/joinus");
         }
-      } else {
-        nav.push("/login");
       }
     });
   }, []);

@@ -238,7 +238,13 @@ export default function Joinus(props) {
                     <div className="h-100 card card-secondary">
                       <div className="card-header border-0 text-center">
                         ENTERPRISE
-                        <h2 className="mb-0">Custom Price</h2>
+                        <h3 className="mb-0">
+                          $
+                          {getPrice("custom")
+                            ? getPrice("custom").toFixed(2)
+                            : "Undefined"}
+                          /2Years
+                        </h3>
                       </div>
                       <div className="card-body p-0">
                         <ul className="products-list product-list-in-card text-center">
@@ -266,7 +272,7 @@ export default function Joinus(props) {
                           <a
                             type="button"
                             className="btn btn-primary"
-                            href="/register"
+                            onClick={() => handleCheckout("custom")}
                           >
                             Select
                           </a>
