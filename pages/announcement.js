@@ -26,7 +26,7 @@ export default function Announcement() {
           Frantzdy Trading CO - Trading become easier when you trade with us
         </title>
       </Head>
-      <Checker no_check={true} no_login={true}>
+      <Checker tier={1}>
         <Navbar />
 
         <div className="content-wrapper">
