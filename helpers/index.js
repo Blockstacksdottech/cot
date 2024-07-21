@@ -478,6 +478,33 @@ export async function req(url, base_use = false) {
   }
 }
 
+export async function reqNoAuth(url, base_use = false) {
+  let access = sessionStorage.getItem("accessToken");
+  let headers = set_header();
+
+  let options = {
+    method: "get",
+    headers: headers,
+    mode: "cors",
+  };
+
+  let preResp = await fetch((base_use ? base : api) + url, options);
+  if (preResp.ok) {
+    let resp = await preResp.json();
+    return resp;
+  } else if (preResp.status == 401) {
+    let dec = await refreshToken();
+    if (dec) {
+      return reqNoAuth(url, base_use);
+    } else {
+      return false;
+    }
+  } else {
+    console.log("other errors");
+    return false;
+  }
+}
+
 export async function deleteReq(url, base_use = false) {
   let access = sessionStorage.getItem("accessToken");
   let headers = set_header(access);
@@ -648,4 +675,19 @@ export function formatDateLocal(dateString) {
   // Format the date using toLocaleDateString
   const options = { year: "numeric", month: "long", day: "numeric" };
   return date.toLocaleDateString(undefined, options);
+}
+
+export function getSubName(tier) {
+  switch (tier) {
+    case 1:
+      return "Basic";
+    case 2:
+      return "Standard";
+    case 3:
+      return "Premium";
+    case 4:
+      return "Custom";
+    default:
+      return "Free";
+  }
 }

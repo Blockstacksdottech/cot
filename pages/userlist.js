@@ -5,6 +5,7 @@ import React, { Component, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import {
   formatImage,
+  getSubName,
   isLogged,
   patchReq,
   postReq,
@@ -115,7 +116,11 @@ const Userlist = () => {
                                       <td>{e.details.state}</td>
                                       <td>{e.details.country}</td>
                                       <td>{e.details.zip_code}</td>
-                                      <td>Basic</td>
+                                      <td>
+                                        {e.sub.valid
+                                          ? getSubName(e.sub.tier)
+                                          : "Free"}
+                                      </td>
                                       <td>
                                         {e.is_active && (
                                           <a className="badge bg-success">

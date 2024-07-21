@@ -3,7 +3,7 @@ import Navbar from "./components/frontend/navbar";
 import Footer from "./components/frontend/footer";
 import React, { Component, useContext, useEffect, useState } from "react";
 import Checker from "./components/Checker";
-import { postReq, req } from "@/helpers";
+import { postReq, req, reqNoAuth } from "@/helpers";
 import { loadStripe } from "@stripe/stripe-js";
 import { toast } from "react-toastify";
 import { public_stripe_key } from "@/helpers/constants";
@@ -33,7 +33,7 @@ export default function Joinus(props) {
   };
 
   const fetchPayments = async () => {
-    const resp = await req("/payment/subscribable-product", true);
+    const resp = await reqNoAuth("/payment/subscribable-product", true);
     if (resp) {
       console.log(resp);
       setPayments(resp);
@@ -43,6 +43,13 @@ export default function Joinus(props) {
   useEffect(() => {
     fetchPayments();
   }, []);
+  useEffect(() => {
+    if (user.logged) {
+      if (user.valid) {
+        nav.push("/cotscanner");
+      }
+    }
+  }, [user]);
 
   function filterByNameKeyword(array, keyword) {
     return array.filter((obj) =>
