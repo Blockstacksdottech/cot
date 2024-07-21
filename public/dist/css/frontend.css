@@ -69,3 +69,7 @@ body {
   width: 100%;
   z-index: 999;
 }
+
+.card-subscribed {
+  background: #6c757d !important;
+}

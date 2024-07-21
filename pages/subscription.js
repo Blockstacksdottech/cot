@@ -10,7 +10,7 @@ import { public_stripe_key } from "@/helpers/constants";
 import { UserContext } from "@/contexts/UserContextData";
 import { useRouter } from "next/router";
 
-export default function Joinus(props) {
+export default function Subscription(props) {
   const [payments, setPayments] = useState([]);
   const { user, setUser } = useContext(UserContext);
   const nav = useRouter();
@@ -99,11 +99,8 @@ export default function Joinus(props) {
               <div class="row my-4">
                 <div class="col-sm-12 text-center">
                   <h1 className="head-text-big text-white">
-                    Join Frantzdy Trading CO
+                    Your Subscription
                   </h1>
-                  <p className="mb-0 p-tag-big text-white">
-                    Trading become easier when you trade with us
-                  </p>
                 </div>
               </div>
             </div>
@@ -141,10 +138,10 @@ export default function Joinus(props) {
                         <div className="text-center">
                           <a
                             type="button"
-                            className="btn btn-primary"
+                            className="btn btn-danger"
                             onClick={() => handleCheckout("basic")}
                           >
-                            Select
+                            Unsubscribe
                           </a>
                         </div>
                       </div>
@@ -185,7 +182,7 @@ export default function Joinus(props) {
                             className="btn btn-primary"
                             onClick={() => handleCheckout("standard")}
                           >
-                            Select
+                            Upgrade
                           </a>
                         </div>
                       </div>
@@ -228,7 +225,7 @@ export default function Joinus(props) {
                             className="btn btn-primary"
                             onClick={() => handleCheckout("premium")}
                           >
-                            Select
+                            Upgrade
                           </a>
                         </div>
                       </div>
@@ -274,7 +271,7 @@ export default function Joinus(props) {
                             className="btn btn-primary"
                             onClick={() => handleCheckout("custom")}
                           >
-                            Select
+                            Upgrade
                           </a>
                         </div>
                       </div>

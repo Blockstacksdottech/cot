@@ -89,7 +89,7 @@ export default function Navbar({}) {
                     <a className="btn btn-secondary" href="/login">
                       Login
                     </a>
-                    <a className="btn btn-info" href="/joinus">
+                    <a className="btn btn-info" href="/register">
                       Join Us
                     </a>
                   </div>
@@ -131,6 +131,10 @@ export default function Navbar({}) {
 
                     <li className="user-footer bg-primary">
                       <a href="/account">Account Management</a>
+                    </li>
+
+                    <li className="user-footer bg-primary">
+                      <a href="/subscription">Subscription</a>
                     </li>
 
                     {user && user.isAdmin && (
