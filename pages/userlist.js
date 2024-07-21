@@ -86,6 +86,7 @@ const Userlist = () => {
                                 <th>State</th>
                                 <th>Country</th>
                                 <th>Zip</th>
+                                <th>Subscription</th>
                                 <th>Status</th>
                                 <th></th>
                               </thead>
@@ -114,6 +115,7 @@ const Userlist = () => {
                                       <td>{e.details.state}</td>
                                       <td>{e.details.country}</td>
                                       <td>{e.details.zip_code}</td>
+                                      <td>Basic</td>
                                       <td>
                                         {e.is_active && (
                                           <a className="badge bg-success">
