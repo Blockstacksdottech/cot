@@ -89,7 +89,7 @@ export default function Navbar({}) {
                     <a className="btn btn-secondary" href="/login">
                       Login
                     </a>
-                    <a className="btn btn-info" href="/register">
+                    <a className="btn btn-info" href="/joinus">
                       Join Us
                     </a>
                   </div>
