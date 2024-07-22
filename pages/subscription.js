@@ -3,7 +3,7 @@ import Navbar from "./components/frontend/navbar";
 import Footer from "./components/frontend/footer";
 import React, { Component, useContext, useEffect, useState } from "react";
 import Checker from "./components/Checker";
-import { postReq, req, reqNoAuth, formatDateLocal } from "@/helpers";
+import { postReq, req, reqNoAuth, formatDateLocal, logout } from "@/helpers";
 import { loadStripe } from "@stripe/stripe-js";
 import { toast } from "react-toastify";
 import { public_stripe_key } from "@/helpers/constants";
@@ -25,7 +25,9 @@ export default function Subscription(props) {
           ? "Subscription updated"
           : "Subscription Canceled"
       );
-      nav.push("/cotscanner");
+      if (body.action === "cancel") {
+        logout(nav, setUser);
+      }
     } else {
       toast.error(`Failed`);
     }

@@ -42,6 +42,18 @@ const Userlist = () => {
     }
   };
 
+  const deleteUser = async (id) => {
+    const resp = await postReq("userdelete", {
+      userid: id,
+    });
+    if (resp) {
+      toast.success("User Deleted");
+      fetchUsers();
+    } else {
+      toast.error("Failed");
+    }
+  };
+
   useEffect(() => {
     fetchUsers();
   }, []);
@@ -90,6 +102,7 @@ const Userlist = () => {
                                 <th>Subscription</th>
                                 <th>Status</th>
                                 <th></th>
+                                <th></th>
                               </thead>
                               <tbody>
                                 {users.map((e, i) => {
@@ -136,6 +149,11 @@ const Userlist = () => {
                                       <td onClick={() => switchStatus(e.id)}>
                                         <a className="btn btn-sm btn-danger">
                                           <i className="fa fa-ban"></i>
+                                        </a>
+                                      </td>
+                                      <td onClick={() => deleteUser(e.id)}>
+                                        <a className="btn btn-sm btn-danger">
+                                          <i className="fa fa-trash"></i>
                                         </a>
                                       </td>
                                     </tr>

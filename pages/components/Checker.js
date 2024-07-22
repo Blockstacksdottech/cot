@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { UserContext } from "../../contexts/UserContextData";
-import { isLogged } from "@/helpers";
+import { isLogged, logout } from "@/helpers";
 import { useRouter } from "next/router";
+import { toast } from "react-toastify";
 
 function Checker({ children, tier, no_check, only_admin, no_login }) {
   const { user, setUser } = useContext(UserContext);
@@ -18,6 +19,7 @@ function Checker({ children, tier, no_check, only_admin, no_login }) {
         obj.valid = resp.isValidSub;
         obj.tier = resp.tier;
         obj.isAdmin = resp.is_superuser;
+        obj.isActive = resp.is_active;
         setUser(obj);
         return obj;
       } else {
@@ -30,6 +32,11 @@ function Checker({ children, tier, no_check, only_admin, no_login }) {
         return;
       }
       if (obj.logged) {
+        if (!obj.isActive) {
+          toast.error("You are banned");
+          logout(setUser);
+          nav.push("/login");
+        }
         if (only_admin) {
           if (obj.isAdmin) {
             return;
