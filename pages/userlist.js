@@ -22,6 +22,18 @@ const Userlist = () => {
   const { user, setUser } = useContext(UserContext);
   const [users, setUsers] = useState([]);
 
+  const initDataTable = () => {
+    const script = document.createElement("script");
+    script.src = "/dist/js/datatable.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      // Cleanup function to remove the script on component unmount
+      document.body.removeChild(script);
+    };
+  };
+
   const fetchUsers = async () => {
     const resp = await req("userlist");
     if (resp) {
