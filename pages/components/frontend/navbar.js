@@ -133,9 +133,11 @@ export default function Navbar({}) {
                       <a href="/account">Account Management</a>
                     </li>
 
-                    <li className="user-footer bg-primary">
-                      <a href="/subscription">Subscription</a>
-                    </li>
+                    {user && !user.isAdmin && (
+                      <li className="user-footer bg-primary">
+                        <a href="/subscription">Subscription</a>
+                      </li>
+                    )}
 
                     {user && user.isAdmin && (
                       <li className="user-footer bg-primary">
