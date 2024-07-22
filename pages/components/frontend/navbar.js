@@ -78,11 +78,13 @@ export default function Navbar({}) {
                   ANNOUNCEMENT
                 </a>
               </li>
-              <li className="nav-item active">
-                <a className="nav-link" href="/contact">
-                  CONTACT US
-                </a>
-              </li>
+              {user && user.isAdmin && (
+                <li className="nav-item active">
+                  <a className="nav-link" href="/contact">
+                    CONTACT US
+                  </a>
+                </li>
+              )}
               {(!user || !user.logged) && (
                 <li className="nav-item">
                   <div class="btn-group">
