@@ -78,7 +78,7 @@ export default function Navbar({}) {
                   ANNOUNCEMENT
                 </a>
               </li>
-              {user && user.isAdmin && (
+              {user && !user.isAdmin && (
                 <li className="nav-item active">
                   <a className="nav-link" href="/contact">
                     CONTACT US
